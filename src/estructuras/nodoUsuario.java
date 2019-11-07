@@ -9,8 +9,7 @@ public class nodoUsuario
 {
     nodoUsuario siguiente;
     nodoGrafo primeroG;
-    nodoGrafo ultimoG;
-    
+    nodoGrafo ultimoG;    
     String nombre;
     
     public nodoUsuario(String n) 

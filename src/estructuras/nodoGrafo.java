@@ -10,18 +10,22 @@ import java.util.*;
  */
 public class nodoGrafo 
 {
-    nodoGrafo siguiente;
-    String carpetaPadre;
-    ArrayList carpetasHijos;
-    Node raiz;
-    String ruta;
+    nodoGrafo siguiente;    
+    HashMap<String, String> nombreCarpetasHijos;
+    HashMap<String, String> rutasCarpetasHijos;    
+    Node arbolDeArchivos;
+    String nomCarpetaPadre;
+    String rutaDondeSeEncontraraCarpeta;
+    String nombreCarpetaAIngresar;
     
-    public nodoGrafo(String cp, String rut) 
+    public nodoGrafo(String carppadre, String rut,String nomcarp) 
     {
-        this.carpetaPadre=cp;
-        this.carpetasHijos=new ArrayList();
-        this.raiz=null;
-        this.ruta=rut;
+        this.nomCarpetaPadre=carppadre;
+        this.nombreCarpetasHijos=new HashMap<>();
+        this.rutasCarpetasHijos=new HashMap<>();
+        this.arbolDeArchivos=null;
+        this.rutaDondeSeEncontraraCarpeta=rut;
+        this.nombreCarpetaAIngresar=nomcarp;
     }
         
 }

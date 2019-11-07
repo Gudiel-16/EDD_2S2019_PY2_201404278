@@ -21,10 +21,15 @@ import java.util.Date;
  * @author GUDIEL
  */
 public class principal extends javax.swing.JFrame {
-            
+    
+    opUsuarios misUsuarios; 
+    
     public principal() {
                             
         initComponents();
+        
+        //inicializando lista Usuarios
+        misUsuarios=new opUsuarios();
         
         /* 7 primeras posiciones de tabla hash */
         DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
@@ -71,6 +76,15 @@ public class principal extends javax.swing.JFrame {
         bttSubirCarpeta = new javax.swing.JButton();
         bttEliminarArchivo = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        txtRutaActual = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtNombreUsuarioActual = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtableCarpeArchivos = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        txtContenidoArchivo = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jpReportes = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -181,7 +195,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bttCompartirCarpeta.setText("COMPARTIR");
-        jPanel4.add(bttCompartirCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 141, 44));
+        jPanel4.add(bttCompartirCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 141, 44));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -189,13 +203,18 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
 
         bttCrearCarpeta.setText("CREAR");
-        jPanel4.add(bttCrearCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 141, 44));
+        bttCrearCarpeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttCrearCarpetaActionPerformed(evt);
+            }
+        });
+        jPanel4.add(bttCrearCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 141, 44));
 
         bttEliminarCarpeta.setText("ELIMINAR");
-        jPanel4.add(bttEliminarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 141, 44));
+        jPanel4.add(bttEliminarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 141, 44));
 
         bttModificarCarpeta.setText("MODIFICAR");
-        jPanel4.add(bttModificarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 141, 44));
+        jPanel4.add(bttModificarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 141, 44));
 
         bttCrearArchivo.setText("CREAR");
         jPanel4.add(bttCrearArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 423, 141, 44));
@@ -210,7 +229,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttSubirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 660, 141, 44));
 
         bttSubirCarpeta.setText("SUBIR");
-        jPanel4.add(bttSubirCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 141, 44));
+        jPanel4.add(bttSubirCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 141, 44));
 
         bttEliminarArchivo.setText("ELIMINAR");
         jPanel4.add(bttEliminarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 141, 44));
@@ -219,6 +238,52 @@ public class principal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("CARPETAS");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jPanel4.add(txtRutaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 770, 30));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("RUTA ACTUAL:");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, 30));
+        jPanel4.add(txtNombreUsuarioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 30, 200, 30));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("USUARIO:");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 30, -1, 30));
+
+        jtableCarpeArchivos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "NOMBRE", "CONTENIDO", "RUTA", "TIPO"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtableCarpeArchivos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtableCarpeArchivosMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jtableCarpeArchivos);
+
+        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 780, 510));
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("CONTENIDO ARCHIVO:");
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 670, -1, -1));
+        jPanel4.add(txtContenidoArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 670, 1030, 30));
+
+        jButton1.setText("ACTUALIZAR RUTA");
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 220, 40));
 
         areaPestan.addTab("PERFIL USUARIO", jPanel4);
 
@@ -362,11 +427,20 @@ public class principal extends javax.swing.JFrame {
         naa.generarGrafica(root);*/
         
         opUsuarios us=new opUsuarios();
+        //se crea usuario y carpeta raiz
         us.insertar("Gudiel");
-        us.insertarGrafoRaiz("Gudiel", "principal", "/");
-        us.insertar("Chris");
-        us.insertarGrafoRaiz("Chris", "raiz", "/documentos/");
-        us.imprimir();
+        us.insertarCarpetaParaUsuario("Gudiel", "/", "/","raiz"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
+        
+        //se crea una carpeta Documentos Dentro de Raiz (se agrega como hijo)
+        us.insertarCarpetaComoHijo("Gudiel", "/","/documentos/","documentos"); // us, carpPadre, rutaCarpetaAcrear, nombreCarpeta
+        //se inserta una nueva carpeta al grafo (nuevo nodo)
+        us.insertarCarpetaParaUsuario("Gudiel", "/", "/documentos/","documentos");
+        //insertamos archivos a carpeta
+        us.insertarArchivoACarpeta("/", "hello.py", "hola mundo", "12-12", "Gudiel");
+        us.insertarArchivoACarpeta("/", "alo.py", "hola 2", "13-12", "Gudiel");
+        us.insertarArchivoACarpeta("/", "pollo.py", "hola 3", "14-12", "Gudiel");
+        us.mostrarCarpetasYArchivos(jtableCarpeArchivos, "Gudiel", "/");
+        //us.imprimir();
         
         
     }//GEN-LAST:event_reporteAVLActionPerformed
@@ -458,6 +532,22 @@ public class principal extends javax.swing.JFrame {
         }        
         
     }//GEN-LAST:event_bttCargaMasivaUsActionPerformed
+
+    private void bttCrearCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCrearCarpetaActionPerformed
+        String nombre = JOptionPane.showInputDialog("Ingrese nombre de carpeta");
+        try {
+            if (!nombre.equals("")) 
+            {
+                
+            }
+        } catch (Exception e) {
+        } 
+    }//GEN-LAST:event_bttCrearCarpetaActionPerformed
+
+    private void jtableCarpeArchivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtableCarpeArchivosMouseClicked
+        int posicion=jtableCarpeArchivos.rowAtPoint(evt.getPoint());
+        txtContenidoArchivo.setText(jtableCarpeArchivos.getValueAt(posicion, 1).toString());
+    }//GEN-LAST:event_jtableCarpeArchivosMouseClicked
 
     public void leerCSVSimple(String path) {
         
@@ -759,10 +849,14 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JButton bttRegistrar;
     private javax.swing.JButton bttSubirArchivo;
     private javax.swing.JButton bttSubirCarpeta;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -770,15 +864,20 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel jpLogin;
     private javax.swing.JPanel jpReportes;
+    private javax.swing.JTable jtableCarpeArchivos;
     private javax.swing.JMenuItem reporteAVL;
     private javax.swing.JMenuItem reporteGrafo;
     private javax.swing.JMenuItem reporteMatriz;
     private javax.swing.JMenuItem reporteTabHash;
     private javax.swing.JTable tableUsError;
     private javax.swing.JTable tableUscargados;
+    private javax.swing.JTextField txtContenidoArchivo;
+    private javax.swing.JTextField txtNombreUsuarioActual;
     private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtRutaActual;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

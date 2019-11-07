@@ -16,11 +16,17 @@ public class arbol_AVL
         public int height = 1;
         public String value;
         public String contenido;
+        public String fecha;
+        public String usuario;
+        public String ruta;
 
-        public Node (String val, String cont) 
+        public Node (String val, String cont, String fech, String us, String ruta) 
         {
             this.value = val;
             this.contenido=cont;
+            this.fecha=fech;
+            this.usuario=us;
+            this.ruta=ruta;
         }
     }
     
@@ -31,16 +37,16 @@ public class arbol_AVL
         return N.height;
     }
     
-    public Node insertar(Node node, String value, String cont) {
+    public Node insertar(Node node, String value, String cont, String fech, String us, String ruta) {
         /* 1.  Realizar la rotación normal */
         if (node == null) {
-            return(new Node(value,cont));
+            return(new Node(value,cont,fech,us,ruta));
         }
 
         if (value.compareTo(node.value) < 0)
-            node.left  = insertar(node.left, value,cont);
+            node.left  = insertar(node.left, value,cont,fech,us,ruta);
         else
-            node.right = insertar(node.right, value,cont);
+            node.right = insertar(node.right, value,cont,fech,us,ruta);
 
         /* 2. Actualizar altura de este nodo */
         node.height = Math.max(height(node.left), height(node.right)) + 1;
@@ -119,7 +125,7 @@ public class arbol_AVL
     public void preOrder(Node root) {
         if (root != null) {
             preOrder(root.left);
-            System.out.printf("%d ", root.value);
+            System.out.printf("id "+ root.value);
             preOrder(root.right);
         }
     }
