@@ -5,6 +5,7 @@ package interfaz;
 import estructuras.arbol_AVL;
 import estructuras.arbol_AVL.Node;
 import estructuras.graphivArbolAVL;
+import estructuras.opUsuarios;
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -343,11 +344,9 @@ public class principal extends javax.swing.JFrame {
 
     private void reporteAVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteAVLActionPerformed
                 
-        arbol_AVL miTree=new arbol_AVL();
-        graphivArbolAVL naa=new graphivArbolAVL();
-        
-        Node root=null;
-        
+        /*arbol_AVL miTree=new arbol_AVL();
+        graphivArbolAVL naa=new graphivArbolAVL();        
+        Node root=null;        
         root=miTree.insertar(root, "nana50","a");
         root=miTree.insertar(root, "hilo17","b");
         root=miTree.insertar(root, "fosa12","c");
@@ -360,9 +359,14 @@ public class principal extends javax.swing.JFrame {
         root=miTree.insertar(root, "lazo19","j");
         root=miTree.insertar(root, "oso54","k");
         root=miTree.deleteNode(root, "toma76");
-        naa.generarGrafica(root);
+        naa.generarGrafica(root);*/
         
-        
+        opUsuarios us=new opUsuarios();
+        us.insertar("Gudiel");
+        us.insertarGrafoRaiz("Gudiel", "principal", "/");
+        us.insertar("Chris");
+        us.insertarGrafoRaiz("Chris", "raiz", "/documentos/");
+        us.imprimir();
         
         
     }//GEN-LAST:event_reporteAVLActionPerformed
