@@ -283,6 +283,11 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(txtContenidoArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 670, 1030, 30));
 
         jButton1.setText("ACTUALIZAR RUTA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 220, 40));
 
         areaPestan.addTab("PERFIL USUARIO", jPanel4);
@@ -426,21 +431,27 @@ public class principal extends javax.swing.JFrame {
         root=miTree.deleteNode(root, "toma76");
         naa.generarGrafica(root);*/
         
-        opUsuarios us=new opUsuarios();
+        //opUsuarios us=new opUsuarios();
         //se crea usuario y carpeta raiz
-        us.insertar("Gudiel");
-        us.insertarCarpetaParaUsuario("Gudiel", "/", "/","raiz"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
+        misUsuarios.insertar("Gudiel");
+        misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/", "/","raiz"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
+        
+        //se inserta una nueva carpeta al grafo (nuevo nodo)
+        misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/", "/documentos/","documentos");//usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
+        //se crea una carpeta Documentos Dentro de Raiz (se agrega como hijo)
+        misUsuarios.insertarCarpetaComoHijo("Gudiel", "/","/documentos/","documentos"); // us, carpPadre, rutaCarpetaAcrear, nombreCarpeta
         
         //se crea una carpeta Documentos Dentro de Raiz (se agrega como hijo)
-        us.insertarCarpetaComoHijo("Gudiel", "/","/documentos/","documentos"); // us, carpPadre, rutaCarpetaAcrear, nombreCarpeta
+        //misUsuarios.insertarCarpetaComoHijo("Gudiel", "/documentos/","/documentos/videos/","videos"); // us, carpPadre, rutaCarpetaAcrear, nombreCarpeta
         //se inserta una nueva carpeta al grafo (nuevo nodo)
-        us.insertarCarpetaParaUsuario("Gudiel", "/", "/documentos/","documentos");
+        //misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/documentos/", "/documentos/videos/","videos");//usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
         //insertamos archivos a carpeta
-        us.insertarArchivoACarpeta("/", "hello.py", "hola mundo", "12-12", "Gudiel");
-        us.insertarArchivoACarpeta("/", "alo.py", "hola 2", "13-12", "Gudiel");
-        us.insertarArchivoACarpeta("/", "pollo.py", "hola 3", "14-12", "Gudiel");
-        us.mostrarCarpetasYArchivos(jtableCarpeArchivos, "Gudiel", "/");
-        //us.imprimir();
+        misUsuarios.insertarArchivoACarpeta("/", "hello.py", "hola mundo", "12-12", "Gudiel");
+        misUsuarios.insertarArchivoACarpeta("/", "alo.py", "hola 2", "13-12", "Gudiel");
+        misUsuarios.insertarArchivoACarpeta("/", "pollo.py", "hola 3", "14-12", "Gudiel");
+        //misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, "Gudiel", "/");
+        //System.out.println(us.existeCarpeta("Gudiel", "/"));
+        misUsuarios.imprimir();
         
         
     }//GEN-LAST:event_reporteAVLActionPerformed
@@ -538,7 +549,28 @@ public class principal extends javax.swing.JFrame {
         try {
             if (!nombre.equals("")) 
             {
-                
+                String rutCarpeAInsertar=txtRutaActual.getText()+nombre+"/";
+                if (misUsuarios.existeCarpeta(txtNombreUsuarioActual.getText(), rutCarpeAInsertar)==false) 
+                {                    
+                    //
+                    misUsuarios.insertarCarpetaParaUsuario(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), rutCarpeAInsertar, nombre);
+                    misUsuarios.insertarCarpetaComoHijo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), rutCarpeAInsertar, nombre);
+                    //eliminando contenido de tabla
+                    DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
+                    for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
+                    {
+                        modelo.removeRow(i);
+                    }
+                    //actualizando visor de archivos y carpetas
+                    misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
+                    misUsuarios.imprimir();
+                }else
+                {
+                    int resp = JOptionPane.showConfirmDialog(null, "¿La carpeta ya existe, desea reemplazarla?", "Alerta!", JOptionPane.YES_NO_OPTION);
+                    //0 si
+                    //1 no
+                    //-1 cerrar
+                }
             }
         } catch (Exception e) {
         } 
@@ -548,6 +580,15 @@ public class principal extends javax.swing.JFrame {
         int posicion=jtableCarpeArchivos.rowAtPoint(evt.getPoint());
         txtContenidoArchivo.setText(jtableCarpeArchivos.getValueAt(posicion, 1).toString());
     }//GEN-LAST:event_jtableCarpeArchivosMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
+        for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
+        {
+            modelo.removeRow(i);
+        }
+        misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void leerCSVSimple(String path) {
         

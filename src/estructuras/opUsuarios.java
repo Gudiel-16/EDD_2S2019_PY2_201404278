@@ -94,7 +94,9 @@ public class opUsuarios
                     {                        
                         if (aux.nomCarpetaPadre.equals(CarPadre)) //cuando encuentre carpeta padre, agrega como hijo
                         {
+                            System.out.println(aux.nomCarpetaPadre);
                             aux.rutasCarpetasHijos.put(nombreCarpeta, rutaCarpetaACrear);
+                            break;
                         }
                         aux=aux.siguiente;
                     }
@@ -133,6 +135,7 @@ public class opUsuarios
     
     }
     
+    //ingresa carpetas a la tabla para mostrar
     public void mostrarCarpetasYArchivos(javax.swing.JTable tabla, String usuario, String rutaCarpeta)
     {
         DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
@@ -145,7 +148,8 @@ public class opUsuarios
                 if (aux!=null) 
                 {
                     while (aux!=null) //recorre el grafo
-                    {                        
+                    {      
+                        System.out.println(aux.rutasCarpetasHijos.size());
                         if (aux.rutaDondeSeEncontraraCarpeta.equals(rutaCarpeta)) //cuando encuentre la ruta de carpeta
                         {                               
                             Iterator<String> productos = aux.rutasCarpetasHijos.keySet().iterator();
@@ -159,18 +163,19 @@ public class opUsuarios
                                 fila[2]=valor; //ruta 
                                 fila[3]="carpeta";//tipo
                                 modelo.addRow(fila);
+                                System.out.println("->>>> "+clave + " ->>> " + valor);
                             }  
-                            insertarArchivosDesdeArbol(modelo,aux.arbolDeArchivos);
+                            //insertarArchivosDesdeArbol(modelo,aux.arbolDeArchivos);
                         }
                         aux=aux.siguiente;
                     }
                 }                
             }
             temp=temp.siguiente;
-        }
-        tabla.setModel(modelo);
+        }        
     }
     
+    //inrgesa archivos desde el arbol a la tabla para mostrar
     public void insertarArchivosDesdeArbol(DefaultTableModel modelo, Node root)
     {
         if (root!=null)         
@@ -186,6 +191,36 @@ public class opUsuarios
         }  
                 
     }
+    
+    //validar si existe carpeta
+    public boolean existeCarpeta(String usuario, String rut)
+    {
+        boolean bande=false;
+        nodoUsuario temp=this.primero;
+        
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                nodoGrafo aux=temp.primeroG;
+                if (aux!=null) 
+                {
+                    while (aux!=null) //recorre el grafo
+                    {                        
+                        if (aux.rutaDondeSeEncontraraCarpeta.equals(rut)) //cuando encuentre la ruta de carpeta
+                        {                               
+                            bande=true;
+                        }
+                        aux=aux.siguiente;
+                    }
+                }                
+            }
+            temp=temp.siguiente;
+        }
+        
+        return bande;
+    }
+    
     
     public void imprimir()
     {
