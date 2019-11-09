@@ -4,10 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/CHIPECH/PROGRAMACION/ESTRUCTURAS_DE_DATOS/%5BEDD%5DProyecto2_201404278/src/interfaz/principal.java</file>
-            <file>file:/E:/CHIPECH/PROGRAMACION/ESTRUCTURAS_DE_DATOS/%5BEDD%5DProyecto2_201404278/src/estructuras/nodoUsuario.java</file>
-            <file>file:/E:/CHIPECH/PROGRAMACION/ESTRUCTURAS_DE_DATOS/%5BEDD%5DProyecto2_201404278/src/estructuras/arbol_AVL.java</file>
-            <file>file:/E:/CHIPECH/PROGRAMACION/ESTRUCTURAS_DE_DATOS/%5BEDD%5DProyecto2_201404278/src/estructuras/carpeta.java</file>
-            <file>file:/E:/CHIPECH/PROGRAMACION/ESTRUCTURAS_DE_DATOS/%5BEDD%5DProyecto2_201404278/src/estructuras/nodoGrafo.java</file>
+            <file>file:/E:/CHIPECH/PROGRAMACION/ESTRUCTURAS_DE_DATOS/%5BEDD%5DProyecto2_201404278/src/estructuras/graphvizTablaHash.java</file>
+            <file>file:/E:/CHIPECH/PROGRAMACION/ESTRUCTURAS_DE_DATOS/%5BEDD%5DProyecto2_201404278/src/estructuras/graphivArbolAVL.java</file>
             <file>file:/E:/CHIPECH/PROGRAMACION/ESTRUCTURAS_DE_DATOS/%5BEDD%5DProyecto2_201404278/src/estructuras/opUsuarios.java</file>
         </group>
     </open-files>

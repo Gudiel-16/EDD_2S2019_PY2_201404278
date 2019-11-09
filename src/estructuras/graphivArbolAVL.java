@@ -61,35 +61,28 @@ public class graphivArbolAVL {
         
         String cadena = "digraph G\n" +
                         "{\n" +
-                        //"rankdir=LR;"+
                         grafo+                
                         "}";
-        //cadena = cadena.replace("\"\"","\"");
-        //cadena = cadena.replace("\\","\\\\");
         
-        /*---------------------------------------------------------------------------------*/
         try (  PrintWriter writer = new PrintWriter(direccionEntrada)) {
             writer.print(cadena);            
         } catch (Exception e) {
-        }
-        /*---------------------------------------------------------------------------------*/
-        
-        
+        }               
         
         String tParam = "-Tpng";
         String tOParam = "-o";
         
-        //dot -Tpng ast.txt -o ast.jpg
 
         String[] cmd = new String[5];
-              cmd[0] = dotPath;
-              cmd[1] = tParam;
-              cmd[2] = direccionEntrada;
-              cmd[3] = tOParam;
-              cmd[4] = direccionSalida;
+        cmd[0] = dotPath;
+        cmd[1] = tParam;
+        cmd[2] = direccionEntrada;
+        cmd[3] = tOParam;
+        cmd[4] = direccionSalida;
 
-              Runtime rt = Runtime.getRuntime();
-              try {
+        Runtime rt = Runtime.getRuntime();
+              
+        try {
             rt.exec( cmd );
         } catch (Exception e) {
         }

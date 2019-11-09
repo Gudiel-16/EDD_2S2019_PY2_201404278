@@ -6,6 +6,7 @@ import estructuras.arbol_AVL;
 import estructuras.arbol_AVL.Node;
 import estructuras.carpeta;
 import estructuras.graphivArbolAVL;
+import estructuras.graphvizTablaHash;
 import estructuras.opUsuarios;
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -24,6 +25,7 @@ import java.util.Date;
 public class principal extends javax.swing.JFrame {
     
     opUsuarios misUsuarios; 
+    graphvizTablaHash gvTabHashgvTabHash;
     
     public principal() {
                             
@@ -31,18 +33,22 @@ public class principal extends javax.swing.JFrame {
         
         //inicializando lista Usuarios
         misUsuarios=new opUsuarios();
+        gvTabHashgvTabHash=new graphvizTablaHash();
         
         /* 7 primeras posiciones de tabla hash */
         DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
         for (int i = 0; i < 7; i++) 
         {
-            Object [] fila= new Object[3];
+            Object [] fila= new Object[5];
             fila[0]="";
             fila[1]="-";
-            fila[2]="";
+            fila[2]="-";
+            fila[3]="-";
+            fila[4]="-";
             modeloUsCargados.addRow(fila);            
         }
         tableUscargados.setModel(modeloUsCargados);
+        insertarIndices();
         /*--------------------------------------*/
     }
 
@@ -210,6 +216,11 @@ public class principal extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bttCompartirCarpeta.setText("COMPARTIR");
+        bttCompartirCarpeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttCompartirCarpetaActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttCompartirCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 141, 44));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -323,34 +334,11 @@ public class principal extends javax.swing.JFrame {
         areaPestan.addTab("PERFIL USUARIO", jPanel4);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 0));
+        jPanel1.setLayout(null);
 
-        javax.swing.GroupLayout jpReportesLayout = new javax.swing.GroupLayout(jpReportes);
-        jpReportes.setLayout(jpReportesLayout);
-        jpReportesLayout.setHorizontalGroup(
-            jpReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1491, Short.MAX_VALUE)
-        );
-        jpReportesLayout.setVerticalGroup(
-            jpReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 718, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jpReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jpReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jpReportes.setLayout(null);
+        jPanel1.add(jpReportes);
+        jpReportes.setBounds(443, 12, 1060, 718);
 
         areaPestan.addTab("REPORTES", jPanel1);
 
@@ -399,28 +387,63 @@ public class principal extends javax.swing.JFrame {
 
     private void reporteTabHashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteTabHashActionPerformed
         
+        
+        
+        
         jpReportes.removeAll();
         jpReportes.revalidate();
         jpReportes.repaint();
         
-        graphivArbolAVL naa=new graphivArbolAVL();        
-        String a=naa.listArbol.get(0);
+        gvTabHashgvTabHash.generarGrafica(tableUscargados);
+        
+        String a=gvTabHashgvTabHash.listTablaHash.get(0);
         System.out.println(a);
+        
+                
         JLabel aa=new JLabel();        
         ImageIcon imgi=new ImageIcon(a);
         aa.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
         aa.setIcon(imgi);
         
-        JPanel aja=new JPanel();
-        aja.add(aa);
-        
-        JScrollPane jsp = new JScrollPane(aja);
+        JPanel panel=new JPanel();
+        //panel.setLayout(null);        
+        panel.add(aa);
+        //panel.revalidate();
+        //panel.repaint();
+
+        JScrollPane jsp = new JScrollPane(panel);
+        jsp.setLayout(null);
         jsp.setBounds(0, 0, 1491, 718);
-        jsp.setViewportView(aja);
+        jsp.setViewportView(panel);
+        jsp.repaint();
         
         jpReportes.add(jsp);
-        jpReportes.revalidate();
+        //jpReportes.revalidate();
         jpReportes.repaint();
+        //jPanel1.add(aa);
+        
+//        jpReportes.removeAll();
+//        jpReportes.revalidate();
+//        jpReportes.repaint();
+//        
+//        graphivArbolAVL naa=new graphivArbolAVL();        
+//        String a=naa.listArbol.get(0);
+//        System.out.println(a);
+//        JLabel aa=new JLabel();        
+//        ImageIcon imgi=new ImageIcon(a);
+//        aa.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
+//        aa.setIcon(imgi);
+//        
+//        JPanel aja=new JPanel();
+//        aja.add(aa);
+//        
+//        JScrollPane jsp = new JScrollPane(aja);
+//        jsp.setBounds(0, 0, 1491, 718);
+//        jsp.setViewportView(aja);
+//        
+//        jpReportes.add(jsp);
+//        jpReportes.revalidate();
+//        jpReportes.repaint();
         
         
     }//GEN-LAST:event_reporteTabHashActionPerformed
@@ -435,6 +458,33 @@ public class principal extends javax.swing.JFrame {
         System.out.println(op2);
         System.out.println(op3);
         System.out.println(op4);
+        
+        jpReportes.removeAll();
+        jpReportes.revalidate();
+        jpReportes.repaint();
+        
+        String a=gvTabHashgvTabHash.listTablaHash.get(0);
+        System.out.println(a);
+        
+        JLabel aa=new JLabel();        
+        ImageIcon imgi=new ImageIcon(a);
+        aa.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
+        aa.setIcon(imgi);
+        
+        JPanel panel=new JPanel();
+        panel.setLayout(null);        
+        panel.add(aa);
+        panel.revalidate();
+        panel.repaint();
+
+        JScrollPane jsp = new JScrollPane(panel);
+        jsp.setBounds(0, 0, 1491, 718);
+        jsp.setViewportView(panel);
+        
+        jpReportes.add(jsp);
+        jpReportes.revalidate();
+        jpReportes.repaint();
+        jPanel1.add(aa);
         
     }//GEN-LAST:event_reporteGrafoActionPerformed
 
@@ -532,14 +582,15 @@ public class principal extends javax.swing.JFrame {
                                         {
                                             System.out.println("agregando... "+i);
                                             Object [] fila= new Object[5];
-                                            fila[0]="";
-                                            fila[1]="";
-                                            fila[2]="";
-                                            fila[3]="";
-                                            fila[4]="";
+                                            fila[0]="-";
+                                            fila[1]="-";
+                                            fila[2]="-";
+                                            fila[3]="-";
+                                            fila[4]="-";
                                             modeloUsCargados.addRow(fila);
                                         }
                                         recalcularIndices();
+                                        insertarIndices();
                                     }
                         } catch (Exception e) {
                             System.out.println("puede que el usuario cayo en un ciclo!");
@@ -706,6 +757,10 @@ public class principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bttModificarArchivoActionPerformed
 
+    private void bttCompartirCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCompartirCarpetaActionPerformed
+        
+    }//GEN-LAST:event_bttCompartirCarpetaActionPerformed
+
     public void leerCSVSimple(String path) {
         
         DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
@@ -764,14 +819,15 @@ public class principal extends javax.swing.JFrame {
                                     for (int i = 0; i < op1; i++) 
                                     {
                                         Object [] fila= new Object[5];
-                                        fila[0]="";
-                                        fila[1]="";
-                                        fila[2]="";
-                                        fila[3]="";
-                                        fila[4]="";
+                                        fila[0]="-";
+                                        fila[1]="-";
+                                        fila[2]="-";
+                                        fila[3]="-";
+                                        fila[4]="-";
                                         modeloUsCargados.addRow(fila);                                        
                                     }
                                     recalcularIndices();
+                                    insertarIndices();
                                 }
                             }else
                             {
@@ -1051,6 +1107,15 @@ public class principal extends javax.swing.JFrame {
             String passenc=tableUsuariosOrden.getValueAt(i, 4).toString();
             
             ingresarEnTablaHash(nom, pass, passenc,fech);            
+        }
+    }
+    
+    //actualizar indices en tabla hash
+    public void insertarIndices()
+    {
+        for (int i = 0; i < tableUscargados.getRowCount(); i++) 
+        {
+            tableUscargados.setValueAt(i, i, 0);
         }
     }
     
