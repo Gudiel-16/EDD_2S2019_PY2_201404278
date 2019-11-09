@@ -5,6 +5,7 @@ import com.sun.javafx.collections.MappingChange.Map;
 import estructuras.arbol_AVL.Node;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
+import java.util.*;
 
 /**
  *
@@ -54,14 +55,14 @@ public class opUsuarios
     }
     
     //ingresa carpetas a usuario especifico
-    public void insertarCarpetaParaUsuario(String nomUs, String carPadre, String ruta, String nomCarp)
+    public void insertarCarpetaParaUsuario(String nomUs, String ruta)
     {
         nodoUsuario temp=this.primero;
         for (int i = 0; i < this.size; i++) 
         {
             if (temp.nombre.equals(nomUs)) //cuando encuentra nombre
             {
-                nodoGrafo nuevo=new nodoGrafo(carPadre, ruta, nomCarp);
+                nodoGrafo nuevo=new nodoGrafo(ruta);
                 if (temp.primeroG==null) 
                 {
                     nuevo.siguiente=null;
@@ -79,33 +80,31 @@ public class opUsuarios
         }
     }
     
-    //inserta carpeta como hijo
-    public void insertarCarpetaComoHijo(String nomUs, String CarPadre, String rutaCarpetaACrear, String nombreCarpeta)
+    public void insertarCarpetaHijo(String nomUs, String carpetaPadre, carpeta carpetaInsertar)
     {
         nodoUsuario temp=this.primero;
         for (int i = 0; i < this.size; i++) 
         {
             if (temp.nombre.equals(nomUs)) //cuando encuentra nombre
             {
-                nodoGrafo aux=temp.primeroG;
-                if (aux!=null) 
+                if (temp.carpetas.containsKey(carpetaPadre)) 
                 {
-                    while (aux!=null) //recorre el grafo
-                    {                        
-                        if (aux.nomCarpetaPadre.equals(CarPadre)) //cuando encuentre carpeta padre, agrega como hijo
-                        {
-                            System.out.println(aux.nomCarpetaPadre);
-                            aux.rutasCarpetasHijos.put(nombreCarpeta, rutaCarpetaACrear);
-                            break;
-                        }
-                        aux=aux.siguiente;
-                    }
-                }                
+                    temp.carpetas.get(carpetaPadre).add(carpetaInsertar);
+                    //System.out.println("Carpeta Padre: "  + carpetaPadre + " -> " + temp.carpetas.get(carpetaPadre));
+                }else
+                {
+                    ArrayList<carpeta> nuevo= new ArrayList<carpeta>();
+                    nuevo.add(carpetaInsertar);
+                    temp.carpetas.put(carpetaPadre, nuevo);
+                    //System.out.println("Carpeta Padre: " + carpetaPadre + " -> " + temp.carpetas.get(carpetaPadre));
+                }
+                
+                break;
             }
             temp=temp.siguiente;
         }
     }
-    
+       
     //ingresara archivo al AVL
     public void insertarArchivoACarpeta(String rutaCarpetaAInsertar, String nombreArchivo, String Contenido, String fecha, String usuario)
     {
@@ -121,10 +120,9 @@ public class opUsuarios
                     {                        
                         if (aux.rutaDondeSeEncontraraCarpeta.equals(rutaCarpetaAInsertar)) //cuando encuentre la ruta de carpeta
                         {                               
-                            Node root=aux.arbolDeArchivos;
-                            root=miTree.insertar(root, nombreArchivo, Contenido, fecha, usuario,aux.nomCarpetaPadre);
-                            aux.arbolDeArchivos=root;
+                            aux.arbolDeArchivos=miTree.insertar(aux.arbolDeArchivos, nombreArchivo, Contenido, fecha, usuario,"");
                             //graphviz.generarGrafica(aux.arbolDeArchivos);
+                            break;
                         }
                         aux=aux.siguiente;
                     }
@@ -144,32 +142,34 @@ public class opUsuarios
         {
             if (temp.nombre.equals(usuario)) //cuando encuentra nombre
             {
+                //se agregan carpetas
+                if (temp.carpetas.containsKey(rutaCarpeta)) 
+                {
+                    ArrayList<carpeta> aux=temp.carpetas.get(rutaCarpeta);
+                    for (int j = 0; j < aux.size(); j++) 
+                    {
+                        carpeta resultado=(carpeta)aux.get(j);
+                        Object [] fila=new Object[4]; 
+                        fila[0]=resultado.nombreOriginalCarpeta; //nombre de carpeta  
+                        fila[1]="";  //contenido
+                        fila[2]=resultado.rutaCarpetaHijo; //ruta 
+                        fila[3]="carpeta";//tipo
+                        modelo.addRow(fila);
+                    }                    
+                } 
+                //se agregan archivos
                 nodoGrafo aux=temp.primeroG;
                 if (aux!=null) 
                 {
                     while (aux!=null) //recorre el grafo
-                    {      
-                        System.out.println(aux.rutasCarpetasHijos.size());
+                    {                        
                         if (aux.rutaDondeSeEncontraraCarpeta.equals(rutaCarpeta)) //cuando encuentre la ruta de carpeta
                         {                               
-                            Iterator<String> productos = aux.rutasCarpetasHijos.keySet().iterator();
-                            while(productos.hasNext())
-                            {
-                                String clave = productos.next();
-                                String valor=aux.rutasCarpetasHijos.get(clave);
-                                Object [] fila=new Object[4]; 
-                                fila[0]=clave; //nombre de carpeta  
-                                fila[1]="";  //contenido
-                                fila[2]=valor; //ruta 
-                                fila[3]="carpeta";//tipo
-                                modelo.addRow(fila);
-                                System.out.println("->>>> "+clave + " ->>> " + valor);
-                            }  
-                            //insertarArchivosDesdeArbol(modelo,aux.arbolDeArchivos);
+                            insertarArchivosDesdeArbol(modelo, aux.arbolDeArchivos);
                         }
                         aux=aux.siguiente;
                     }
-                }                
+                }               
             }
             temp=temp.siguiente;
         }        
@@ -190,6 +190,34 @@ public class opUsuarios
             insertarArchivosDesdeArbol(modelo,root.right);
         }  
                 
+    }
+    
+    //modificar archivo
+    public void modificarArchivo(String usuario, String rutaDondeEstaArchivo, String nomArchiElim, String nomArchiNuevo, String contenido, String fecha)
+    {
+        nodoUsuario temp=this.primero;
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                nodoGrafo aux=temp.primeroG;
+                if (aux!=null) 
+                {
+                    while (aux!=null) //recorre el grafo
+                    {                        
+                        if (aux.rutaDondeSeEncontraraCarpeta.equals(rutaDondeEstaArchivo)) //cuando encuentre la ruta de carpeta
+                        {                               
+                            aux.arbolDeArchivos=miTree.deleteNode(aux.arbolDeArchivos, nomArchiElim);
+                            aux.arbolDeArchivos=miTree.insertar(aux.arbolDeArchivos, nomArchiNuevo, contenido, fecha, usuario, "");
+                            //graphviz.generarGrafica(aux.arbolDeArchivos);
+                            break;
+                        }
+                        aux=aux.siguiente;
+                    }
+                }                
+            }
+            temp=temp.siguiente;
+        }
     }
     
     //validar si existe carpeta
@@ -221,6 +249,53 @@ public class opUsuarios
         return bande;
     }
     
+    //validar si existe carpeta
+    public boolean existeArchivo(String usuario, String rut, String nomArchi)
+    {
+        boolean bande=false;
+        nodoUsuario temp=this.primero;
+        
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                nodoGrafo aux=temp.primeroG;
+                if (aux!=null) 
+                {
+                    while (aux!=null) //recorre el grafo
+                    {                        
+                        if (aux.rutaDondeSeEncontraraCarpeta.equals(rut)) //cuando encuentre la ruta de carpeta
+                        {                               
+                            bande=existeNodoEnArbol(nomArchi, aux.arbolDeArchivos);
+                        }
+                        aux=aux.siguiente;
+                    }
+                }                
+            }
+            temp=temp.siguiente;
+        }
+        
+        return bande;
+    }
+    
+    public boolean existeNodoEnArbol(String nom, Node root)
+    {
+        if(root==null)
+        {
+            return false;
+        }
+        else if (root.value.equals(nom)) 
+        {
+            return true;
+        }else if(root.value.compareTo(nom)<0)
+        {
+           return existeNodoEnArbol(nom, root.left);
+        }else 
+        {
+            return existeNodoEnArbol(nom, root.right);
+        }
+    }
+    
     
     public void imprimir()
     {
@@ -232,7 +307,7 @@ public class opUsuarios
                     nodoGrafo auxJ=aux.primeroG;
                     if(auxJ!=null){
                         while(auxJ!=null){
-                                System.out.println("       CarpetaPadre: "+auxJ.nomCarpetaPadre+ " Hijos: " + auxJ.rutasCarpetasHijos.size() +" Ruta: "+auxJ.rutaDondeSeEncontraraCarpeta + " nombreCarpeta:" + auxJ.nombreCarpetaAIngresar);
+                                System.out.println(" Ruta: "+auxJ.rutaDondeSeEncontraraCarpeta);
                          auxJ=auxJ.siguiente;    
                         }
                     }

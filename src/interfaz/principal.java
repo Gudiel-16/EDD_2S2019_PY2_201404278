@@ -4,6 +4,7 @@ package interfaz;
 
 import estructuras.arbol_AVL;
 import estructuras.arbol_AVL.Node;
+import estructuras.carpeta;
 import estructuras.graphivArbolAVL;
 import estructuras.opUsuarios;
 import javax.swing.*;
@@ -37,7 +38,7 @@ public class principal extends javax.swing.JFrame {
         {
             Object [] fila= new Object[3];
             fila[0]="";
-            fila[1]="";
+            fila[1]="-";
             fila[2]="";
             modeloUsCargados.addRow(fila);            
         }
@@ -63,6 +64,8 @@ public class principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableUsError = new javax.swing.JTable();
         bttCargaMasivaUs = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tableUsuariosOrden = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         bttCompartirCarpeta = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -84,7 +87,7 @@ public class principal extends javax.swing.JFrame {
         jtableCarpeArchivos = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         txtContenidoArchivo = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        bttActualizarRuta = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jpReportes = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -167,7 +170,7 @@ public class principal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableUscargados);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 69, 1439, 298));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 69, 1439, 140));
 
         tableUsError.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,6 +191,18 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jPanel2.add(bttCargaMasivaUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 10, -1, 50));
+
+        tableUsuariosOrden.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "INDICE", "USUARIO", "PASSWORD", "TIMESTAMP", "PASSWORD ENCRIPTADA"
+            }
+        ));
+        jScrollPane4.setViewportView(tableUsuariosOrden);
+
+        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 980, 140));
 
         areaPestan.addTab("ADMINISTRADOR", jPanel2);
 
@@ -217,12 +232,27 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttModificarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 141, 44));
 
         bttCrearArchivo.setText("CREAR");
+        bttCrearArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttCrearArchivoActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttCrearArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 423, 141, 44));
 
         bttCompartirArchivo.setText("COMPARTIR");
+        bttCompartirArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttCompartirArchivoActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttCompartirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 479, 141, 44));
 
         bttModificarArchivo.setText("MODIFICAR");
+        bttModificarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttModificarArchivoActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttModificarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 141, 44));
 
         bttSubirArchivo.setText("SUBIR");
@@ -282,13 +312,13 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 670, -1, -1));
         jPanel4.add(txtContenidoArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 670, 1030, 30));
 
-        jButton1.setText("ACTUALIZAR RUTA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bttActualizarRuta.setText("ACTUALIZAR RUTA");
+        bttActualizarRuta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bttActualizarRutaActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 220, 40));
+        jPanel4.add(bttActualizarRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 220, 40));
 
         areaPestan.addTab("PERFIL USUARIO", jPanel4);
 
@@ -396,7 +426,7 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_reporteTabHashActionPerformed
 
     private void reporteGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteGrafoActionPerformed
-        System.out.println(saberPorcentajeDeTabla());
+        System.out.println(saberPorcentajeDeTabla(tableUscargados.getRowCount()));
         int op=146 % 7;
         int op2=146 % 11;
         int op3=146 % 17;
@@ -434,21 +464,25 @@ public class principal extends javax.swing.JFrame {
         //opUsuarios us=new opUsuarios();
         //se crea usuario y carpeta raiz
         misUsuarios.insertar("Gudiel");
-        misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/", "/","raiz"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
+        misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
         
-        //se inserta una nueva carpeta al grafo (nuevo nodo)
-        misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/", "/documentos/","documentos");//usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
-        //se crea una carpeta Documentos Dentro de Raiz (se agrega como hijo)
-        misUsuarios.insertarCarpetaComoHijo("Gudiel", "/","/documentos/","documentos"); // us, carpPadre, rutaCarpetaAcrear, nombreCarpeta
-        
+//        //se inserta una nueva carpeta al grafo (nuevo nodo)
+//        misUsuarios.insertarCarpetaParaUsuario("Gudiel","/documentos/");//usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
+//        //se crea una carpeta Documentos Dentro de Raiz (se agrega como hijo)
+//        misUsuarios.insertarCarpetaHijo("Gudiel","/",new carpeta("videos","/videos/")); // us, carpPadre, carpeta a insertar
+//        misUsuarios.insertarCarpetaHijo("Gudiel","/",new carpeta("usac","/usac/")); 
+//        misUsuarios.insertarCarpetaHijo("Gudiel","/",new carpeta("image","/image/")); 
+//        
+//        misUsuarios.insertarCarpetaHijo("Gudiel","/documentos/",new carpeta("mp4","/documentos/mp4/")); // us, carpPadre, rutaCarpetaAcrear, nombreCarpeta
+//        misUsuarios.insertarCarpetaHijo("Gudiel","/documentos/",new carpeta("mp3","/documentos/mp3//")); // us, carpPadre, rutaCarpetaAcrear, nombreCarpeta
         //se crea una carpeta Documentos Dentro de Raiz (se agrega como hijo)
         //misUsuarios.insertarCarpetaComoHijo("Gudiel", "/documentos/","/documentos/videos/","videos"); // us, carpPadre, rutaCarpetaAcrear, nombreCarpeta
         //se inserta una nueva carpeta al grafo (nuevo nodo)
         //misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/documentos/", "/documentos/videos/","videos");//usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
         //insertamos archivos a carpeta
-        misUsuarios.insertarArchivoACarpeta("/", "hello.py", "hola mundo", "12-12", "Gudiel");
-        misUsuarios.insertarArchivoACarpeta("/", "alo.py", "hola 2", "13-12", "Gudiel");
-        misUsuarios.insertarArchivoACarpeta("/", "pollo.py", "hola 3", "14-12", "Gudiel");
+//        misUsuarios.insertarArchivoACarpeta("/", "hello.py", "hola mundo", "12-12", "Gudiel");
+//        misUsuarios.insertarArchivoACarpeta("/", "alo.py", "hola 2", "13-12", "Gudiel");
+//        misUsuarios.insertarArchivoACarpeta("/", "pollo.py", "hola 3", "14-12", "Gudiel");
         //misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, "Gudiel", "/");
         //System.out.println(us.existeCarpeta("Gudiel", "/"));
         misUsuarios.imprimir();
@@ -470,24 +504,47 @@ public class principal extends javax.swing.JFrame {
                 {
                     if (password.length()>=8)
                     {
-                        ingresarEnTablaHash(nombre, password, obtenerHash(password));
-                        int porc=saberPorcentajeDeTabla();
-                                //System.out.println(porc);
-                                if (porc<25) 
-                                {
-                                    int sig=siguienteNumeroPrimo(tableUscargados.getRowCount());
-                                    int op1=sig-tableUscargados.getRowCount();
-                                    for (int i = 0; i < op1; i++) 
+                        try {
+                            Date date = new Date();
+                            DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy"); 
+                            
+                            ingresarEnTablaHash(nombre, password, obtenerHash(password),horaActual.format(date));
+                            
+                            DefaultTableModel modeloUsOrden=(DefaultTableModel) tableUsuariosOrden.getModel();
+                            Object [] filao= new Object[5];
+                            filao[0]="";
+                            filao[1]=nombre;
+                            filao[2]=password;
+                            filao[3]=horaActual.format(date);
+                            filao[4]=obtenerHash(password);
+                            modeloUsOrden.addRow(filao);
+                            tableUsuariosOrden.setModel(modeloUsOrden);
+                            
+                            int porc=saberPorcentajeDeTabla(tableUscargados.getRowCount());
+                            System.out.println("porce: "+porc);
+                            
+                                    if (porc<25) 
                                     {
-                                        Object [] fila= new Object[5];
-                                        fila[0]="";
-                                        fila[1]="";
-                                        fila[2]="";
-                                        fila[3]="";
-                                        fila[4]="";
-                                        modeloUsCargados.addRow(fila);
+                                        int sig=siguienteNumeroPrimo(tableUscargados.getRowCount());
+                                        int op1=tableUscargados.getRowCount();
+                                        int op2=sig-op1;
+                                        for (int i = 0; i < op2; i++) 
+                                        {
+                                            System.out.println("agregando... "+i);
+                                            Object [] fila= new Object[5];
+                                            fila[0]="";
+                                            fila[1]="";
+                                            fila[2]="";
+                                            fila[3]="";
+                                            fila[4]="";
+                                            modeloUsCargados.addRow(fila);
+                                        }
+                                        recalcularIndices();
                                     }
-                                }
+                        } catch (Exception e) {
+                            System.out.println("puede que el usuario cayo en un ciclo!");
+                        }
+                        
                     }else
                     {
                         Object [] fila= new Object[3];
@@ -553,8 +610,9 @@ public class principal extends javax.swing.JFrame {
                 if (misUsuarios.existeCarpeta(txtNombreUsuarioActual.getText(), rutCarpeAInsertar)==false) 
                 {                    
                     //
-                    misUsuarios.insertarCarpetaParaUsuario(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), rutCarpeAInsertar, nombre);
-                    misUsuarios.insertarCarpetaComoHijo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), rutCarpeAInsertar, nombre);
+                    misUsuarios.insertarCarpetaParaUsuario(txtNombreUsuarioActual.getText(), rutCarpeAInsertar);
+                    misUsuarios.insertarCarpetaHijo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), new carpeta(nombre,rutCarpeAInsertar));
+                    misUsuarios.imprimir();
                     //eliminando contenido de tabla
                     DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
                     for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
@@ -563,7 +621,6 @@ public class principal extends javax.swing.JFrame {
                     }
                     //actualizando visor de archivos y carpetas
                     misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
-                    misUsuarios.imprimir();
                 }else
                 {
                     int resp = JOptionPane.showConfirmDialog(null, "¿La carpeta ya existe, desea reemplazarla?", "Alerta!", JOptionPane.YES_NO_OPTION);
@@ -581,14 +638,73 @@ public class principal extends javax.swing.JFrame {
         txtContenidoArchivo.setText(jtableCarpeArchivos.getValueAt(posicion, 1).toString());
     }//GEN-LAST:event_jtableCarpeArchivosMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bttActualizarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarRutaActionPerformed
         DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
         for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
         {
             modelo.removeRow(i);
         }
         misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bttActualizarRutaActionPerformed
+
+    private void bttCrearArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCrearArchivoActionPerformed
+        String nombre = JOptionPane.showInputDialog("Ingrese nombre de archivo");
+        String contenido=JOptionPane.showInputDialog("Ingrese contenido de archivo");
+        try {
+            if (!nombre.equals("") && !contenido.equals("")) 
+            {
+                if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , nombre)==false) 
+                {                    
+                    //se agrega archivo
+                    misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), nombre, contenido , "fecha" , txtNombreUsuarioActual.getText());
+                    //eliminando contenido de tabla
+                    DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
+                    for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
+                    {
+                        modelo.removeRow(i);
+                    }
+                    //actualizando visor de archivos y carpetas
+                    misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
+                }else
+                {
+                    int resp = JOptionPane.showConfirmDialog(null, "¿El archivo ya existe, desea reemplazarlo?", "Alerta!", JOptionPane.YES_NO_OPTION);
+                    //0 si
+                    //1 no
+                    //-1 cerrar
+                }
+            }
+        } catch (Exception e) {
+        } 
+    }//GEN-LAST:event_bttCrearArchivoActionPerformed
+
+    private void bttCompartirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCompartirArchivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bttCompartirArchivoActionPerformed
+
+    private void bttModificarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttModificarArchivoActionPerformed
+        int fila=jtableCarpeArchivos.getSelectedRow();
+        if (fila>=0) //si selecciono fila
+        {
+           String nomArchiElim=jtableCarpeArchivos.getValueAt(fila, 0).toString();
+            if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , nomArchiElim)==true) 
+            {
+                String nombre = JOptionPane.showInputDialog("Ingrese nombre nuevo de archivo");
+                String contenido=JOptionPane.showInputDialog("Ingrese contenido nuevo de archivo");
+                try {
+                    if (!nombre.equals("") && !contenido.equals("")) 
+                    {
+                        misUsuarios.modificarArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), nomArchiElim, nombre , contenido, "fecha");
+                    }
+                } catch (Exception e) {
+                }
+            }
+            else
+            {
+                //archivo no existe
+                System.out.println("error");
+            }
+        }
+    }//GEN-LAST:event_bttModificarArchivoActionPerformed
 
     public void leerCSVSimple(String path) {
         
@@ -623,8 +739,24 @@ public class principal extends javax.swing.JFrame {
                         {
                             if (campos[1].length()>=8) //si la contra tiene mas que 8 caracteres
                             {
-                                ingresarEnTablaHash(campos[0], campos[1], obtenerHash(campos[1]));
-                                int porc=saberPorcentajeDeTabla();
+                                Date date = new Date();
+                                DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy"); 
+                                
+                                ingresarEnTablaHash(campos[0], campos[1], obtenerHash(campos[1]),horaActual.format(date));  
+                                
+                                DefaultTableModel modeloUsOrden=(DefaultTableModel) tableUsuariosOrden.getModel();
+                                Object [] filao= new Object[5];
+                                filao[0]="";
+                                filao[1]=campos[0];
+                                filao[2]=campos[1];
+                                filao[3]=horaActual.format(date);
+                                filao[4]=obtenerHash(campos[1]);
+                                modeloUsOrden.addRow(filao);
+                                tableUsuariosOrden.setModel(modeloUsOrden);
+                                
+                                int porc=saberPorcentajeDeTabla(tableUscargados.getRowCount());
+                                System.out.println("porce: "+porc);
+                                
                                 if (porc<25) 
                                 {
                                     int sig=siguienteNumeroPrimo(tableUscargados.getRowCount());
@@ -637,8 +769,9 @@ public class principal extends javax.swing.JFrame {
                                         fila[2]="";
                                         fila[3]="";
                                         fila[4]="";
-                                        modeloUsCargados.addRow(fila);
+                                        modeloUsCargados.addRow(fila);                                        
                                     }
+                                    recalcularIndices();
                                 }
                             }else
                             {
@@ -701,16 +834,17 @@ public class principal extends javax.swing.JFrame {
             
             tableUscargados.setModel(modeloUsCargados);
             tableUsError.setModel(modeloUsError);
+            
                         
         } catch (Exception e) 
         { JOptionPane.showMessageDialog(null, "NO SE ENCONTRO EL ARCHIVO"); }                    
 }
-    
+  
     public boolean validarExistenciaUsuario(String nomb)
     {
         for (int i = 0; i < tableUscargados.getRowCount(); i++) 
         {
-            String nomus=tableUscargados.getValueAt(i, 0).toString();
+            String nomus=tableUscargados.getValueAt(i, 1).toString();
             if (nomb.equals(nomus)) 
             {
                 return true;
@@ -734,20 +868,20 @@ public class principal extends javax.swing.JFrame {
 	return toReturn;
     }
     
-    public int saberPorcentajeDeTabla()
+    public int saberPorcentajeDeTabla(int tamanioTabla)
     {
         int porce=0;
         
-        for (int i = 0; i < tableUscargados.getRowCount(); i++) 
+        for (int i = 0; i < tamanioTabla; i++) 
         {
             String value=tableUscargados.getValueAt(i, 1).toString();
-            if (value.equals("")) 
+            if (value.equals("-")) 
             {
                 porce++;
             }            
         }
         
-        int tamTabla=tableUscargados.getRowCount();
+        int tamTabla=tamanioTabla;
         int op1 = porce*100;
         int op2=op1/tamTabla;
         System.out.println("Tabla: " + tamTabla + " op1: " + op1 + " op2: " + op2);
@@ -755,7 +889,7 @@ public class principal extends javax.swing.JFrame {
         return op2;        
     }
     
-    public int indiceEnTablaHash(String nomb)
+    public int indiceEnTablaHash(String nomb, int numeroVe)
     {
         int contador=0;
         for (int i = 0; i < nomb.length(); i++) 
@@ -764,34 +898,84 @@ public class principal extends javax.swing.JFrame {
             contador=contador+(int)carac;
         }
         
+        //se hace la opracion x mod k
         int tamTabla=tableUscargados.getRowCount();
         int op1= contador%tamTabla;
         
-        return op1;
-    }
-    
-    public void ingresarEnTablaHash(String nom, String pass, String hash)
-    {
-        int indice=indiceEnTablaHash(nom); //obtengo el indice de la tabla
+        //se verifica si esta ocupada la posicion
         int dondeIngresar=0;
-        
-        for (int i = 0; i < indice; i++) 
+        for (int i = 0; i < op1; i++) 
         {
             dondeIngresar++;
-            if (dondeIngresar>tableUscargados.getRowCount()-1) 
+            if (dondeIngresar>(tableUscargados.getRowCount()-1)) 
             {
                 dondeIngresar=0;
             }            
-        }
+        }   
         
-        Date date = new Date();
-        DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");       
+        String valor= tableUscargados.getValueAt(dondeIngresar, 1).toString();
+        if (valor.equals("-")) 
+        {
+            return dondeIngresar;
+        }
+        else
+        {
+            
+            return colision(op1, numeroVe);
+            
+            
+        }
+    }
+    
+    public int colision(int indiceOriginal, int numeroVe)
+    {
+        int nuevoIndice=indiceOriginal + (int)Math.pow(numeroVe, 2);
+        int dondeIngresar=0;
+        for (int i = 0; i < nuevoIndice; i++) 
+        {
+            dondeIngresar++;
+            if (dondeIngresar>(tableUscargados.getRowCount()-1)) 
+            {
+                dondeIngresar=0;
+            }
+            
+        } 
+        String valor= tableUscargados.getValueAt(dondeIngresar, 1).toString();
+        if (valor.equals("-")) 
+        {
+            return dondeIngresar;
+        }
+        else
+        {
+            try {
+                return colision(indiceOriginal, numeroVe+1);
+            } catch (Exception e) {
+                System.out.println("se a producido un error, se inciclo!");
+                int a=0;
+                for (int i = 0; i < tableUscargados.getRowCount(); i++) {
+                    String valor2= tableUscargados.getValueAt(i, 1).toString();
+                    if (valor2.equals("")) 
+                    {
+                        break;
+                    }
+                    a++;
+                }
+                return a;
+            }
+            
+        }
+    }
+    
+    public void ingresarEnTablaHash(String nom, String pass, String hash, String fecha)
+    {
+        int dondeIngresar=indiceEnTablaHash(nom,1); //obtengo el indice de la tabla
         
         tableUscargados.setValueAt(dondeIngresar, dondeIngresar, 0);
         tableUscargados.setValueAt(nom, dondeIngresar, 1);
         tableUscargados.setValueAt(pass, dondeIngresar, 2);
-        tableUscargados.setValueAt(horaActual.format(date), dondeIngresar, 3);
-        tableUscargados.setValueAt(hash, dondeIngresar, 4);        
+        tableUscargados.setValueAt(fecha, dondeIngresar, 3);
+        tableUscargados.setValueAt(hash, dondeIngresar, 4);      
+               
         
     }
     
@@ -836,10 +1020,37 @@ public class principal extends javax.swing.JFrame {
     
     public void recalcularIndices()
     {
-        //recorrer la tabla de usuarios destructurada
-        for (int i = 0; i < tableUscargados.getRowCount(); i++) 
+        int tamActual=tableUscargados.getRowCount();
+        
+        //limpiando tabla usuariosCargaods
+        DefaultTableModel modelo=(DefaultTableModel) tableUscargados.getModel();
+        for (int i = tableUscargados.getRowCount()-1; i >= 0; i--) 
         {
+            modelo.removeRow(i);
+        }
+        
+        DefaultTableModel modelo2=(DefaultTableModel) tableUscargados.getModel();
+        for (int i = 0; i < tamActual; i++) 
+        {
+            Object [] fila= new Object[5];
+            fila[0]="";
+            fila[1]="-";
+            fila[2]="";
+            fila[3]="";
+            fila[4]="";
+            modelo.addRow(fila);
+        }
+        tableUscargados.setModel(modelo2);
+        
+        //recorrer la tabla de usuarios destructurada
+        for (int i = 0; i < tableUsuariosOrden.getRowCount(); i++) 
+        {
+            String nom=tableUsuariosOrden.getValueAt(i, 1).toString();
+            String pass=tableUsuariosOrden.getValueAt(i, 2).toString();
+            String fech=tableUsuariosOrden.getValueAt(i, 3).toString();
+            String passenc=tableUsuariosOrden.getValueAt(i, 4).toString();
             
+            ingresarEnTablaHash(nom, pass, passenc,fech);            
         }
     }
     
@@ -877,6 +1088,7 @@ public class principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane areaPestan;
+    private javax.swing.JButton bttActualizarRuta;
     private javax.swing.JButton bttCargaMasivaUs;
     private javax.swing.JButton bttCompartirArchivo;
     private javax.swing.JButton bttCompartirCarpeta;
@@ -890,7 +1102,6 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JButton bttRegistrar;
     private javax.swing.JButton bttSubirArchivo;
     private javax.swing.JButton bttSubirCarpeta;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -906,6 +1117,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel jpLogin;
     private javax.swing.JPanel jpReportes;
     private javax.swing.JTable jtableCarpeArchivos;
@@ -915,6 +1127,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem reporteTabHash;
     private javax.swing.JTable tableUsError;
     private javax.swing.JTable tableUscargados;
+    private javax.swing.JTable tableUsuariosOrden;
     private javax.swing.JTextField txtContenidoArchivo;
     private javax.swing.JTextField txtNombreUsuarioActual;
     private javax.swing.JTextField txtPassword;
