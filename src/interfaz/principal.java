@@ -8,6 +8,7 @@ import estructuras.carpeta;
 import estructuras.graphivArbolAVL;
 import estructuras.graphvizTablaHash;
 import estructuras.opUsuarios;
+import java.awt.Color;
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,6 +27,9 @@ public class principal extends javax.swing.JFrame {
     
     opUsuarios misUsuarios; 
     graphvizTablaHash gvTabHashgvTabHash;
+    graphivArbolAVL gvArbolAVL;
+    String tablaHashGraphviz="";
+    String arbolAVLGrapvhiz="";
     
     public principal() {
                             
@@ -34,6 +38,7 @@ public class principal extends javax.swing.JFrame {
         //inicializando lista Usuarios
         misUsuarios=new opUsuarios();
         gvTabHashgvTabHash=new graphvizTablaHash();
+        gvArbolAVL=new graphivArbolAVL();
         
         /* 7 primeras posiciones de tabla hash */
         DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
@@ -96,6 +101,8 @@ public class principal extends javax.swing.JFrame {
         bttActualizarRuta = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jpReportes = new javax.swing.JPanel();
+        bttActualizarGraphTablHash = new javax.swing.JButton();
+        bttActualizarGraphArbolAVL = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         reporteTabHash = new javax.swing.JMenuItem();
@@ -240,6 +247,11 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttEliminarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 141, 44));
 
         bttModificarCarpeta.setText("MODIFICAR");
+        bttModificarCarpeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttModificarCarpetaActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttModificarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 141, 44));
 
         bttCrearArchivo.setText("CREAR");
@@ -338,13 +350,31 @@ public class principal extends javax.swing.JFrame {
 
         jpReportes.setLayout(null);
         jPanel1.add(jpReportes);
-        jpReportes.setBounds(443, 12, 1060, 718);
+        jpReportes.setBounds(13, 50, 1490, 680);
+
+        bttActualizarGraphTablHash.setText("TABLA HASH");
+        bttActualizarGraphTablHash.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttActualizarGraphTablHashActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bttActualizarGraphTablHash);
+        bttActualizarGraphTablHash.setBounds(10, 10, 120, 30);
+
+        bttActualizarGraphArbolAVL.setText("ARBOL AVL");
+        bttActualizarGraphArbolAVL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttActualizarGraphArbolAVLActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bttActualizarGraphArbolAVL);
+        bttActualizarGraphArbolAVL.setBounds(150, 10, 130, 30);
 
         areaPestan.addTab("REPORTES", jPanel1);
 
         getContentPane().add(areaPestan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 1520, 770));
 
-        jMenu1.setText("REPORTES");
+        jMenu1.setText("GENERAR REPORTES");
 
         reporteTabHash.setText("TABLA HASH");
         reporteTabHash.addActionListener(new java.awt.event.ActionListener() {
@@ -387,113 +417,29 @@ public class principal extends javax.swing.JFrame {
 
     private void reporteTabHashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteTabHashActionPerformed
         
-        
-        
-        
-        jpReportes.removeAll();
-        jpReportes.revalidate();
-        jpReportes.repaint();
-        
         gvTabHashgvTabHash.generarGrafica(tableUscargados);
         
         String a=gvTabHashgvTabHash.listTablaHash.get(0);
         System.out.println(a);
-        
-                
-        JLabel aa=new JLabel();        
-        ImageIcon imgi=new ImageIcon(a);
-        aa.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
-        aa.setIcon(imgi);
-        
-        JPanel panel=new JPanel();
-        //panel.setLayout(null);        
-        panel.add(aa);
-        //panel.revalidate();
-        //panel.repaint();
-
-        JScrollPane jsp = new JScrollPane(panel);
-        jsp.setLayout(null);
-        jsp.setBounds(0, 0, 1491, 718);
-        jsp.setViewportView(panel);
-        jsp.repaint();
-        
-        jpReportes.add(jsp);
-        //jpReportes.revalidate();
-        jpReportes.repaint();
-        //jPanel1.add(aa);
-        
-//        jpReportes.removeAll();
-//        jpReportes.revalidate();
-//        jpReportes.repaint();
-//        
-//        graphivArbolAVL naa=new graphivArbolAVL();        
-//        String a=naa.listArbol.get(0);
-//        System.out.println(a);
-//        JLabel aa=new JLabel();        
-//        ImageIcon imgi=new ImageIcon(a);
-//        aa.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
-//        aa.setIcon(imgi);
-//        
-//        JPanel aja=new JPanel();
-//        aja.add(aa);
-//        
-//        JScrollPane jsp = new JScrollPane(aja);
-//        jsp.setBounds(0, 0, 1491, 718);
-//        jsp.setViewportView(aja);
-//        
-//        jpReportes.add(jsp);
-//        jpReportes.revalidate();
-//        jpReportes.repaint();
-        
+        tablaHashGraphviz=a;
         
     }//GEN-LAST:event_reporteTabHashActionPerformed
 
     private void reporteGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteGrafoActionPerformed
-        System.out.println(saberPorcentajeDeTabla(tableUscargados.getRowCount()));
-        int op=146 % 7;
-        int op2=146 % 11;
-        int op3=146 % 17;
-        int op4=146 % 19;
-        System.out.println(op);
-        System.out.println(op2);
-        System.out.println(op3);
-        System.out.println(op4);
-        
-        jpReportes.removeAll();
-        jpReportes.revalidate();
-        jpReportes.repaint();
-        
-        String a=gvTabHashgvTabHash.listTablaHash.get(0);
-        System.out.println(a);
-        
-        JLabel aa=new JLabel();        
-        ImageIcon imgi=new ImageIcon(a);
-        aa.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
-        aa.setIcon(imgi);
-        
-        JPanel panel=new JPanel();
-        panel.setLayout(null);        
-        panel.add(aa);
-        panel.revalidate();
-        panel.repaint();
-
-        JScrollPane jsp = new JScrollPane(panel);
-        jsp.setBounds(0, 0, 1491, 718);
-        jsp.setViewportView(panel);
-        
-        jpReportes.add(jsp);
-        jpReportes.revalidate();
-        jpReportes.repaint();
-        jPanel1.add(aa);
-        
+                
     }//GEN-LAST:event_reporteGrafoActionPerformed
 
     private void reporteMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteMatrizActionPerformed
-        areaPestan.setEnabledAt(0, true);
+        //areaPestan.setEnabledAt(0, true);
     }//GEN-LAST:event_reporteMatrizActionPerformed
 
     private void reporteAVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteAVLActionPerformed
-                
+        
+        //misUsuarios.generarArbolDeCarpeta(txtNombreUsuarioActual.getText(),txtRutaActual.getText());
+        //String a=gvArbolAVL.listArbol.get(0);
+        
+        //arbolAVLGrapvhiz=a;
+        
         /*arbol_AVL miTree=new arbol_AVL();
         graphivArbolAVL naa=new graphivArbolAVL();        
         Node root=null;        
@@ -513,9 +459,10 @@ public class principal extends javax.swing.JFrame {
         
         //opUsuarios us=new opUsuarios();
         //se crea usuario y carpeta raiz
-        misUsuarios.insertar("Gudiel");
-        misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
-        
+       misUsuarios.insertar("Gudiel");
+       misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
+       txtNombreUsuarioActual.setText("Gudiel");
+       txtRutaActual.setText("/");
 //        //se inserta una nueva carpeta al grafo (nuevo nodo)
 //        misUsuarios.insertarCarpetaParaUsuario("Gudiel","/documentos/");//usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
 //        //se crea una carpeta Documentos Dentro de Raiz (se agrega como hijo)
@@ -535,7 +482,7 @@ public class principal extends javax.swing.JFrame {
 //        misUsuarios.insertarArchivoACarpeta("/", "pollo.py", "hola 3", "14-12", "Gudiel");
         //misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, "Gudiel", "/");
         //System.out.println(us.existeCarpeta("Gudiel", "/"));
-        misUsuarios.imprimir();
+       // misUsuarios.imprimir();
         
         
     }//GEN-LAST:event_reporteAVLActionPerformed
@@ -760,6 +707,58 @@ public class principal extends javax.swing.JFrame {
     private void bttCompartirCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCompartirCarpetaActionPerformed
         
     }//GEN-LAST:event_bttCompartirCarpetaActionPerformed
+
+    private void bttModificarCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttModificarCarpetaActionPerformed
+        
+    }//GEN-LAST:event_bttModificarCarpetaActionPerformed
+
+    private void bttActualizarGraphTablHashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarGraphTablHashActionPerformed
+        this.jpReportes.removeAll();
+        this.jpReportes.repaint();
+                               
+        JLabel lblImagen=new JLabel();        
+        ImageIcon imgi=new ImageIcon(tablaHashGraphviz);
+        lblImagen.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
+        lblImagen.setIcon(imgi);
+        
+        JPanel panel=new JPanel();
+        panel.setBackground(Color.WHITE);        
+        panel.setLayout(null);     
+        panel.add(lblImagen);
+
+        JScrollPane jsp = new JScrollPane(panel);
+        
+        jsp.setBounds(0, 0, 1491, 718);
+        jsp.setViewportView(panel);
+        
+        this.jpReportes.add(jsp);
+        this.jpReportes.revalidate();
+        this.jpReportes.repaint();
+    }//GEN-LAST:event_bttActualizarGraphTablHashActionPerformed
+
+    private void bttActualizarGraphArbolAVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarGraphArbolAVLActionPerformed
+        this.jpReportes.removeAll();
+        this.jpReportes.repaint();
+                               
+        JLabel lblImagen=new JLabel();        
+        ImageIcon imgi=new ImageIcon(arbolAVLGrapvhiz);
+        lblImagen.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
+        lblImagen.setIcon(imgi);
+        
+        JPanel panel=new JPanel();
+        panel.setBackground(Color.WHITE);        
+        panel.setLayout(null);     
+        panel.add(lblImagen);
+
+        JScrollPane jsp = new JScrollPane(panel);
+        
+        jsp.setBounds(0, 0, 1491, 718);
+        jsp.setViewportView(panel);
+        
+        this.jpReportes.add(jsp);
+        this.jpReportes.revalidate();
+        this.jpReportes.repaint();
+    }//GEN-LAST:event_bttActualizarGraphArbolAVLActionPerformed
 
     public void leerCSVSimple(String path) {
         
@@ -1153,6 +1152,8 @@ public class principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane areaPestan;
+    private javax.swing.JButton bttActualizarGraphArbolAVL;
+    private javax.swing.JButton bttActualizarGraphTablHash;
     private javax.swing.JButton bttActualizarRuta;
     private javax.swing.JButton bttCargaMasivaUs;
     private javax.swing.JButton bttCompartirArchivo;

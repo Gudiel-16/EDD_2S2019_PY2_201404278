@@ -296,6 +296,30 @@ public class opUsuarios
         }
     }
     
+    public void generarArbolDeCarpeta(String usuario, String ruta)
+    {
+        nodoUsuario temp=this.primero;
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                nodoGrafo aux=temp.primeroG;
+                if (aux!=null) 
+                {
+                    while (aux!=null) //recorre el grafo
+                    {                        
+                        if (aux.rutaDondeSeEncontraraCarpeta.equals(ruta)) //cuando encuentre la ruta de carpeta
+                        {                               
+                            graphviz.generarGrafica(aux.arbolDeArchivos);
+                        }
+                        aux=aux.siguiente;
+                    }
+                }                
+            }
+            temp=temp.siguiente;
+        }
+    }
+    
     
     public void imprimir()
     {
