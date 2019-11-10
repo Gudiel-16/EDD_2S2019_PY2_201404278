@@ -20,6 +20,8 @@ public class opUsuarios
     
     arbol_AVL miTree;
     graphivArbolAVL graphviz;
+    
+    public ArrayList contenidoArbol=new ArrayList<String>();
 
     public opUsuarios() 
     {
@@ -220,6 +222,32 @@ public class opUsuarios
         }
     }
     
+    //eliminar archivo
+    public void eliminarArchivo(String usuario, String rutaDondeEstaArchivo, String nomArchiElim)
+    {
+        nodoUsuario temp=this.primero;
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                nodoGrafo aux=temp.primeroG;
+                if (aux!=null) 
+                {
+                    while (aux!=null) //recorre el grafo
+                    {                        
+                        if (aux.rutaDondeSeEncontraraCarpeta.equals(rutaDondeEstaArchivo)) //cuando encuentre la ruta de carpeta
+                        {                               
+                            aux.arbolDeArchivos=miTree.deleteNode(aux.arbolDeArchivos, nomArchiElim);
+                            break;
+                        }
+                        aux=aux.siguiente;
+                    }
+                }                
+            }
+            temp=temp.siguiente;
+        }
+    }
+    
     //validar si existe carpeta
     public boolean existeCarpeta(String usuario, String rut)
     {
@@ -265,8 +293,12 @@ public class opUsuarios
                     while (aux!=null) //recorre el grafo
                     {                        
                         if (aux.rutaDondeSeEncontraraCarpeta.equals(rut)) //cuando encuentre la ruta de carpeta
-                        {                               
-                            bande=existeNodoEnArbol(nomArchi, aux.arbolDeArchivos);
+                        {       
+                            contenidoArbol.clear();
+                            existeNodoEnArbol(aux.arbolDeArchivos);
+                            if (contenidoArbol.contains(nomArchi)){
+                                return true;                                
+                            }
                         }
                         aux=aux.siguiente;
                     }
@@ -278,22 +310,14 @@ public class opUsuarios
         return bande;
     }
     
-    public boolean existeNodoEnArbol(String nom, Node root)
+    public void existeNodoEnArbol(Node root)
     {
-        if(root==null)
+        if (root!=null)         
         {
-            return false;
-        }
-        else if (root.value.equals(nom)) 
-        {
-            return true;
-        }else if(root.value.compareTo(nom)<0)
-        {
-           return existeNodoEnArbol(nom, root.left);
-        }else 
-        {
-            return existeNodoEnArbol(nom, root.right);
-        }
+            existeNodoEnArbol(root.left);
+            contenidoArbol.add(root.value);
+            existeNodoEnArbol(root.right);
+        }  
     }
     
     public void generarArbolDeCarpeta(String usuario, String ruta)

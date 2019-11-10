@@ -9,6 +9,7 @@ import estructuras.graphivArbolAVL;
 import estructuras.graphvizTablaHash;
 import estructuras.opUsuarios;
 import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -103,6 +104,7 @@ public class principal extends javax.swing.JFrame {
         jpReportes = new javax.swing.JPanel();
         bttActualizarGraphTablHash = new javax.swing.JButton();
         bttActualizarGraphArbolAVL = new javax.swing.JButton();
+        scrollPaneReportes = new javax.swing.JScrollPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         reporteTabHash = new javax.swing.JMenuItem();
@@ -279,12 +281,22 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttModificarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 141, 44));
 
         bttSubirArchivo.setText("SUBIR");
+        bttSubirArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttSubirArchivoActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttSubirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 660, 141, 44));
 
         bttSubirCarpeta.setText("SUBIR");
         jPanel4.add(bttSubirCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 141, 44));
 
         bttEliminarArchivo.setText("ELIMINAR");
+        bttEliminarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttEliminarArchivoActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttEliminarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 141, 44));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -311,15 +323,7 @@ public class principal extends javax.swing.JFrame {
             new String [] {
                 "NOMBRE", "CONTENIDO", "RUTA", "TIPO"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jtableCarpeArchivos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtableCarpeArchivosMouseClicked(evt);
@@ -350,7 +354,7 @@ public class principal extends javax.swing.JFrame {
 
         jpReportes.setLayout(null);
         jPanel1.add(jpReportes);
-        jpReportes.setBounds(13, 50, 1490, 680);
+        jpReportes.setBounds(13, 50, 1490, 30);
 
         bttActualizarGraphTablHash.setText("TABLA HASH");
         bttActualizarGraphTablHash.addActionListener(new java.awt.event.ActionListener() {
@@ -369,6 +373,8 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel1.add(bttActualizarGraphArbolAVL);
         bttActualizarGraphArbolAVL.setBounds(150, 10, 130, 30);
+        jPanel1.add(scrollPaneReportes);
+        scrollPaneReportes.setBounds(10, 90, 1490, 640);
 
         areaPestan.addTab("REPORTES", jPanel1);
 
@@ -426,19 +432,33 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_reporteTabHashActionPerformed
 
     private void reporteGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteGrafoActionPerformed
-                
+       misUsuarios.insertar("Gudiel");
+       misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
+       txtNombreUsuarioActual.setText("Gudiel");
+       txtRutaActual.setText("/");   
     }//GEN-LAST:event_reporteGrafoActionPerformed
 
     private void reporteMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteMatrizActionPerformed
         //areaPestan.setEnabledAt(0, true);
+        JLabel lblImagen=new JLabel();        
+        ImageIcon imgi=new ImageIcon("E:\\CHIPECH\\PROGRAMACION\\ESTRUCTURAS_DE_DATOS\\[EDD]Proyecto2_201404278\\AVL2.jpg");
+        lblImagen.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
+        lblImagen.setIcon(imgi);
+        
+        JPanel aa=new JPanel();
+        aa.add(lblImagen);
+        aa.setBackground(Color.red);
+        aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
+        scrollPaneReportes.setViewportView(aa);
+        
     }//GEN-LAST:event_reporteMatrizActionPerformed
 
     private void reporteAVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteAVLActionPerformed
         
-        //misUsuarios.generarArbolDeCarpeta(txtNombreUsuarioActual.getText(),txtRutaActual.getText());
-        //String a=gvArbolAVL.listArbol.get(0);
+        misUsuarios.generarArbolDeCarpeta(txtNombreUsuarioActual.getText(),txtRutaActual.getText());
+        String a=gvArbolAVL.listArbol.get(0);
         
-        //arbolAVLGrapvhiz=a;
+        arbolAVLGrapvhiz=a;
         
         /*arbol_AVL miTree=new arbol_AVL();
         graphivArbolAVL naa=new graphivArbolAVL();        
@@ -459,10 +479,7 @@ public class principal extends javax.swing.JFrame {
         
         //opUsuarios us=new opUsuarios();
         //se crea usuario y carpeta raiz
-       misUsuarios.insertar("Gudiel");
-       misUsuarios.insertarCarpetaParaUsuario("Gudiel", "/"); //usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
-       txtNombreUsuarioActual.setText("Gudiel");
-       txtRutaActual.setText("/");
+       
 //        //se inserta una nueva carpeta al grafo (nuevo nodo)
 //        misUsuarios.insertarCarpetaParaUsuario("Gudiel","/documentos/");//usuario, carpetaPadre, rutaCarpeta, nombreCarpeta
 //        //se crea una carpeta Documentos Dentro de Raiz (se agrega como hijo)
@@ -592,7 +609,7 @@ public class principal extends javax.swing.JFrame {
         try {
             if (!nombre.equals("")) 
             {
-                leerCSVSimple(nombre);
+              leerCSVUsuarios(nombre);
             }
         } catch (Exception e) {
         }        
@@ -680,10 +697,13 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bttCompartirArchivoActionPerformed
 
     private void bttModificarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttModificarArchivoActionPerformed
+       
         int fila=jtableCarpeArchivos.getSelectedRow();
+        System.out.println(fila);
         if (fila>=0) //si selecciono fila
         {
            String nomArchiElim=jtableCarpeArchivos.getValueAt(fila, 0).toString();
+            System.out.println(nomArchiElim);
             if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , nomArchiElim)==true) 
             {
                 String nombre = JOptionPane.showInputDialog("Ingrese nombre nuevo de archivo");
@@ -737,30 +757,56 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bttActualizarGraphTablHashActionPerformed
 
     private void bttActualizarGraphArbolAVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarGraphArbolAVLActionPerformed
-        this.jpReportes.removeAll();
-        this.jpReportes.repaint();
-                               
         JLabel lblImagen=new JLabel();        
         ImageIcon imgi=new ImageIcon(arbolAVLGrapvhiz);
         lblImagen.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
         lblImagen.setIcon(imgi);
         
-        JPanel panel=new JPanel();
-        panel.setBackground(Color.WHITE);        
-        panel.setLayout(null);     
-        panel.add(lblImagen);
-
-        JScrollPane jsp = new JScrollPane(panel);
-        
-        jsp.setBounds(0, 0, 1491, 718);
-        jsp.setViewportView(panel);
-        
-        this.jpReportes.add(jsp);
-        this.jpReportes.revalidate();
-        this.jpReportes.repaint();
+        JPanel aa=new JPanel();
+        aa.add(lblImagen);
+        aa.setBackground(Color.WHITE);
+        aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
+        scrollPaneReportes.setViewportView(aa);
     }//GEN-LAST:event_bttActualizarGraphArbolAVLActionPerformed
 
-    public void leerCSVSimple(String path) {
+    private void bttEliminarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEliminarArchivoActionPerformed
+        int fila=jtableCarpeArchivos.getSelectedRow();
+
+        if (fila>=0) //si selecciono fila
+        {
+           String nomArchiElim=jtableCarpeArchivos.getValueAt(fila, 0).toString();
+
+           if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , nomArchiElim)==true) 
+            {
+                String respp="¿Esta Seguro que desea eliminar el archivo "+nomArchiElim+"?";
+                int resp = JOptionPane.showConfirmDialog(null, respp, "Alerta!", JOptionPane.YES_NO_OPTION);
+                if (resp==0) 
+                {
+                    try {
+                        misUsuarios.eliminarArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), nomArchiElim);                    
+                    } catch (Exception e) {}                    
+                }                
+            }
+            else
+            {
+                //archivo no existe
+                System.out.println("error");
+            }
+        }
+    }//GEN-LAST:event_bttEliminarArchivoActionPerformed
+
+    private void bttSubirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttSubirArchivoActionPerformed
+        String nombre = JOptionPane.showInputDialog("Ingrese direccion del arhivo CSV");
+        try {
+            if (!nombre.equals("")) 
+            {
+              leerCSVArchivos(nombre);
+            }
+        } catch (Exception e) {
+        }  
+    }//GEN-LAST:event_bttSubirArchivoActionPerformed
+
+    public void leerCSVUsuarios(String path) {
         
         DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
         DefaultTableModel modeloUsError=(DefaultTableModel) tableUsError.getModel();
@@ -894,7 +940,76 @@ public class principal extends javax.swing.JFrame {
         } catch (Exception e) 
         { JOptionPane.showMessageDialog(null, "NO SE ENCONTRO EL ARCHIVO"); }                    
 }
+ 
+       public void leerCSVArchivos(String path) {
+        
+        try 
+        {            
+            int bandera=0;
+            boolean bandera2=false;
+            
+            // Abro el .csv en buffer de lectura
+            BufferedReader bufferLectura = new BufferedReader(new FileReader(path));
+
+            // Leo una línea del archivo
+            String linea = bufferLectura.readLine();
+
+            while (linea != null) {
+                    // Separa la línea leída con el separador definido previamente
+                    String[] campos = linea.split(String.valueOf(','));
+
+                    if (bandera==0) //para saber en que columnas estan los usuarios
+                    {
+                        if (campos[0].toLowerCase().equals("archivo")) 
+                        {
+                            bandera2=true;
+                        }
+                    }
+                    if (bandera>0 && bandera2==true) //quiere decir que los archivos estan en la primera fila
+                    {
+                        System.out.println(campos[0]);
+                        if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , campos[0])==false) 
+                        {    
+                            
+                            //se agrega archivo
+                            misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), campos[0], campos[1] , "fecha" , txtNombreUsuarioActual.getText());
+                            //eliminando contenido de tabla
+                            DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
+                            for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
+                            {
+                                modelo.removeRow(i);
+                            }
+                            //actualizando visor de archivos y carpetas
+                            misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
+                        }else
+                        {
+                            int resp = JOptionPane.showConfirmDialog(null, "¿El archivo ya existe, desea reemplazarlo?", "Alerta!", JOptionPane.YES_NO_OPTION);
+                            //0 si
+                            //1 no
+                            //-1 cerrar
+                        }
+                        
+                    }else if(bandera>0 && bandera2==false) //quiere decir que los archivos estan en la segunda fila
+                    {
+                        
+                    }
+                    
+                    // Vuelvo a leer del fichero
+                    linea = bufferLectura.readLine();
+                    
+                    bandera++;
+            }                     
+
+            // CIerro el buffer de lectura
+            if (bufferLectura != null) {
+                    bufferLectura.close();
+            }  
+                        
+        } catch (Exception e) 
+        { JOptionPane.showMessageDialog(null, "NO SE ENCONTRO EL ARCHIVO"); }                    
+}
   
+    
     public boolean validarExistenciaUsuario(String nomb)
     {
         for (int i = 0; i < tableUscargados.getRowCount(); i++) 
@@ -1191,6 +1306,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem reporteGrafo;
     private javax.swing.JMenuItem reporteMatriz;
     private javax.swing.JMenuItem reporteTabHash;
+    private javax.swing.JScrollPane scrollPaneReportes;
     private javax.swing.JTable tableUsError;
     private javax.swing.JTable tableUscargados;
     private javax.swing.JTable tableUsuariosOrden;
