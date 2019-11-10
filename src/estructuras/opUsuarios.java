@@ -1,6 +1,7 @@
 
 package estructuras;
 
+import com.sun.javafx.collections.ArrayListenerHelper;
 import com.sun.javafx.collections.MappingChange.Map;
 import estructuras.arbol_AVL.Node;
 import java.util.Iterator;
@@ -15,11 +16,12 @@ import java.util.*;
 public class opUsuarios 
 {
     nodoUsuario primero;
-    nodoUsuario ultimo;    
-    int size;
+    nodoUsuario ultimo;   
+    int size;    
     
     arbol_AVL miTree;
     graphivArbolAVL graphviz;
+    graphvizGrafo graphGrafo;
     
     public ArrayList contenidoArbol=new ArrayList<String>();
 
@@ -30,6 +32,7 @@ public class opUsuarios
         this.size=0;
         miTree=new arbol_AVL();
         graphviz=new graphivArbolAVL();
+        graphGrafo= new graphvizGrafo();
     }
     
     public boolean estaVacia()
@@ -310,6 +313,7 @@ public class opUsuarios
         return bande;
     }
     
+    //existe archivo en arbol
     public void existeNodoEnArbol(Node root)
     {
         if (root!=null)         
@@ -320,6 +324,22 @@ public class opUsuarios
         }  
     }
     
+    //existe usuario
+    public boolean existeUsuario(String us)
+    {
+        nodoUsuario temp=this.primero;
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(us)) //cuando encuentra nombre
+            {
+                return true;
+            }
+            temp=temp.siguiente;
+        }        
+        return false;
+    }
+    
+    //genera el arbol en graphviz de carpeta especifica
     public void generarArbolDeCarpeta(String usuario, String ruta)
     {
         nodoUsuario temp=this.primero;
@@ -344,6 +364,33 @@ public class opUsuarios
         }
     }
     
+    //generar cadena y graphviz de grafo
+    public void generarGrafo(String usuario)
+    {
+        nodoUsuario temp=this.primero;
+        String grafo="";
+        
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                Iterator it = temp.carpetas.keySet().iterator();
+                while(it.hasNext()){
+                    Object key = it.next();
+                    //System.out.println("Clave: " + key + " -> Valor: " + temp.carpetas.get(key));
+                    ArrayList<carpeta> nue= temp.carpetas.get(key);
+                    for (int j = 0; j < nue.size(); j++) 
+                    {
+                        carpeta aja=nue.get(j);
+                        grafo+="\""+key + "\"" + " -> " + "\""+ aja.rutaCarpetaHijo + "\"\n";
+                    }
+                }
+                graphGrafo.generarGrafica(grafo);
+
+            }
+            temp=temp.siguiente;
+        }        
+    }
     
     public void imprimir()
     {
