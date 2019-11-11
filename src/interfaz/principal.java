@@ -20,6 +20,9 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Date;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 /**
  *
@@ -358,6 +361,11 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(txtMostrarRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 700, 1370, 30));
 
         bttDescargarArchivo.setText("DESCARGAR");
+        bttDescargarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttDescargarArchivoActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttDescargarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 190, 40));
 
         areaPestan.addTab("PERFIL USUARIO", jPanel4);
@@ -458,8 +466,11 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_reporteGrafoActionPerformed
 
     private void reporteMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteMatrizActionPerformed
+         
         
-         //usuario1
+        
+
+        //usuario1
        misUsuarios.insertar("gudiel");
        misUsuarios.insertarCarpetaParaUsuario("gudiel", "/"); //usuario, ruta
 //       //usuario2
@@ -825,13 +836,40 @@ public class principal extends javax.swing.JFrame {
             }
             else
             {
-                //archivo no existe
-                System.out.println("error");
+                JOptionPane.showMessageDialog(null, "No existe usuario");
             }
         }
     }//GEN-LAST:event_bttModificarArchivoActionPerformed
 
     private void bttModificarCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttModificarCarpetaActionPerformed
+
+        int fila=jtableCarpeArchivos.getSelectedRow();        
+        
+        if (fila>=0) 
+        {
+            String rutCarpModi=jtableCarpeArchivos.getValueAt(fila, 2).toString();
+            String nomCarpModi=jtableCarpeArchivos.getValueAt(fila, 0).toString();
+            
+            String nombreNuevoCarpeta = JOptionPane.showInputDialog("Ingrese nombre nuevo de carpeta");
+            int op1=nomCarpModi.length();//+1por la /
+            int op2=rutCarpModi.length();
+            int op3=op2-op1;
+            String rutaHastaDondeEstaCarpetaAModificar=rutCarpModi.substring(0,op3-1);
+            String nuevaRuta=rutaHastaDondeEstaCarpetaAModificar+nombreNuevoCarpeta+"/";
+            misUsuarios.modificarCarpeta(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
+            System.out.println(nuevaRuta);
+        }
+        
+//        //capturando nombre de carpeta a modificcar, videosa
+//        String pru="/videos/mp5/videosa/";
+//        pru=pru.substring(0,pru.length()-1);
+//        String nombreCarpetaAModificar=pru.substring(pru.lastIndexOf("/")+1, pru.length());//obtengo: videosa
+//        int op1=nombreCarpetaAModificar.length()+1; //+1 por la /
+//        int op2=pru.length();
+//        int op3=op2-op1+1;
+//        String rutaHastaDondeEstaCarpetaAModificar=pru.substring(0, op3);//obtengo: /videos/mp5/
+//        System.out.println(rutaHastaDondeEstaCarpetaAModificar);
+        
         
     }//GEN-LAST:event_bttModificarCarpetaActionPerformed
 
@@ -890,8 +928,7 @@ public class principal extends javax.swing.JFrame {
             }
             else
             {
-                //archivo no existe
-                System.out.println("error");
+                JOptionPane.showMessageDialog(null, "No existe usuario");
             }
         }
     }//GEN-LAST:event_bttEliminarArchivoActionPerformed
@@ -919,6 +956,29 @@ public class principal extends javax.swing.JFrame {
         aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
         scrollPaneReportes.setViewportView(aa);
     }//GEN-LAST:event_bttActualizarGrafoActionPerformed
+
+    private void bttDescargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttDescargarArchivoActionPerformed
+        int fila=jtableCarpeArchivos.getSelectedRow();
+
+        if (fila>=0) //si selecciono fila
+        {
+           String nomArchi=jtableCarpeArchivos.getValueAt(fila, 0).toString();
+           String contenido=jtableCarpeArchivos.getValueAt(fila, 1).toString();
+
+            String respp="¿Esta Seguro que desea descargar el archivo "+nomArchi+"?";
+            int resp = JOptionPane.showConfirmDialog(null, respp, "Alerta!", JOptionPane.YES_NO_OPTION);
+            if (resp==0) 
+            {
+                try {
+                    descargarArchivo(nomArchi, contenido);                    
+                } catch (Exception e) {}                    
+            } 
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Seleccione arcivo");
+        }
+    }//GEN-LAST:event_bttDescargarArchivoActionPerformed
 
     public void leerCSVUsuarios(String path) {
         
@@ -1126,8 +1186,7 @@ public class principal extends javax.swing.JFrame {
         } catch (Exception e) 
         { JOptionPane.showMessageDialog(null, "NO SE ENCONTRO EL ARCHIVO"); }                    
 }
-     
-    
+         
     public String obtenerHash(String pass)
     {
         String toReturn = null;
@@ -1337,6 +1396,42 @@ public class principal extends javax.swing.JFrame {
             tableUscargados.setValueAt(i, i, 0);
         }
     }
+    
+    //descargar archivo
+    public void descargarArchivo(String nomArchi, String contenido)
+    {
+        try {
+            
+            String ruta = PathActual()+"\\"+nomArchi+".txt";
+            File archivo = new File(ruta);
+            BufferedWriter bw;
+            if(archivo.exists()) {
+                bw = new BufferedWriter(new FileWriter(archivo));
+                bw.write(contenido);
+            } else {
+                bw = new BufferedWriter(new FileWriter(archivo));
+                bw.write(contenido);
+            }
+            bw.close();
+            JOptionPane.showMessageDialog(null, "Archivo descargado!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Seleccione arcivo");
+        }
+                
+    }
+    
+    public String PathActual(){
+        String path="";
+         File miDir = new File (".");
+         try {
+           //System.out.println (miDir.getCanonicalPath());
+           path=miDir.getCanonicalPath();
+         }
+         catch(Exception e) {
+           e.printStackTrace();
+           }
+         return path;
+    } 
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

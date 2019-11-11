@@ -392,6 +392,34 @@ public class opUsuarios
         }        
     }
     
+    //modificar carpeta
+    public void modificarCarpeta(String usuario, String ruta, String nuevaRuta, String nombreNuevo)
+    {
+        nodoUsuario temp=this.primero;
+        
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                Iterator it = temp.carpetas.keySet().iterator();
+                while(it.hasNext())
+                {                    
+                    Object key = it.next();
+                    ArrayList<carpeta> nue= temp.carpetas.get(key);
+                    for (int j = 0; j < nue.size(); j++) 
+                    {
+                        carpeta aja=nue.get(j);
+                        if (aja.rutaCarpetaHijo.equals(ruta)) 
+                        {
+                            nue.set(j, new carpeta(nombreNuevo, nuevaRuta)); //modifico el nombre y ruta como hijo
+                        }
+                    }
+                }
+            }
+            temp=temp.siguiente;
+        } 
+    }
+    
     public void imprimir()
     {
         nodoUsuario aux=this.primero;
