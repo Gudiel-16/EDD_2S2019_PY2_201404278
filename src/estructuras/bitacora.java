@@ -8,10 +8,13 @@ package estructuras;
 public class bitacora 
 {
     nodoBitacora primero;
+    graphvizBitacora graphB;
+    
     int size;
     
     public bitacora()
     {
+        graphB=new graphvizBitacora();
         this.primero=null;
         this.size=0;
     }
@@ -29,28 +32,26 @@ public class bitacora
             this.primero=nuevo;
         }
         else{
-            nuevo.siguiente=nuevo;
+            nuevo.siguiente=this.primero;
             this.primero=nuevo;
         }
         this.size=this.size+1;        
     }
     
-    public String reporte()
+    public void generarBitacora()
     {
+        String grafo="";
+        
         nodoBitacora temp=this.primero;
-        String cadena="node0[label= \"{";
-        String cadenaNodo="";
         for (int i = 0; i < this.size; i++) 
         {
-            cadenaNodo="|"+temp.descripcion+"\n"+temp.timeStamp+"\n"+temp.usuario;
-            cadena+=cadenaNodo;
+            grafo+="<tr><td>"+temp.usuario+"</td><td>"+temp.descripcion+"</td><td>"+temp.timeStamp+"</td></tr>\n";
             temp=temp.siguiente;
         }
-        cadena+="}\"];";
         
-        return cadena;        
+        graphB.generarGrafica(grafo);        
     }
-    
+       
     
     
     

@@ -1,8 +1,6 @@
 
 package estructuras;
 
-import com.sun.javafx.collections.ArrayListenerHelper;
-import com.sun.javafx.collections.MappingChange.Map;
 import estructuras.arbol_AVL.Node;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +22,7 @@ public class opUsuarios
     graphvizGrafo graphGrafo;
     
     public ArrayList contenidoArbol=new ArrayList<String>();
+    HashMap<String, ArrayList<carpeta>> temporal = new HashMap<>();
 
     public opUsuarios() 
     {
@@ -400,20 +399,62 @@ public class opUsuarios
         for (int i = 0; i < this.size; i++) 
         {
             if (temp.nombre.equals(usuario)) //cuando encuentra nombre
-            {
+            {                
                 Iterator it = temp.carpetas.keySet().iterator();
-                while(it.hasNext())
+                while(it.hasNext()) //recorro el hash
                 {                    
-                    Object key = it.next();
-                    ArrayList<carpeta> nue= temp.carpetas.get(key);
-                    for (int j = 0; j < nue.size(); j++) 
+                    Object key = it.next(); //clave actual del hash
+                    ArrayList<carpeta> nue= temp.carpetas.get(key);//lista de la clave actual
+                    for (int j = 0; j < nue.size(); j++) //recorro lista de clave actual
                     {
-                        carpeta aja=nue.get(j);
+                        carpeta aja=nue.get(j);//obtengo valor actual de la lista
                         if (aja.rutaCarpetaHijo.equals(ruta)) 
                         {
                             nue.set(j, new carpeta(nombreNuevo, nuevaRuta)); //modifico el nombre y ruta como hijo
                         }
                     }
+                    
+                    //cuando la clave y ruta vieje son iguales obtengo la lista que tiene esa clave
+//                    if (key.equals(ruta)) //INGRESO AL PADRE DE TODAS LAS CARPETAS QUE TENGO QUE MODIFICAR
+//                    {
+//                        String a=(String)key;
+//                        String nuevaKey=a.replaceFirst(ruta, nuevaRuta); //cambia la ruta vieja, por la nueva
+//                        for (int j = 0; j < nue.size(); j++) 
+//                        {
+//                            //carpeta aux=nue.get(j);
+//                            //String b=aux.rutaCarpetaHijo.replaceFirst(ruta, nuevaKey);
+//                            modificarCarpeta2(temp.carpetas, ruta, nuevaKey);
+//                        }
+//                    }
+                }
+            }
+            temp=temp.siguiente;
+        } 
+    }
+    
+    public void modificarCarpeta2(String usuario, String rutaVieja, String nuevaRuta, String nombreNuevo)
+    {
+        nodoUsuario temp=this.primero;
+        
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {                
+                Iterator it = temp.carpetas.keySet().iterator();
+                
+                while(it.hasNext()) //recorro el hash
+                {                    
+                    Object key = it.next(); //clave actual del hash
+                    String keyy=key.toString();
+                    //System.out.println(key + " " +keyy.length());
+                    if (keyy.length()>=nuevaRuta.length()) 
+                    {
+                        System.out.println(keyy + " -> " + nuevaRuta);
+                        if (keyy.substring(0, nuevaRuta.length()-1).equals(nuevaRuta)) 
+                        {
+                            System.out.println("yess");
+                        } 
+                    }                                         
                 }
             }
             temp=temp.siguiente;

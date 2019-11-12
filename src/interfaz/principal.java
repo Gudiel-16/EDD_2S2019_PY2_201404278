@@ -2,10 +2,10 @@
         
 package interfaz;
 
-import estructuras.arbol_AVL;
-import estructuras.arbol_AVL.Node;
+import estructuras.bitacora;
 import estructuras.carpeta;
 import estructuras.graphivArbolAVL;
+import estructuras.graphvizBitacora;
 import estructuras.graphvizGrafo;
 import estructuras.graphvizTablaHash;
 import estructuras.opUsuarios;
@@ -31,22 +31,27 @@ import java.io.FileWriter;
 public class principal extends javax.swing.JFrame {
     
     opUsuarios misUsuarios; 
+    bitacora historial;
     graphvizTablaHash gvTabHashgvTabHash;
     graphivArbolAVL gvArbolAVL;
     graphvizGrafo gvGrafo;
+    graphvizBitacora gvBitacora;
     String tablaHashGraphviz="";
     String arbolAVLGrapvhiz="";
     String grafoGraphviz="";
+    String bitacoraGraphviz="";
     
     public principal() {
                             
         initComponents();
         
-        //inicializando lista Usuarios
+        //inicializando listas
         misUsuarios=new opUsuarios();
+        historial=new bitacora();
         gvTabHashgvTabHash=new graphvizTablaHash();
         gvArbolAVL=new graphivArbolAVL();
         gvGrafo= new graphvizGrafo();
+        gvBitacora=new graphvizBitacora();
         
         /* 7 primeras posiciones de tabla hash */
         DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
@@ -114,12 +119,14 @@ public class principal extends javax.swing.JFrame {
         bttActualizarGraphArbolAVL = new javax.swing.JButton();
         scrollPaneReportes = new javax.swing.JScrollPane();
         bttActualizarGrafo = new javax.swing.JButton();
+        bttActualizarBitacora = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         reporteTabHash = new javax.swing.JMenuItem();
         reporteGrafo = new javax.swing.JMenuItem();
         reporteMatriz = new javax.swing.JMenuItem();
         reporteAVL = new javax.swing.JMenuItem();
+        reporteBitacora = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -248,6 +255,11 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttCrearCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 190, 44));
 
         bttEliminarCarpeta.setText("ELIMINAR");
+        bttEliminarCarpeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttEliminarCarpetaActionPerformed(evt);
+            }
+        });
         jPanel4.add(bttEliminarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 190, 44));
 
         bttModificarCarpeta.setText("MODIFICAR");
@@ -402,6 +414,15 @@ public class principal extends javax.swing.JFrame {
         jPanel1.add(bttActualizarGrafo);
         bttActualizarGrafo.setBounds(300, 10, 130, 30);
 
+        bttActualizarBitacora.setText("BITACORA");
+        bttActualizarBitacora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttActualizarBitacoraActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bttActualizarBitacora);
+        bttActualizarBitacora.setBounds(450, 10, 120, 30);
+
         areaPestan.addTab("REPORTES", jPanel1);
 
         getContentPane().add(areaPestan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 1520, 770));
@@ -439,6 +460,14 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(reporteAVL);
+
+        reporteBitacora.setText("BITACORA");
+        reporteBitacora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reporteBitacoraActionPerformed(evt);
+            }
+        });
+        jMenu1.add(reporteBitacora);
 
         jMenuBar1.add(jMenu1);
 
@@ -574,6 +603,8 @@ public class principal extends javax.swing.JFrame {
                             misUsuarios.insertar(nombre);
                             misUsuarios.insertarCarpetaParaUsuario(nombre, "/");
                             
+                            historial.insertar("Se registro nuevo usuario con nombre: "+nombre, horaActual.format(date), "sistema");
+                            
                             int porc=saberPorcentajeDeTabla(tableUscargados.getRowCount());
                             System.out.println("porce: "+porc);
                             
@@ -667,7 +698,10 @@ public class principal extends javax.swing.JFrame {
         try {
             if (!nombre.equals("")) 
             {
+              Date date = new Date();
+              DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy"); 
               leerCSVUsuarios(nombre);
+              historial.insertar("Carga masiva de usuarios con nombre: "+nombre,horaActual.format(date) , "admin");
             }
         } catch (Exception e) {
         }        
@@ -676,6 +710,9 @@ public class principal extends javax.swing.JFrame {
 
     private void bttCrearCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCrearCarpetaActionPerformed
         String nombre = JOptionPane.showInputDialog("Ingrese nombre de carpeta");
+        Date date = new Date();
+        DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+              
         try {
             if (!nombre.equals("")) 
             {
@@ -685,6 +722,7 @@ public class principal extends javax.swing.JFrame {
                     //
                     misUsuarios.insertarCarpetaParaUsuario(txtNombreUsuarioActual.getText(), rutCarpeAInsertar);
                     misUsuarios.insertarCarpetaHijo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), new carpeta(nombre,rutCarpeAInsertar));
+                    historial.insertar("Se creo carpeta con nombre: "+nombre, horaActual.format(date), txtNombreUsuarioActual.getText());
                     //misUsuarios.imprimir();
                     //eliminando contenido de tabla
                     DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
@@ -734,13 +772,17 @@ public class principal extends javax.swing.JFrame {
     private void bttCrearArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCrearArchivoActionPerformed
         String nombre = JOptionPane.showInputDialog("Ingrese nombre de archivo");
         String contenido=JOptionPane.showInputDialog("Ingrese contenido de archivo");
+        Date date = new Date();
+        DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy"); 
+        
         try {
             if (!nombre.equals("") && !contenido.equals("")) 
             {
                 if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , nombre)==false) 
                 {                    
                     //se agrega archivo
-                    misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), nombre, contenido , "fecha" , txtNombreUsuarioActual.getText());
+                    misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), nombre, contenido , horaActual.format(date), txtNombreUsuarioActual.getText());
+                    historial.insertar("Se creo archivo con nombre: "+nombre, horaActual.format(date), txtNombreUsuarioActual.getText());
                     //eliminando contenido de tabla
                     DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
                     for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
@@ -779,6 +821,7 @@ public class principal extends javax.swing.JFrame {
                         if (misUsuarios.existeArchivo(nombreUsAcompartir, "/", nomArchi)==false) //si no existe archivo, inserta
                         {
                             misUsuarios.insertarArchivoACarpeta("/", nomArchi, contenidoArchivoSeleccionado , horaActual.format(date) , nombreUsAcompartir);
+                            historial.insertar("Se compartio un archivo con nombre: "+nomArchi, horaActual.format(date), txtNombreUsuarioActual.getText());
                             JOptionPane.showMessageDialog(null, "Archivo compartido!");
                         }
                         else //si ya existe sobre escribe
@@ -822,6 +865,7 @@ public class principal extends javax.swing.JFrame {
                     if (!nombre.equals("") && !contenido.equals("")) 
                     {
                         misUsuarios.modificarArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), nomArchiElim, nombre , contenido, horaActual.format(date));
+                        historial.insertar("Se modifico un archivo: "+nomArchiElim+" por "+nombre, horaActual.format(date), txtNombreUsuarioActual.getText());
                         //actualizando
                         DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
                         for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
@@ -857,6 +901,7 @@ public class principal extends javax.swing.JFrame {
             String rutaHastaDondeEstaCarpetaAModificar=rutCarpModi.substring(0,op3-1);
             String nuevaRuta=rutaHastaDondeEstaCarpetaAModificar+nombreNuevoCarpeta+"/";
             misUsuarios.modificarCarpeta(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
+            misUsuarios.modificarCarpeta2(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
             System.out.println(nuevaRuta);
         }
         
@@ -905,7 +950,9 @@ public class principal extends javax.swing.JFrame {
         if (fila>=0) //si selecciono fila
         {
            String nomArchiElim=jtableCarpeArchivos.getValueAt(fila, 0).toString();
-
+           Date date = new Date();
+           DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+           
            if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , nomArchiElim)==true) 
             {
                 String respp="¿Esta Seguro que desea eliminar el archivo "+nomArchiElim+"?";
@@ -914,6 +961,7 @@ public class principal extends javax.swing.JFrame {
                 {
                     try {
                         misUsuarios.eliminarArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), nomArchiElim); 
+                        historial.insertar("Se elimino un archivo con nombre: "+nomArchiElim, horaActual.format(date), txtNombreUsuarioActual.getText());
                         //eliminando contenido de tabla
                         DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
                         for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
@@ -935,10 +983,14 @@ public class principal extends javax.swing.JFrame {
 
     private void bttSubirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttSubirArchivoActionPerformed
         String nombre = JOptionPane.showInputDialog("Ingrese direccion del arhivo CSV");
+        Date date = new Date();
+        DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy"); 
+        
         try {
             if (!nombre.equals("")) 
             {
               leerCSVArchivos(nombre);
+              historial.insertar("Carga masiva de archivos", horaActual.format(date), txtNombreUsuarioActual.getText());
             }
         } catch (Exception e) {
         }  
@@ -964,13 +1016,16 @@ public class principal extends javax.swing.JFrame {
         {
            String nomArchi=jtableCarpeArchivos.getValueAt(fila, 0).toString();
            String contenido=jtableCarpeArchivos.getValueAt(fila, 1).toString();
+           Date date = new Date();
+           DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy"); 
 
             String respp="¿Esta Seguro que desea descargar el archivo "+nomArchi+"?";
             int resp = JOptionPane.showConfirmDialog(null, respp, "Alerta!", JOptionPane.YES_NO_OPTION);
             if (resp==0) 
             {
                 try {
-                    descargarArchivo(nomArchi, contenido);                    
+                    descargarArchivo(nomArchi, contenido); 
+                    historial.insertar("Se descargo archivo con nombre: "+nomArchi, horaActual.format(date), txtNombreUsuarioActual.getText());
                 } catch (Exception e) {}                    
             } 
         }
@@ -979,6 +1034,32 @@ public class principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Seleccione arcivo");
         }
     }//GEN-LAST:event_bttDescargarArchivoActionPerformed
+
+    private void reporteBitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteBitacoraActionPerformed
+        historial.generarBitacora();
+        String a=gvBitacora.listBitacora.get(0);        
+        bitacoraGraphviz=a;
+    }//GEN-LAST:event_reporteBitacoraActionPerformed
+
+    private void bttActualizarBitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarBitacoraActionPerformed
+        JLabel lblImagen=new JLabel();        
+        ImageIcon imgi=new ImageIcon(bitacoraGraphviz);
+        lblImagen.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
+        lblImagen.setIcon(imgi);
+        
+        JPanel aa=new JPanel();
+        aa.add(lblImagen);
+        aa.setBackground(Color.WHITE);
+        aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
+        scrollPaneReportes.setViewportView(aa);
+    }//GEN-LAST:event_bttActualizarBitacoraActionPerformed
+
+    private void bttEliminarCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEliminarCarpetaActionPerformed
+        String a="/videos/";
+        String b=a.replaceFirst(a, "/images/");
+        
+        System.out.println(b);
+    }//GEN-LAST:event_bttEliminarCarpetaActionPerformed
 
     public void leerCSVUsuarios(String path) {
         
@@ -1467,6 +1548,7 @@ public class principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane areaPestan;
+    private javax.swing.JButton bttActualizarBitacora;
     private javax.swing.JButton bttActualizarGrafo;
     private javax.swing.JButton bttActualizarGraphArbolAVL;
     private javax.swing.JButton bttActualizarGraphTablHash;
@@ -1504,6 +1586,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JPanel jpLogin;
     private javax.swing.JTable jtableCarpeArchivos;
     private javax.swing.JMenuItem reporteAVL;
+    private javax.swing.JMenuItem reporteBitacora;
     private javax.swing.JMenuItem reporteGrafo;
     private javax.swing.JMenuItem reporteMatriz;
     private javax.swing.JMenuItem reporteTabHash;

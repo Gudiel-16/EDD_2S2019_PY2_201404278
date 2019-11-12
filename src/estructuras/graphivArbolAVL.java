@@ -27,17 +27,29 @@ public class graphivArbolAVL {
         {
             if (raiz.left!=null) 
             {
-                grafo += "\"" + raiz.value + " FE:" + raiz.contenido + "\" -> \"" + raiz.left.value + " FE:" + raiz.left.contenido + "\"\n";
+                int altura=obtenerAltura(raiz);
+                int alturaHI=obtenerAltura(raiz.left);
+                int facte=obteneFE(raiz);
+                int facteHI=obteneFE(raiz.left);
+                grafo += "\"Nombre: " + raiz.value + " \nContenido: " + raiz.contenido + " \nFE: " + facte + "\nAltura: " + altura + "\nTimestamp: " + raiz.fecha + "\nUsuario: " + raiz.usuario + "\" -> \"Nombre: " + raiz.left.value + " \nContenido: " + raiz.left.contenido + " \nFE: " + facteHI + "\nAltura: " + alturaHI + "\nTimestamp: " + raiz.left.fecha + "\nUsuario: " + raiz.left.usuario + "\"\n";
             }else
             {
-                grafo += "\"" + raiz.value + " FE:" + raiz.contenido + "\" -> \"" + raiz.value + " FE:" + raiz.contenido + " NULL IZQ \"\n";
+                int altura=obtenerAltura(raiz);
+                int facte=obteneFE(raiz);
+                grafo += "\"Nombre: " + raiz.value + " \nContenido: " + raiz.contenido + " \nFE: " + facte + "\nAltura: " + altura + "\nTimestamp: " + raiz.fecha + "\nUsuario: " + raiz.usuario + "\" -> \"Nombre: " + raiz.value + " NULL IZQ \"\n";
             }
             if (raiz.right!=null) 
             {
-                grafo += "\"" + raiz.value + " FE:" + raiz.contenido + "\" -> \"" + raiz.right.value + " FE:" + raiz.right.contenido + "\"\n";
+                int altura=obtenerAltura(raiz);
+                int alturaHD=obtenerAltura(raiz.right);
+                int facte=obteneFE(raiz);
+                int facteHD=obteneFE(raiz.right);
+                grafo += "\"Nombre: " + raiz.value + " \nContenido: " + raiz.contenido + " \nFE: " + facte + "\nAltura: " + altura + "\nTimestamp: " + raiz.fecha + "\nUsuario: " + raiz.usuario + "\" -> \"Nombre: " + raiz.right.value + " \nContenido: " + raiz.right.contenido + " \nFE: " + facteHD + "\nAltura: " + alturaHD + "\nTimestamp: " + raiz.right.fecha + "\nUsuario: " + raiz.right.usuario + "\"\n";
             }else
             {
-                grafo += "\"" + raiz.value + " FE:" + raiz.contenido + "\" -> \"" + raiz.value + " FE:" + raiz.contenido + " NULL DER \"\n";
+                int altura=obtenerAltura(raiz);
+                int facte=obteneFE(raiz);
+                grafo += "\"Nombre: " + raiz.value + " \nContenido: " + raiz.contenido + " \nFE: " + facte + "\nAltura: " + altura + "\nTimestamp: " + raiz.fecha + "\nUsuario: " + raiz.usuario + "\" -> \"Nombre: " + raiz.value + " NULL DER \"\n";
             }
         }
         
@@ -87,6 +99,49 @@ public class graphivArbolAVL {
         } catch (Exception e) {
         }
               
+    }
+    
+    public int obtenerAltura(Node raiz)
+    {
+        int mayor=0,temp;
+        if (raiz==null) 
+        {
+            return 0;
+        }
+        else
+        {
+            temp=obtenerAltura(raiz.left);
+            if (temp>mayor) 
+            {
+                mayor=temp;
+            }
+            temp=obtenerAltura(raiz.right);
+            if (temp>mayor) 
+            {
+                mayor=temp;                
+            }
+            return mayor+1;
+        }
+    }
+    
+    public int obteneFE(Node raiz)
+    {
+        if (raiz.left==null && raiz.right==null) 
+        {
+            return 0;
+        }else if(raiz.left==null && raiz.right!=null)
+        {
+            return 1;
+        }else if(raiz.left!=null && raiz.right==null)
+        {
+            return -1;
+        }else
+        {
+            int alti=obtenerAltura(raiz.left);
+            int altd=obtenerAltura(raiz.right);
+            int op=altd-alti;
+            return op;
+        }
     }
     
     public String PathActual(){
