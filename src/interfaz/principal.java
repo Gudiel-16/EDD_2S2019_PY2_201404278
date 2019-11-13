@@ -336,7 +336,15 @@ public class principal extends javax.swing.JFrame {
             new String [] {
                 "NOMBRE", "CONTENIDO", "RUTA", "TIPO"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jtableCarpeArchivos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtableCarpeArchivosMouseClicked(evt);
@@ -746,8 +754,19 @@ public class principal extends javax.swing.JFrame {
 
     private void jtableCarpeArchivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtableCarpeArchivosMouseClicked
         int posicion=jtableCarpeArchivos.rowAtPoint(evt.getPoint());
-        txtContenidoArchivo.setText(jtableCarpeArchivos.getValueAt(posicion, 1).toString());
-        txtMostrarRuta.setText(jtableCarpeArchivos.getValueAt(posicion, 2).toString());
+        if (evt.getClickCount()==2)
+        {
+            if (jtableCarpeArchivos.getValueAt(posicion, 3).toString().equals("carpeta")) 
+            {
+                txtRutaActual.setText(jtableCarpeArchivos.getValueAt(posicion, 2).toString());
+            }
+        }else
+        {
+            txtContenidoArchivo.setText(jtableCarpeArchivos.getValueAt(posicion, 1).toString());
+            txtMostrarRuta.setText(jtableCarpeArchivos.getValueAt(posicion, 2).toString());
+        }
+        
+        
     }//GEN-LAST:event_jtableCarpeArchivosMouseClicked
 
     private void bttActualizarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarRutaActionPerformed
@@ -894,27 +913,21 @@ public class principal extends javax.swing.JFrame {
             String rutCarpModi=jtableCarpeArchivos.getValueAt(fila, 2).toString();
             String nomCarpModi=jtableCarpeArchivos.getValueAt(fila, 0).toString();
             
-            String nombreNuevoCarpeta = JOptionPane.showInputDialog("Ingrese nombre nuevo de carpeta");
-            int op1=nomCarpModi.length();//+1por la /
-            int op2=rutCarpModi.length();
-            int op3=op2-op1;
-            String rutaHastaDondeEstaCarpetaAModificar=rutCarpModi.substring(0,op3-1);
-            String nuevaRuta=rutaHastaDondeEstaCarpetaAModificar+nombreNuevoCarpeta+"/";
-            misUsuarios.modificarCarpeta(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
-            misUsuarios.modificarCarpeta2(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
-            System.out.println(nuevaRuta);
-        }
-        
-//        //capturando nombre de carpeta a modificcar, videosa
-//        String pru="/videos/mp5/videosa/";
-//        pru=pru.substring(0,pru.length()-1);
-//        String nombreCarpetaAModificar=pru.substring(pru.lastIndexOf("/")+1, pru.length());//obtengo: videosa
-//        int op1=nombreCarpetaAModificar.length()+1; //+1 por la /
-//        int op2=pru.length();
-//        int op3=op2-op1+1;
-//        String rutaHastaDondeEstaCarpetaAModificar=pru.substring(0, op3);//obtengo: /videos/mp5/
-//        System.out.println(rutaHastaDondeEstaCarpetaAModificar);
-        
+            try {
+                String nombreNuevoCarpeta = JOptionPane.showInputDialog("Ingrese nombre nuevo de carpeta");
+                if (!nombreNuevoCarpeta.equals("")) 
+                {
+                    int op1=nomCarpModi.length();
+                    int op2=rutCarpModi.length();
+                    int op3=op2-op1;
+                    String rutaHastaDondeEstaCarpetaAModificar=rutCarpModi.substring(0,op3-1);
+                    String nuevaRuta=rutaHastaDondeEstaCarpetaAModificar+nombreNuevoCarpeta+"/";
+                    misUsuarios.modificarCarpeta(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
+                }                
+            } catch (Exception e) {
+                System.out.println("error en modificar carpeta");
+            }              
+        }                
         
     }//GEN-LAST:event_bttModificarCarpetaActionPerformed
 
@@ -1007,6 +1020,8 @@ public class principal extends javax.swing.JFrame {
         aa.setBackground(Color.WHITE);
         aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
         scrollPaneReportes.setViewportView(aa);
+        
+        //misUsuarios.imprimir();
     }//GEN-LAST:event_bttActualizarGrafoActionPerformed
 
     private void bttDescargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttDescargarArchivoActionPerformed
@@ -1055,10 +1070,13 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bttActualizarBitacoraActionPerformed
 
     private void bttEliminarCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEliminarCarpetaActionPerformed
-        String a="/videos/";
-        String b=a.replaceFirst(a, "/images/");
         
-        System.out.println(b);
+        String rutVieja="/videos/";
+        String nuevaRuta="/images/";
+        //String b=a.replaceFirst(a, "/images/");
+        
+        
+        //System.out.println(b);
     }//GEN-LAST:event_bttEliminarCarpetaActionPerformed
 
     public void leerCSVUsuarios(String path) {

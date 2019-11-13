@@ -22,8 +22,7 @@ public class opUsuarios
     graphvizGrafo graphGrafo;
     
     public ArrayList contenidoArbol=new ArrayList<String>();
-    HashMap<String, ArrayList<carpeta>> temporal = new HashMap<>();
-
+    
     public opUsuarios() 
     {
         this.primero=null;
@@ -377,15 +376,17 @@ public class opUsuarios
                 while(it.hasNext()){
                     Object key = it.next();
                     //System.out.println("Clave: " + key + " -> Valor: " + temp.carpetas.get(key));
-                    ArrayList<carpeta> nue= temp.carpetas.get(key);
-                    for (int j = 0; j < nue.size(); j++) 
+                    if (temp.carpetas.containsKey(key.toString())) 
                     {
-                        carpeta aja=nue.get(j);
-                        grafo+="\""+key + "\"" + " -> " + "\""+ aja.rutaCarpetaHijo + "\"\n";
-                    }
+                        ArrayList<carpeta> nue= temp.carpetas.get(key.toString());
+                        for (int j = 0; j < nue.size(); j++) 
+                        {
+                            carpeta aja=nue.get(j);
+                            grafo+="\""+key + "\"" + " -> " + "\""+ aja.rutaCarpetaHijo + "\"\n";
+                        }
+                    }                    
                 }
                 graphGrafo.generarGrafica(grafo);
-
             }
             temp=temp.siguiente;
         }        
@@ -394,12 +395,15 @@ public class opUsuarios
     //modificar carpeta
     public void modificarCarpeta(String usuario, String ruta, String nuevaRuta, String nombreNuevo)
     {
+        HashMap<String, ArrayList<carpeta>> hmtemporal = new HashMap<>();
+        ArrayList<String> listTemp=new ArrayList<>();
         nodoUsuario temp=this.primero;
         
         for (int i = 0; i < this.size; i++) 
         {
             if (temp.nombre.equals(usuario)) //cuando encuentra nombre
-            {                
+            {     
+                //se modifica la ruta cuando esta como hijo
                 Iterator it = temp.carpetas.keySet().iterator();
                 while(it.hasNext()) //recorro el hash
                 {                    
@@ -410,57 +414,100 @@ public class opUsuarios
                         carpeta aja=nue.get(j);//obtengo valor actual de la lista
                         if (aja.rutaCarpetaHijo.equals(ruta)) 
                         {
+                            modificarCarpetaEnLista(usuario, ruta, nuevaRuta);
                             nue.set(j, new carpeta(nombreNuevo, nuevaRuta)); //modifico el nombre y ruta como hijo
                         }
                     }
-                    
-                    //cuando la clave y ruta vieje son iguales obtengo la lista que tiene esa clave
-//                    if (key.equals(ruta)) //INGRESO AL PADRE DE TODAS LAS CARPETAS QUE TENGO QUE MODIFICAR
-//                    {
-//                        String a=(String)key;
-//                        String nuevaKey=a.replaceFirst(ruta, nuevaRuta); //cambia la ruta vieja, por la nueva
-//                        for (int j = 0; j < nue.size(); j++) 
-//                        {
-//                            //carpeta aux=nue.get(j);
-//                            //String b=aux.rutaCarpetaHijo.replaceFirst(ruta, nuevaKey);
-//                            modificarCarpeta2(temp.carpetas, ruta, nuevaKey);
-//                        }
-//                    }
                 }
+                                
+                Iterator it3 = temp.carpetas.keySet().iterator();
+                while(it3.hasNext()) //recorro el hash
+                {                    
+                    Object key = it3.next(); //clave actual del hash
+                    
+                    if (key.toString().length()>=ruta.length()) //para que no entre hasta que las rutas sean iguales o mayor
+                    {
+                        int a=key.toString().substring(0,ruta.length()).length();//obtengo el tamanio de lo que voy a modificar
+                        String b=key.toString().substring(0,a);//obtengo la porcion te texto a modificar
+                        
+                        if (b.equals(ruta)) //si es la ruta que tengo que modificar
+                        {
+                            int aa=key.toString().substring(0,ruta.length()).length();//obtengo el tamanio de lo que voy a modificar
+                            String bb=key.toString().substring(0,aa);//obtengo la porcion te texto a modificar
+                            String nuevaKey=key.toString().replaceFirst(bb, nuevaRuta);//reemplazo la ruta vieja por la nueva
+                            
+                            ArrayList<carpeta> nue= temp.carpetas.get(key.toString());//obtengo la lista a modificar
+                            ArrayList<carpeta> aux=new ArrayList<>();
+                            
+                            for (int j = 0; j < nue.size(); j++) //recorro lista de clave actual
+                            {
+                                carpeta aja=nue.get(j);//obtengo valor actual de la lista
+
+                                int aaa=aja.rutaCarpetaHijo.substring(0,ruta.length()).length();//obtengo el tamanio de lo que voy a modificar
+                                String bbb=aja.rutaCarpetaHijo.substring(0,aaa);//obtengo la porcion te texto a modificar
+                                String ccc=aja.rutaCarpetaHijo.replaceFirst(bbb, nuevaRuta);//reemplazo la ruta vieja por la nueva
+                                modificarCarpetaEnLista(usuario, aja.rutaCarpetaHijo, ccc); //modificamos en la lista grafo la ruta
+                                listTemp.add(aja.rutaCarpetaHijo);//agregamos para saber que key hay que eliminar
+                                nue.set(j, new carpeta(aja.nombreOriginalCarpeta,ccc)); //modificamos la ruta actual
+                                aux.add(new carpeta(aja.nombreOriginalCarpeta,ccc)); //agregamos, para eliminar keys y luego agregar los nuevos
+                                
+                            }
+                            hmtemporal.put(nuevaKey, aux);                            
+                        }
+                    }                    
+                }  
+                
+                //recorremos list para eliminar keys
+                for (int j = 0; j < listTemp.size(); j++) 
+                {
+                    String act=listTemp.get(j);
+                    System.out.println(act);
+                    if (temp.carpetas.containsKey(act)) 
+                    {
+                        temp.carpetas.remove(act);
+                    }
+                }
+                
+                //recorremos hash para agregar nuevas keys
+                Iterator it2 = hmtemporal.keySet().iterator();
+                while(it2.hasNext()) //recorro el hash
+                {                    
+                    Object key = it2.next(); //clave actual del hash
+                    ArrayList<carpeta> nue= hmtemporal.get(key.toString());//lista de la clave actual
+                    temp.carpetas.put(key.toString(), nue);
+                }
+                
+                temp.carpetas.remove(ruta);
+                
             }
             temp=temp.siguiente;
         } 
     }
     
-    public void modificarCarpeta2(String usuario, String rutaVieja, String nuevaRuta, String nombreNuevo)
+    public void modificarCarpetaEnLista(String usuario, String rutaVieja, String rutaNueva)
     {
         nodoUsuario temp=this.primero;
-        
         for (int i = 0; i < this.size; i++) 
         {
             if (temp.nombre.equals(usuario)) //cuando encuentra nombre
-            {                
-                Iterator it = temp.carpetas.keySet().iterator();
-                
-                while(it.hasNext()) //recorro el hash
-                {                    
-                    Object key = it.next(); //clave actual del hash
-                    String keyy=key.toString();
-                    //System.out.println(key + " " +keyy.length());
-                    if (keyy.length()>=nuevaRuta.length()) 
-                    {
-                        System.out.println(keyy + " -> " + nuevaRuta);
-                        if (keyy.substring(0, nuevaRuta.length()-1).equals(nuevaRuta)) 
-                        {
-                            System.out.println("yess");
-                        } 
-                    }                                         
-                }
+            {
+                nodoGrafo aux=temp.primeroG;
+                if (aux!=null) 
+                {
+                    while (aux!=null) //recorre el grafo
+                    {                        
+                        if (aux.rutaDondeSeEncontraraCarpeta.equals(rutaVieja)) //cuando encuentre la ruta de carpeta
+                        {                               
+                            aux.rutaDondeSeEncontraraCarpeta=rutaNueva;//cambiamos ruta
+                        }
+                        aux=aux.siguiente;
+                    }
+                }                
             }
             temp=temp.siguiente;
-        } 
+        }
     }
-    
+        
     public void imprimir()
     {
         nodoUsuario aux=this.primero;
