@@ -742,10 +742,8 @@ public class principal extends javax.swing.JFrame {
                     misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
                 }else
                 {
-                    int resp = JOptionPane.showConfirmDialog(null, "¿La carpeta ya existe, desea reemplazarla?", "Alerta!", JOptionPane.YES_NO_OPTION);
-                    //0 si
-                    //1 no
-                    //-1 cerrar
+                    historial.insertar("Error al crear carpeta, en el directorio existe carpeta con mismo nombre: "+nombre, horaActual.format(date), txtNombreUsuarioActual.getText());
+                    JOptionPane.showMessageDialog(null, "Error al modificar carpeta, en el directorio existe carpeta con mismo nombre!");
                 }
             }
         } catch (Exception e) {
@@ -912,18 +910,39 @@ public class principal extends javax.swing.JFrame {
         {
             String rutCarpModi=jtableCarpeArchivos.getValueAt(fila, 2).toString();
             String nomCarpModi=jtableCarpeArchivos.getValueAt(fila, 0).toString();
+            Date date = new Date();
+            DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
             
             try {
-                String nombreNuevoCarpeta = JOptionPane.showInputDialog("Ingrese nombre nuevo de carpeta");
-                if (!nombreNuevoCarpeta.equals("")) 
+                String respp="¿Esta Seguro que desea modificar la carpeta con nombre: "+nomCarpModi+"?";
+                int resp = JOptionPane.showConfirmDialog(null, respp, "Alerta!", JOptionPane.YES_NO_OPTION);
+                
+                if (resp==0) 
                 {
-                    int op1=nomCarpModi.length();
-                    int op2=rutCarpModi.length();
-                    int op3=op2-op1;
-                    String rutaHastaDondeEstaCarpetaAModificar=rutCarpModi.substring(0,op3-1);
-                    String nuevaRuta=rutaHastaDondeEstaCarpetaAModificar+nombreNuevoCarpeta+"/";
-                    misUsuarios.modificarCarpeta(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
-                }                
+                    String nombreNuevoCarpeta = JOptionPane.showInputDialog("Ingrese nombre nuevo de carpeta");
+                    if (!nombreNuevoCarpeta.equals("")) 
+                    {                       
+                        int op1=nomCarpModi.length();
+                        int op2=rutCarpModi.length();
+                        int op3=op2-op1;
+                        String rutaHastaDondeEstaCarpetaAModificar=rutCarpModi.substring(0,op3-1);
+                        String nuevaRuta=rutaHastaDondeEstaCarpetaAModificar+nombreNuevoCarpeta+"/";
+                        
+                        if (misUsuarios.existeCarpeta(txtNombreUsuarioActual.getText(), nuevaRuta)==false) 
+                        {
+                            misUsuarios.modificarCarpeta(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
+                            historial.insertar("Se Modifico la carpeta con nombre: "+nomCarpModi, horaActual.format(date), txtNombreUsuarioActual.getText());
+                            JOptionPane.showMessageDialog(null, "Carpeta modificada!");
+                        }
+                        else
+                        {
+                            historial.insertar("Error al modificar carpeta, en el directorio existe carpeta con mismo nombre: "+nombreNuevoCarpeta, horaActual.format(date), txtNombreUsuarioActual.getText());
+                            JOptionPane.showMessageDialog(null, "Error al modificar carpeta, en el directorio existe carpeta con mismo nombre!");
+                        }
+                        
+                            
+                    } 
+                }                                  
             } catch (Exception e) {
                 System.out.println("error en modificar carpeta");
             }              
@@ -1071,12 +1090,33 @@ public class principal extends javax.swing.JFrame {
 
     private void bttEliminarCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEliminarCarpetaActionPerformed
         
-        String rutVieja="/videos/";
-        String nuevaRuta="/images/";
-        //String b=a.replaceFirst(a, "/images/");
+        int fila=jtableCarpeArchivos.getSelectedRow();        
         
-        
-        //System.out.println(b);
+        if (fila>=0) 
+        {
+            String rutElim=jtableCarpeArchivos.getValueAt(fila, 2).toString();
+            
+            try {
+                
+                String respp="¿Esta Seguro que desea eliminar la carpeta con ruta: "+rutElim+"?";
+                int resp = JOptionPane.showConfirmDialog(null, respp, "Alerta!", JOptionPane.YES_NO_OPTION);
+                Date date = new Date();
+                DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+           
+                if (resp==0) 
+                {
+                    try {
+                        misUsuarios.eliminarCarpeta(txtNombreUsuarioActual.getText(), rutElim);
+                        historial.insertar("Se Elimino la carpeta con ruta: "+rutElim, horaActual.format(date), txtNombreUsuarioActual.getText());
+                        JOptionPane.showMessageDialog(null, "Carpeta eliminada!");
+                        misUsuarios.imprimir();
+                    } catch (Exception e) {}                    
+                } 
+                
+            } catch (Exception e) {
+                System.out.println("error en modificar carpeta");
+            }              
+        } 
     }//GEN-LAST:event_bttEliminarCarpetaActionPerformed
 
     public void leerCSVUsuarios(String path) {

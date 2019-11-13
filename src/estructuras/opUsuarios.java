@@ -461,7 +461,6 @@ public class opUsuarios
                 for (int j = 0; j < listTemp.size(); j++) 
                 {
                     String act=listTemp.get(j);
-                    System.out.println(act);
                     if (temp.carpetas.containsKey(act)) 
                     {
                         temp.carpetas.remove(act);
@@ -507,7 +506,109 @@ public class opUsuarios
             temp=temp.siguiente;
         }
     }
+    
+    public void eliminarCarpeta(String usuario, String ruta)
+    {
+        ArrayList<String> listTemp=new ArrayList<>();
+        nodoUsuario temp=this.primero;
         
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                //se modifica la ruta cuando esta como hijo
+                Iterator it = temp.carpetas.keySet().iterator();
+                while(it.hasNext()) //recorro el hash
+                {                    
+                    Object key = it.next(); //clave actual del hash
+                    ArrayList<carpeta> nue= temp.carpetas.get(key.toString());//lista de la clave actual
+                    for (int j = 0; j < nue.size(); j++) //recorro lista de clave actual
+                    {
+                        carpeta aja=nue.get(j);//obtengo valor actual de la lista
+                        if (aja.rutaCarpetaHijo.equals(ruta)) 
+                        {
+                            eliminarCarpetaEnLista(usuario, ruta);
+                            nue.remove(j); 
+                        }
+                    }
+                }
+                
+                Iterator it3 = temp.carpetas.keySet().iterator();
+                while(it3.hasNext()) //recorro el hash
+                {                    
+                    Object key = it3.next(); //clave actual del hash
+                    
+                    if (key.toString().length()>=ruta.length()) //para que no entre hasta que las rutas sean iguales o mayor
+                    {
+                        int a=key.toString().substring(0,ruta.length()).length();//obtengo el tamanio de lo que voy a modificar
+                        String b=key.toString().substring(0,a);//obtengo la porcion te texto a modificar
+                        
+                        if (b.equals(ruta)) //si es la ruta que tengo que modificar
+                        {
+                            ArrayList<carpeta> nue= temp.carpetas.get(key.toString());//obtengo la lista a modificar
+                            
+                            for (int j = 0; j < nue.size(); j++) //recorro lista de clave actual
+                            {
+                                carpeta aja=nue.get(j);//obtengo valor actual de la lista
+                                eliminarCarpetaEnLista(usuario, aja.rutaCarpetaHijo);
+                                listTemp.add(aja.rutaCarpetaHijo);//agregamos para saber que key hay que eliminar                                
+                            }
+                        }
+                    }                    
+                }
+                
+                //recorremos list para eliminar keys
+                for (int j = 0; j < listTemp.size(); j++) 
+                {
+                    String act=listTemp.get(j);
+                    if (temp.carpetas.containsKey(act)) 
+                    {
+                        temp.carpetas.remove(act);
+                    }
+                } 
+                
+                temp.carpetas.remove(ruta);
+            }
+            temp=temp.siguiente;
+        }   
+        
+    }
+    
+    public void eliminarCarpetaEnLista(String usuario, String ruta)
+    {
+        nodoUsuario temp=this.primero;
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                nodoGrafo aux=temp.primeroG;
+                if (aux!=null) 
+                {
+                    while (aux!=null) //recorre el grafo
+                    {                        
+                        if (aux.siguiente!=null) 
+                        {                               
+                            if (aux.siguiente.rutaDondeSeEncontraraCarpeta.equals(ruta)) 
+                            {
+                                nodoGrafo aux2=aux.siguiente;
+                                if (aux2.siguiente==null) 
+                                {
+                                    aux.siguiente=null;
+                                }
+                                else
+                                {
+                                    aux.siguiente=aux2.siguiente;
+                                }
+                            }
+                        }
+                        aux=aux.siguiente;                    
+                    }
+                }                
+            }
+            temp=temp.siguiente;
+        }
+    }
+    
     public void imprimir()
     {
         nodoUsuario aux=this.primero;
