@@ -8,6 +8,7 @@ import estructuras.graphivArbolAVL;
 import estructuras.graphvizBitacora;
 import estructuras.graphvizGrafo;
 import estructuras.graphvizTablaHash;
+import estructuras.matriz;
 import estructuras.opUsuarios;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -336,15 +337,7 @@ public class principal extends javax.swing.JFrame {
             new String [] {
                 "NOMBRE", "CONTENIDO", "RUTA", "TIPO"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jtableCarpeArchivos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtableCarpeArchivosMouseClicked(evt);
@@ -504,18 +497,29 @@ public class principal extends javax.swing.JFrame {
 
     private void reporteMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteMatrizActionPerformed
          
+        matriz nuevo=new matriz();
+        nuevo.insertar("a", "b", "ab");
+        nuevo.insertar("a", "c", "ac");
+        nuevo.insertar("a", "d", "ad");
+        nuevo.insertar("b", "a", "ba");
+        nuevo.insertar("b", "c", "bc");
+        
+        misUsuarios.generarGraphMatriz("a", nuevo.getRoot());
+        
         
         
 
-        //usuario1
-       misUsuarios.insertar("gudiel");
-       misUsuarios.insertarCarpetaParaUsuario("gudiel", "/"); //usuario, ruta
-//       //usuario2
-//       misUsuarios.insertar("cris");
-//       misUsuarios.insertarCarpetaParaUsuario("cris", "/"); //usuario, ruta
-//       
-       txtNombreUsuarioActual.setText("gudiel");
-       txtRutaActual.setText("/");  
+////        usuario1
+////       misUsuarios.insertar("gudiel");
+////       misUsuarios.insertarCarpetaParaUsuario("gudiel", "/"); //usuario, ruta
+////       //usuario2
+////       misUsuarios.insertar("cris");
+////       misUsuarios.insertarCarpetaParaUsuario("cris", "/"); //usuario, ruta
+////       
+////       txtNombreUsuarioActual.setText("gudiel");
+////       txtRutaActual.setText("/");  
+       
+       
 //       
 //       tableUscargados.setValueAt("gudiel", 1, 1);
 //       tableUscargados.setValueAt("g", 1, 2);

@@ -20,6 +20,7 @@ public class opUsuarios
     arbol_AVL miTree;
     graphivArbolAVL graphviz;
     graphvizGrafo graphGrafo;
+    matriz mimat;
     
     public ArrayList contenidoArbol=new ArrayList<String>();
     
@@ -31,6 +32,7 @@ public class opUsuarios
         miTree=new arbol_AVL();
         graphviz=new graphivArbolAVL();
         graphGrafo= new graphvizGrafo();
+        mimat=new matriz();
     }
     
     public boolean estaVacia()
@@ -594,16 +596,51 @@ public class opUsuarios
                                 if (aux2.siguiente==null) 
                                 {
                                     aux.siguiente=null;
+                                    this.size=this.size-1;
                                 }
                                 else
                                 {
                                     aux.siguiente=aux2.siguiente;
+                                    this.size=this.size-1;
                                 }
                             }
                         }
                         aux=aux.siguiente;                    
                     }
                 }                
+            }
+            temp=temp.siguiente;
+        }
+    }
+    
+    public void generarGraphMatriz(String usuario, nodoMatriz root)
+    {
+        
+        nodoMatriz aux=root;
+        while (aux!=null) 
+        {                    
+            System.out.print(aux.valor);
+            if (aux.siguiente!=null) 
+            {
+                nodoMatriz sig=aux.siguiente;
+                while(sig!=null)
+                {
+                    System.out.print(" "+sig.valor);
+                    sig=sig.siguiente;
+                }
+                System.out.println("");
+            }                    
+            aux=aux.abajo;
+        }  
+        
+        
+        nodoUsuario temp=this.primero;
+        String grafo="";
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                              
             }
             temp=temp.siguiente;
         }
