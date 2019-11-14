@@ -11,6 +11,7 @@ public class nodoMatriz
     String valor;
     String columna;
     String fila;
+    int x,y;
     
     public nodoMatriz(String columna, String fila, String valor)
     {
@@ -21,5 +22,7 @@ public class nodoMatriz
         this.valor=valor;
         this.columna=columna;
         this.fila=fila;
+        this.x=0;
+        this.y=0;
     }
 }

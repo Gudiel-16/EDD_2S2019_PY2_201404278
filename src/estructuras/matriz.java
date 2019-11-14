@@ -50,14 +50,21 @@ public class matriz
     public nodoMatriz insertar_columna(nodoMatriz nuevo, nodoMatriz cabCol)
     {
         nodoMatriz temp=cabCol;
+        boolean bandera=false;
+        
         while (true) 
         {
-            if (nuevo.columna.equals(temp.columna)) //si son iguales, se sobreescribe
+            if (temp.columna.equals(nuevo.columna)) //si son iguales, se sobreescribe
             {
                 temp.fila=nuevo.fila;
                 temp.valor=nuevo.valor;
                 return temp;                
             }
+//            else if(temp.columna.compareTo(nuevo.columna)>0)
+//            {
+//                bandera=true;
+//                break;
+//            }
             if (temp.siguiente!=null) 
             {
                 temp=temp.siguiente;
@@ -68,9 +75,22 @@ public class matriz
             }            
         }
         
+//        if (bandera==true) 
+//        {
+//            nuevo.siguiente=temp;
+//            temp.anterior.siguiente=nuevo;
+//            nuevo.anterior=temp.anterior;
+//            temp.anterior=nuevo;
+//        }
+//        else
+//        {
+//            //insertamos al final
+//            temp.siguiente=nuevo;
+//            nuevo.anterior=temp;
+//        }
         //insertamos al final
-        temp.siguiente=nuevo;
-        nuevo.anterior=temp;
+            temp.siguiente=nuevo;
+            nuevo.anterior=temp;
         
         return nuevo;        
     }
@@ -78,14 +98,21 @@ public class matriz
     public nodoMatriz insertar_fila(nodoMatriz nuevo, nodoMatriz cabFil)
     {
         nodoMatriz temp=cabFil;
+        boolean bandera=false;
+        
         while (true) 
         {
-            if (nuevo.fila.equals(temp.fila)) //si son iguales, se sobreescribe
+            if (temp.fila.equals(nuevo.fila)) //si son iguales, se sobreescribe
             {
                 temp.columna=nuevo.columna;
                 temp.valor=nuevo.valor;
                 return temp;                
             }
+//            else if(temp.fila.compareTo(nuevo.fila)>0)
+//            {
+//                bandera=true;
+//                break;                        
+//            }
             if (temp.abajo!=null) 
             {
                 temp=temp.abajo;
@@ -96,9 +123,23 @@ public class matriz
             }            
         }
         
+//        if (bandera==true) 
+//        {
+//            nuevo.abajo=temp;
+//            temp.arriba.abajo=nuevo;
+//            nuevo.arriba=temp.arriba;
+//            temp.arriba=nuevo;
+//        }
+//        else
+//        {
+//            //insertamos al final
+//            temp.abajo=nuevo;
+//            nuevo.arriba=temp;
+//        }
         //insertamos al final
-        temp.abajo=nuevo;
-        nuevo.arriba=temp;
+            temp.abajo=nuevo;
+            nuevo.arriba=temp;
+            
         
         return nuevo;        
     }
@@ -117,7 +158,7 @@ public class matriz
         return fila;
     }
     
-    public void insertar(String fila, String columna, String valor)
+    public void insertar(String columna, String fila, String valor)
     {
         nodoMatriz nuevo=new nodoMatriz(columna, fila, valor);
         nodoMatriz nodoColumna=buscar_columna(columna);
@@ -155,8 +196,8 @@ public class matriz
         
         nodoMatriz aux=r;
         while (aux!=null) 
-        {            
-            y++;
+        {    
+            y=aux.y;
             aux=aux.abajo;
         }
         

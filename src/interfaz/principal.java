@@ -7,6 +7,7 @@ import estructuras.carpeta;
 import estructuras.graphivArbolAVL;
 import estructuras.graphvizBitacora;
 import estructuras.graphvizGrafo;
+import estructuras.graphvizMatriz;
 import estructuras.graphvizTablaHash;
 import estructuras.matriz;
 import estructuras.opUsuarios;
@@ -37,10 +38,12 @@ public class principal extends javax.swing.JFrame {
     graphivArbolAVL gvArbolAVL;
     graphvizGrafo gvGrafo;
     graphvizBitacora gvBitacora;
+    graphvizMatriz gvMatriz;
     String tablaHashGraphviz="";
     String arbolAVLGrapvhiz="";
     String grafoGraphviz="";
     String bitacoraGraphviz="";
+    String matrizGraphviz="";
     
     public principal() {
                             
@@ -53,6 +56,7 @@ public class principal extends javax.swing.JFrame {
         gvArbolAVL=new graphivArbolAVL();
         gvGrafo= new graphvizGrafo();
         gvBitacora=new graphvizBitacora();
+        gvMatriz=new graphvizMatriz();
         
         /* 7 primeras posiciones de tabla hash */
         DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
@@ -111,7 +115,7 @@ public class principal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtContenidoArchivo = new javax.swing.JTextField();
         bttActualizarRuta = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        bttCerrarSesion = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtMostrarRuta = new javax.swing.JTextField();
         bttDescargarArchivo = new javax.swing.JButton();
@@ -121,6 +125,7 @@ public class principal extends javax.swing.JFrame {
         scrollPaneReportes = new javax.swing.JScrollPane();
         bttActualizarGrafo = new javax.swing.JButton();
         bttActualizarBitacora = new javax.swing.JButton();
+        bttActualizarMatriz = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         reporteTabHash = new javax.swing.JMenuItem();
@@ -337,7 +342,15 @@ public class principal extends javax.swing.JFrame {
             new String [] {
                 "NOMBRE", "CONTENIDO", "RUTA", "TIPO"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jtableCarpeArchivos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtableCarpeArchivosMouseClicked(evt);
@@ -362,9 +375,14 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttActualizarRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 1240, 40));
 
-        jButton1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jButton1.setText("CERRAR SESION");
-        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 26, 190, 90));
+        bttCerrarSesion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        bttCerrarSesion.setText("CERRAR SESION");
+        bttCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttCerrarSesionActionPerformed(evt);
+            }
+        });
+        jPanel4.add(bttCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 26, 190, 90));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
@@ -423,6 +441,15 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel1.add(bttActualizarBitacora);
         bttActualizarBitacora.setBounds(450, 10, 120, 30);
+
+        bttActualizarMatriz.setText("MATRIZ");
+        bttActualizarMatriz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttActualizarMatrizActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bttActualizarMatriz);
+        bttActualizarMatriz.setBounds(590, 10, 130, 30);
 
         areaPestan.addTab("REPORTES", jPanel1);
 
@@ -496,28 +523,36 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_reporteGrafoActionPerformed
 
     private void reporteMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteMatrizActionPerformed
-         
-        matriz nuevo=new matriz();
-        nuevo.insertar("a", "b", "ab");
-        nuevo.insertar("a", "c", "ac");
-        nuevo.insertar("a", "d", "ad");
-        nuevo.insertar("b", "a", "ba");
-        nuevo.insertar("b", "c", "bc");
         
-        misUsuarios.generarGraphMatriz("a", nuevo.getRoot());
+        misUsuarios.generarGraphMatriz(txtNombreUsuarioActual.getText());
+        String a=gvMatriz.listMatriz.get(0);        
+        matrizGraphviz=a;
         
+//        matriz nuevo=new matriz();
+//        nuevo.insertar("a", "b", "ab");
+//        nuevo.insertar("a", "c", "ac");
+//        nuevo.insertar("a", "d", "ad");
+//        nuevo.insertar("b", "a", "ba");
+//        nuevo.insertar("b", "c", "bc");
+//        
+//        misUsuarios.generarGraphMatriz2("a", nuevo.getRoot());
         
+//        String key="/videos/musica/";
+//        String key2=key.substring(0,key.length()-1);
+//        int key3=key2.lastIndexOf("/");
+//        String nombre=key2.substring(key3+1,key2.length());
+//        System.out.println(nombre);
         
 
-////        usuario1
-////       misUsuarios.insertar("gudiel");
-////       misUsuarios.insertarCarpetaParaUsuario("gudiel", "/"); //usuario, ruta
-////       //usuario2
-////       misUsuarios.insertar("cris");
-////       misUsuarios.insertarCarpetaParaUsuario("cris", "/"); //usuario, ruta
-////       
-////       txtNombreUsuarioActual.setText("gudiel");
-////       txtRutaActual.setText("/");  
+//        //usuario1
+//       misUsuarios.insertar("gudiel");
+//       misUsuarios.insertarCarpetaParaUsuario("gudiel", "/"); //usuario, ruta
+//       //usuario2
+//       misUsuarios.insertar("cris");
+//       misUsuarios.insertarCarpetaParaUsuario("cris", "/"); //usuario, ruta
+//       
+//       txtNombreUsuarioActual.setText("gudiel");
+//       txtRutaActual.setText("/");  
        
        
 //       
@@ -1113,15 +1148,31 @@ public class principal extends javax.swing.JFrame {
                         misUsuarios.eliminarCarpeta(txtNombreUsuarioActual.getText(), rutElim);
                         historial.insertar("Se Elimino la carpeta con ruta: "+rutElim, horaActual.format(date), txtNombreUsuarioActual.getText());
                         JOptionPane.showMessageDialog(null, "Carpeta eliminada!");
-                        misUsuarios.imprimir();
                     } catch (Exception e) {}                    
                 } 
                 
             } catch (Exception e) {
-                System.out.println("error en modificar carpeta");
+                System.out.println("error en eliminar carpeta");
             }              
         } 
     }//GEN-LAST:event_bttEliminarCarpetaActionPerformed
+
+    private void bttCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCerrarSesionActionPerformed
+        misUsuarios.generarGraphMatriz(txtNombreUsuarioActual.getText());
+    }//GEN-LAST:event_bttCerrarSesionActionPerformed
+
+    private void bttActualizarMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarMatrizActionPerformed
+        JLabel lblImagen=new JLabel();        
+        ImageIcon imgi=new ImageIcon(matrizGraphviz);
+        lblImagen.setBounds(0, 0, imgi.getIconWidth(), imgi.getIconHeight());
+        lblImagen.setIcon(imgi);
+        
+        JPanel aa=new JPanel();
+        aa.add(lblImagen);
+        aa.setBackground(Color.WHITE);
+        aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
+        scrollPaneReportes.setViewportView(aa);
+    }//GEN-LAST:event_bttActualizarMatrizActionPerformed
 
     public void leerCSVUsuarios(String path) {
         
@@ -1510,11 +1561,11 @@ public class principal extends javax.swing.JFrame {
         for (int i = 0; i < tamActual; i++) 
         {
             Object [] fila= new Object[5];
-            fila[0]="";
+            fila[0]="-";
             fila[1]="-";
-            fila[2]="";
-            fila[3]="";
-            fila[4]="";
+            fila[2]="-";
+            fila[3]="-";
+            fila[4]="-";
             modelo.addRow(fila);
         }
         tableUscargados.setModel(modelo2);
@@ -1614,8 +1665,10 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JButton bttActualizarGrafo;
     private javax.swing.JButton bttActualizarGraphArbolAVL;
     private javax.swing.JButton bttActualizarGraphTablHash;
+    private javax.swing.JButton bttActualizarMatriz;
     private javax.swing.JButton bttActualizarRuta;
     private javax.swing.JButton bttCargaMasivaUs;
+    private javax.swing.JButton bttCerrarSesion;
     private javax.swing.JButton bttCompartirArchivo;
     private javax.swing.JButton bttCrearArchivo;
     private javax.swing.JButton bttCrearCarpeta;
@@ -1627,7 +1680,6 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JButton bttModificarCarpeta;
     private javax.swing.JButton bttRegistrar;
     private javax.swing.JButton bttSubirArchivo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

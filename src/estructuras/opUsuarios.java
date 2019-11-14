@@ -20,6 +20,7 @@ public class opUsuarios
     arbol_AVL miTree;
     graphivArbolAVL graphviz;
     graphvizGrafo graphGrafo;
+    graphvizMatriz graphMatriz;
     matriz mimat;
     
     public ArrayList contenidoArbol=new ArrayList<String>();
@@ -32,6 +33,7 @@ public class opUsuarios
         miTree=new arbol_AVL();
         graphviz=new graphivArbolAVL();
         graphGrafo= new graphvizGrafo();
+        graphMatriz=new graphvizMatriz();
         mimat=new matriz();
     }
     
@@ -613,19 +615,102 @@ public class opUsuarios
         }
     }
     
-    public void generarGraphMatriz(String usuario, nodoMatriz root)
+    public void generarGraphMatriz(String usuario)
     {
+        matriz nuevo=new matriz();
         
+        nodoUsuario temp=this.primero;
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+            {
+                Iterator it3 = temp.carpetas.keySet().iterator();
+                while(it3.hasNext()) //recorro el hash
+                {                    
+                    Object key = it3.next(); //clave actual del hash
+                    if (key.equals("/")) //es la raiz
+                    {
+                        ArrayList<carpeta> list= temp.carpetas.get(key.toString());//obtengo la lista
+                        for (int j = 0; j < list.size(); j++) //recorro lista
+                        {
+                            carpeta archi=list.get(j);
+                            String ruta=archi.rutaCarpetaHijo;//obtengo valor
+                            String ruta2=ruta.substring(0,ruta.length()-1);//quito ultima /
+                            int ruta3=ruta2.lastIndexOf("/");//obtengo indice hasta donde esta ultimo /
+                            String nombre=ruta2.substring(ruta3+1,ruta2.length()); //recorto solo para que me quede lo ultimo
+                            nuevo.insertar(nombre, key.toString(), key.toString()+nombre); //inserto
+                        }
+                    }
+                    else
+                    {
+                        String key2=key.toString().substring(0,key.toString().length()-1);
+                        int key3=key2.lastIndexOf("/");
+                        String nuevaKey=key2.substring(key3+1,key2.length());
+                        
+                        ArrayList<carpeta> list= temp.carpetas.get(key.toString());//obtengo la lista
+                        for (int j = 0; j < list.size(); j++) //recorro lista
+                        {
+                            carpeta archi=list.get(j);
+                            String ruta=archi.rutaCarpetaHijo;//obtengo valor
+                            String ruta2=ruta.substring(0,ruta.length()-1);//quito ultima /
+                            int ruta3=ruta2.lastIndexOf("/");//obtengo indice hasta donde esta ultimo /
+                            String nombre=ruta2.substring(ruta3+1,ruta2.length()); //recorto solo para que me quede lo ultimo
+                            nuevo.insertar(nombre, nuevaKey, nuevaKey+"/"+nombre); //inserto
+                        }                        
+                    }                                       
+                }
+                generarGraphMatriz2(nuevo.getRoot());
+                break;
+            }
+            temp=temp.siguiente;
+        }
+    }
+    
+    public void generarGraphMatriz2(nodoMatriz root)
+    {
+        //indices cabecera y raiz hacia abajo y luego hacia derecha
+        int c_cy=-1;
+        nodoMatriz aux_cy=root;
+        while (aux_cy!=null) //recorre hacia abajo
+        {   
+            aux_cy.y=c_cy;
+            nodoMatriz aux_cx=aux_cy;
+            while (aux_cx!=null) //recorre hacia la derecha
+            {   
+                aux_cx.y=c_cy;
+                aux_cx=aux_cx.siguiente;
+            }
+            c_cy++;
+            aux_cy=aux_cy.abajo;
+        }
+        
+        //indices cabecera y raiz hacia abajo y luego hacia derecha
+        int c_cx=-1;
+        nodoMatriz aux_cx=root;
+        while (aux_cx!=null) //recorre hacia abajo
+        {   
+            aux_cx.x=c_cx;
+            nodoMatriz aux_cyy=aux_cx;
+            while (aux_cyy!=null) //recorre hacia la derecha
+            {   
+                aux_cyy.x=c_cx;
+                aux_cyy=aux_cyy.abajo;
+            }
+            c_cx++;
+            aux_cx=aux_cx.siguiente;
+        }
+        
+        //imprimir
         nodoMatriz aux=root;
         while (aux!=null) 
         {                    
-            System.out.print(aux.valor);
+            System.out.print("("+aux.x+","+aux.y+")"+aux.valor);
             if (aux.siguiente!=null) 
             {
                 nodoMatriz sig=aux.siguiente;
                 while(sig!=null)
                 {
-                    System.out.print(" "+sig.valor);
+                    System.out.print("("+sig.x+","+sig.y+")"+sig.valor);
                     sig=sig.siguiente;
                 }
                 System.out.println("");
@@ -633,17 +718,92 @@ public class opUsuarios
             aux=aux.abajo;
         }  
         
-        
-        nodoUsuario temp=this.primero;
         String grafo="";
-        for (int i = 0; i < this.size; i++) 
-        {
-            if (temp.nombre.equals(usuario)) //cuando encuentra nombre
+        int filas=mimat.obtenerIndiceMasGrande(root)+1;
+        
+        //para cabeceras en eje y
+        nodoMatriz auxCaby=root;
+        nodoMatriz auxCaby2=root;
+        
+        while (auxCaby!=null) 
+        {            
+            int op=filas-auxCaby.y;
+            if (auxCaby.y==-1) 
             {
-                              
+                op=filas+1;
             }
-            temp=temp.siguiente;
+            if (auxCaby.x==-1 && auxCaby.y ==-1) 
+            {
+                grafo += "\"(" + auxCaby.x + "," + auxCaby.y + ")" + "\"" + "[label=\"{<data> RAIZ }\" ,  style = filled, fillcolor = firebrick1, width = 1.5 pos=\"" + auxCaby.x + "," + op + "!\"];\n";
+            }
+            else
+            {
+                grafo += "\"(" + auxCaby.x + "," + auxCaby.y + ")" + "\"" + "[label=\"{<data>" + auxCaby.fila + " (" + auxCaby.x + "," + auxCaby.y + ")}" + "\" ,  style = filled, fillcolor = firebrick1, width = 1.5 pos=\"" + auxCaby.x + "," + op + "!\"];\n";
+            }
+            auxCaby=auxCaby.abajo;
         }
+        
+        while (auxCaby2!=null) 
+        {  
+            if (auxCaby2.abajo!=null) 
+            {
+                grafo += "\"(" + auxCaby2.x + "," + auxCaby2.y + ")" + "\"" + "->" + "\"(" + auxCaby2.abajo.x + "," + auxCaby2.abajo.y + ")" + "\" [dir=both]; \n";
+            }            
+            auxCaby2=auxCaby2.abajo;
+        }
+        
+        //para cabeceras en eje x
+        nodoMatriz auxCabX=root.siguiente;
+        nodoMatriz auxCabX2=root.siguiente;
+        
+        while (auxCabX != null)
+        {
+            int op = filas - auxCabX.y;
+            if (auxCabX.y == -1)
+            {
+                op = filas + 1;
+            }
+            grafo += "\"(" + auxCabX.x + "," + auxCabX.y + ")" + "\"" + "[label=\"{<data>" + auxCabX.columna + " (" + auxCabX.x + "," + auxCabX.y + ")" + "}\" ,  style = filled, fillcolor = firebrick1, width = 1.5 pos=\"" + (auxCabX.x * 3+1) + "," + op + "!\"];\n";
+            auxCabX = auxCabX.siguiente;
+        }
+        
+        while (auxCabX2 != null)
+        {
+            grafo += "\"(" + auxCabX2.anterior.x + "," + auxCabX2.anterior.y + ")" + "\"" + "->" + "\"(" + auxCabX2.x + "," + auxCabX2.y + ")" + "\" [dir=both]; \n";
+            auxCabX2 = auxCabX2.siguiente;
+        }
+        
+        //para nodos
+        nodoMatriz auxNod=root.abajo;
+        
+        while (auxNod != null)
+        {
+            //creando nodos
+            nodoMatriz aux2 = auxNod.siguiente;
+            nodoMatriz aux3 = auxNod.siguiente;
+
+            while (aux2 != null)
+            {
+                    int op = filas - aux2.y;
+                    grafo += "\"(" + aux2.x + "," + aux2.y + ")" + "\"" + "[label=\"{<data>" + aux2.valor + " (" + aux2.x + "," + aux2.y + ")" + "}\" width = 1.5 pos=\"" + (aux2.x * 3+1) + "," + op + "!\"];\n";
+                    aux2 = aux2.siguiente;
+            }
+
+            //haciendo relacion entre nodos
+            while (aux3 != null)
+            {
+                    grafo += "\"(" + aux3.anterior.x + "," + aux3.anterior.y + ")" + "\"" + "->" + "\"(" + aux3.x + "," + aux3.y + ")" + "\" [dir=both]; \n";
+                    grafo += "\"(" + aux3.x + "," + aux3.y + ")" + "\"" + "->" + "\"(" + aux3.arriba.x + "," + aux3.arriba.y + ")" + "\" [dir=both]; \n";
+
+                    aux3 = aux3.siguiente;
+            }
+
+            auxNod = auxNod.abajo;
+        }
+        
+        
+        graphMatriz.generarGrafica(grafo);
+        
     }
     
     public void imprimir()
