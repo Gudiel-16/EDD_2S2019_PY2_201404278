@@ -63,7 +63,7 @@ public class principal extends javax.swing.JFrame {
         for (int i = 0; i < 7; i++) 
         {
             Object [] fila= new Object[5];
-            fila[0]="-";
+            fila[0]=i;
             fila[1]="-";
             fila[2]="-";
             fila[3]="-";
@@ -71,7 +71,8 @@ public class principal extends javax.swing.JFrame {
             modeloUsCargados.addRow(fila);            
         }
         tableUscargados.setModel(modeloUsCargados);
-        insertarIndices();
+        
+        jpanelOcu.setVisible(false);
         /*--------------------------------------*/
     }
 
@@ -88,13 +89,17 @@ public class principal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableUscargados = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableUsError = new javax.swing.JTable();
         bttCargaMasivaUs = new javax.swing.JButton();
+        bttCerrarSesionAdmin = new javax.swing.JButton();
+        jpanelOcu = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableUscargados = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableUsuariosOrden = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtableUsMostrarCarga = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         bttCrearCarpeta = new javax.swing.JButton();
@@ -195,19 +200,7 @@ public class principal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("USUARIOS CON ERROR");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, -1, -1));
-
-        tableUscargados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "INDICE", "USUARIO", "PASSWORD", "TIMESTAMP", "PASSWORD ENCRIPTADA"
-            }
-        ));
-        jScrollPane1.setViewportView(tableUscargados);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 69, 1439, 140));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
         tableUsError.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -219,7 +212,7 @@ public class principal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tableUsError);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 1430, 290));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 1430, 230));
 
         bttCargaMasivaUs.setText("CARGA MASIVA DE USUARIOS");
         bttCargaMasivaUs.addActionListener(new java.awt.event.ActionListener() {
@@ -227,7 +220,31 @@ public class principal extends javax.swing.JFrame {
                 bttCargaMasivaUsActionPerformed(evt);
             }
         });
-        jPanel2.add(bttCargaMasivaUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 10, -1, 50));
+        jPanel2.add(bttCargaMasivaUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 10, -1, 50));
+
+        bttCerrarSesionAdmin.setText("CERRAR SESION");
+        bttCerrarSesionAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttCerrarSesionAdminActionPerformed(evt);
+            }
+        });
+        jPanel2.add(bttCerrarSesionAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 10, 200, 50));
+
+        jpanelOcu.setBackground(new java.awt.Color(51, 51, 255));
+        jpanelOcu.setLayout(null);
+
+        tableUscargados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "INDICE", "USUARIO", "PASSWORD", "TIMESTAMP", "PASSWORD ENCRIPTADA"
+            }
+        ));
+        jScrollPane1.setViewportView(tableUscargados);
+
+        jpanelOcu.add(jScrollPane1);
+        jScrollPane1.setBounds(39, 0, 1439, 60);
 
         tableUsuariosOrden.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -239,7 +256,22 @@ public class principal extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(tableUsuariosOrden);
 
-        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 980, 140));
+        jpanelOcu.add(jScrollPane4);
+        jScrollPane4.setBounds(38, 66, 1440, 60);
+
+        jPanel2.add(jpanelOcu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 1490, 140));
+
+        jtableUsMostrarCarga.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "INDICE", "USUARIO", "PASSWORD", "TIMESTAMP", "PASSWORD ENCRIPTADA"
+            }
+        ));
+        jScrollPane5.setViewportView(jtableUsMostrarCarga);
+
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 1440, 220));
 
         areaPestan.addTab("ADMINISTRADOR", jPanel2);
 
@@ -351,6 +383,7 @@ public class principal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtableCarpeArchivos.setRowHeight(30);
         jtableCarpeArchivos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtableCarpeArchivosMouseClicked(evt);
@@ -618,8 +651,7 @@ public class principal extends javax.swing.JFrame {
 
     private void bttRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegistrarActionPerformed
         DefaultTableModel modeloUsError=(DefaultTableModel) tableUsError.getModel();
-        DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
-        
+                
         String nombre = JOptionPane.showInputDialog("Ingrese nombre para registrar:");
         String password = JOptionPane.showInputDialog("Ingrese password para registrar:");
         try {
@@ -657,6 +689,7 @@ public class principal extends javax.swing.JFrame {
                             
                                     if (porc<25) 
                                     {
+                                        DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
                                         int sig=siguienteNumeroPrimo(tableUscargados.getRowCount());
                                         int op1=tableUscargados.getRowCount();
                                         int op2=sig-op1;
@@ -671,13 +704,14 @@ public class principal extends javax.swing.JFrame {
                                             fila[4]="-";
                                             modeloUsCargados.addRow(fila);
                                         }
+                                        tableUscargados.setModel(modeloUsCargados);
                                         recalcularIndices();
                                         insertarIndices();
                                     }
                         } catch (Exception e) {
                             System.out.println("puede que el usuario cayo en un ciclo!");
                         }
-                        
+                        JOptionPane.showMessageDialog(null, "Usuario registrado");
                     }else
                     {
                         Object [] fila= new Object[3];
@@ -685,6 +719,7 @@ public class principal extends javax.swing.JFrame {
                         fila[1]=password;
                         fila[2]="La Password contiene menos de 8 caracteres";
                         modeloUsError.addRow(fila);
+                        JOptionPane.showMessageDialog(null, "Usuario no registrado");
                     }
                 }else
                 {
@@ -693,10 +728,11 @@ public class principal extends javax.swing.JFrame {
                     fila[1]=password;
                     fila[2]="El nombre de usuario ya existe";
                     modeloUsError.addRow(fila);
+                    JOptionPane.showMessageDialog(null, "Usuario no registrado");
                 }
             }else
             {
-                JOptionPane.showMessageDialog(null, "SE PRODUJO UN ERROR", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Usuario no registrado");
             }
             
         } catch (Exception e) {
@@ -708,12 +744,14 @@ public class principal extends javax.swing.JFrame {
     private void bttIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttIngresarActionPerformed
         if (txtUsuario.getText().equals("") || txtPassword.getText().equals(""))
         {
-            JOptionPane.showMessageDialog(null, "INGRESE DATOS", "ERROR", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingrese datos", "ERROR", JOptionPane.WARNING_MESSAGE);
         }else
         {
             if (txtUsuario.getText().equals("admin") || txtPassword.getText().equals("admin"))
             {
                 areaPestan.setSelectedIndex(1);
+                areaPestan.setEnabledAt(0, false);
+                areaPestan.setEnabledAt(2, false);
             }
             else
             {
@@ -725,6 +763,10 @@ public class principal extends javax.swing.JFrame {
                     {
                         txtRutaActual.setText("/");
                         txtNombreUsuarioActual.setText(nombre);
+                        
+                        areaPestan.setSelectedIndex(2);
+                        areaPestan.setEnabledAt(0, false);
+                        areaPestan.setEnabledAt(1, false);
                         
                         //actualizando
                         DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
@@ -752,6 +794,11 @@ public class principal extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }        
+        
+        for (int i = 0; i < jtableUsMostrarCarga.getRowCount(); i++) 
+        {
+            jtableUsMostrarCarga.setValueAt(i, i, 0);
+        }
         
     }//GEN-LAST:event_bttCargaMasivaUsActionPerformed
 
@@ -850,9 +897,10 @@ public class principal extends javax.swing.JFrame {
                 }else
                 {
                     int resp = JOptionPane.showConfirmDialog(null, "¿El archivo ya existe, desea reemplazarlo?", "Alerta!", JOptionPane.YES_NO_OPTION);
-                    //0 si
-                    //1 no
-                    //-1 cerrar
+                    if (resp==0) 
+                    {
+                        misUsuarios.modificarArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), nombre, nombre, contenido, nombre);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -1158,7 +1206,29 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bttEliminarCarpetaActionPerformed
 
     private void bttCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCerrarSesionActionPerformed
-        misUsuarios.generarGraphMatriz(txtNombreUsuarioActual.getText());
+
+        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea salir?", "Alerta!", JOptionPane.YES_NO_OPTION);
+
+        if (resp==0) 
+        {
+            txtUsuario.setText("");
+            txtPassword.setText("");
+            areaPestan.setSelectedIndex(0);
+            areaPestan.setEnabledAt(1, false);
+            areaPestan.setEnabledAt(2, false);
+        }
+        
+        //usuario1
+       misUsuarios.insertar("gudiel");
+       misUsuarios.insertarCarpetaParaUsuario("gudiel", "/"); //usuario, ruta
+       //usuario2
+       misUsuarios.insertar("cris");
+       misUsuarios.insertarCarpetaParaUsuario("cris", "/"); //usuario, ruta
+       
+       txtNombreUsuarioActual.setText("gudiel");
+       txtRutaActual.setText("/");  
+//       
+       
     }//GEN-LAST:event_bttCerrarSesionActionPerformed
 
     private void bttActualizarMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarMatrizActionPerformed
@@ -1174,11 +1244,25 @@ public class principal extends javax.swing.JFrame {
         scrollPaneReportes.setViewportView(aa);
     }//GEN-LAST:event_bttActualizarMatrizActionPerformed
 
+    private void bttCerrarSesionAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCerrarSesionAdminActionPerformed
+        
+        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea salir?", "Alerta!", JOptionPane.YES_NO_OPTION);
+
+        if (resp==0) 
+        {
+            txtUsuario.setText("");
+            txtPassword.setText("");
+            areaPestan.setSelectedIndex(0);
+            areaPestan.setEnabledAt(1, false);
+            areaPestan.setEnabledAt(2, false);
+        }
+    }//GEN-LAST:event_bttCerrarSesionAdminActionPerformed
+
     public void leerCSVUsuarios(String path) {
         
-        DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
+        //DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
         DefaultTableModel modeloUsError=(DefaultTableModel) tableUsError.getModel();
-        
+                
         try 
         {            
             int bandera=0;
@@ -1217,6 +1301,7 @@ public class principal extends javax.swing.JFrame {
                                 misUsuarios.insertarCarpetaParaUsuario(campos[0], "/");
                                 
                                 DefaultTableModel modeloUsOrden=(DefaultTableModel) tableUsuariosOrden.getModel();
+                                DefaultTableModel modeloUsMostrarCarga=(DefaultTableModel) jtableUsMostrarCarga.getModel();
                                 Object [] filao= new Object[5];
                                 filao[0]="";
                                 filao[1]=campos[0];
@@ -1224,13 +1309,16 @@ public class principal extends javax.swing.JFrame {
                                 filao[3]=horaActual.format(date);
                                 filao[4]=obtenerHash(campos[1]);
                                 modeloUsOrden.addRow(filao);
+                                modeloUsMostrarCarga.addRow(filao);
                                 tableUsuariosOrden.setModel(modeloUsOrden);
+                                jtableUsMostrarCarga.setModel(modeloUsMostrarCarga);                                
                                 
                                 int porc=saberPorcentajeDeTabla(tableUscargados.getRowCount());
                                 System.out.println("porce: "+porc);
                                 
                                 if (porc<25) 
                                 {
+                                    DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
                                     int sig=siguienteNumeroPrimo(tableUscargados.getRowCount());
                                     int op1=sig-tableUscargados.getRowCount();
                                     for (int i = 0; i < op1; i++) 
@@ -1242,9 +1330,10 @@ public class principal extends javax.swing.JFrame {
                                         fila[3]="-";
                                         fila[4]="-";
                                         modeloUsCargados.addRow(fila);                                        
-                                    }
-                                    recalcularIndices();
-                                    insertarIndices();
+                                    }    
+                                    tableUscargados.setModel(modeloUsCargados);
+                                    //recalcularIndices();
+                                    //insertarIndices();
                                 }
                             }else
                             {
@@ -1266,32 +1355,7 @@ public class principal extends javax.swing.JFrame {
                         
                     }else if(bandera>0 && bandera2==false) //quiere decir que los usuarios estan en la segunda fila
                     {
-                        if (misUsuarios.existeUsuario(campos[1])==false) //se valida si ya existe el usuario
-                        {
-                            if (campos[0].length()>=8) //si la contra tiene mas que 8 caracteres
-                            {
-                                Object [] fila= new Object[3];
-                                fila[0]=campos[1];
-                                fila[1]=campos[0];
-                                fila[2]=obtenerHash(campos[1]);
-                                modeloUsCargados.addRow(fila);
-                            }else
-                            {
-                                Object [] fila= new Object[3];
-                                fila[0]=campos[1];
-                                fila[1]=campos[0];
-                                fila[2]="La Password contiene menos de 8 caracteres";
-                                modeloUsError.addRow(fila);
-                            }
-                            
-                        }else
-                        {
-                            Object [] fila= new Object[3];
-                            fila[0]=campos[1];
-                            fila[1]=campos[0];
-                            fila[2]="El nombre de usuario ya existe";
-                            modeloUsError.addRow(fila);
-                        }
+                        
                     }
                     
                     // Vuelvo a leer del fichero
@@ -1304,8 +1368,9 @@ public class principal extends javax.swing.JFrame {
             if (bufferLectura != null) {
                     bufferLectura.close();
             }   
-            
-            tableUscargados.setModel(modeloUsCargados);
+            recalcularIndices();
+            insertarIndices();
+            //tableUscargados.setModel(modeloUsCargados);
             tableUsError.setModel(modeloUsError);
             
                         
@@ -1319,6 +1384,8 @@ public class principal extends javax.swing.JFrame {
         {            
             int bandera=0;
             boolean bandera2=false;
+            Date date = new Date();
+            DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
             
             // Abro el .csv en buffer de lectura
             BufferedReader bufferLectura = new BufferedReader(new FileReader(path));
@@ -1339,12 +1406,11 @@ public class principal extends javax.swing.JFrame {
                     }
                     if (bandera>0 && bandera2==true) //quiere decir que los archivos estan en la primera fila
                     {
-                        System.out.println(campos[0]);
                         if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , campos[0])==false) 
                         {    
                             
                             //se agrega archivo
-                            misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), campos[0], campos[1] , "fecha" , txtNombreUsuarioActual.getText());
+                            misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), campos[0], campos[1] , horaActual.format(date), txtNombreUsuarioActual.getText());
                             //eliminando contenido de tabla
                             DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
                             for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
@@ -1356,14 +1422,35 @@ public class principal extends javax.swing.JFrame {
                         }else
                         {
                             int resp = JOptionPane.showConfirmDialog(null, "¿El archivo ya existe, desea reemplazarlo?", "Alerta!", JOptionPane.YES_NO_OPTION);
-                            //0 si
-                            //1 no
-                            //-1 cerrar
+                            if (resp==0) 
+                            {
+                                misUsuarios.modificarArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), campos[0], campos[0], campos[1], horaActual.format(date));
+                            }
                         }
                         
                     }else if(bandera>0 && bandera2==false) //quiere decir que los archivos estan en la segunda fila
                     {
-                        
+                        if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , campos[1])==false) 
+                        {    
+                            
+                            //se agrega archivo
+                            misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), campos[1], campos[0] , horaActual.format(date), txtNombreUsuarioActual.getText());
+                            //eliminando contenido de tabla
+                            DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
+                            for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
+                            {
+                                modelo.removeRow(i);
+                            }
+                            //actualizando visor de archivos y carpetas
+                            misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
+                        }else
+                        {
+                            int resp = JOptionPane.showConfirmDialog(null, "¿El archivo ya existe, desea reemplazarlo?", "Alerta!", JOptionPane.YES_NO_OPTION);
+                            if (resp==0) 
+                            {
+                                misUsuarios.modificarArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText(), campos[1], campos[1], campos[0], horaActual.format(date));
+                            }
+                        }
                     }
                     
                     // Vuelvo a leer del fichero
@@ -1669,6 +1756,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JButton bttActualizarRuta;
     private javax.swing.JButton bttCargaMasivaUs;
     private javax.swing.JButton bttCerrarSesion;
+    private javax.swing.JButton bttCerrarSesionAdmin;
     private javax.swing.JButton bttCompartirArchivo;
     private javax.swing.JButton bttCrearArchivo;
     private javax.swing.JButton bttCrearCarpeta;
@@ -1697,8 +1785,11 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPanel jpLogin;
+    private javax.swing.JPanel jpanelOcu;
     private javax.swing.JTable jtableCarpeArchivos;
+    private javax.swing.JTable jtableUsMostrarCarga;
     private javax.swing.JMenuItem reporteAVL;
     private javax.swing.JMenuItem reporteBitacora;
     private javax.swing.JMenuItem reporteGrafo;

@@ -598,12 +598,10 @@ public class opUsuarios
                                 if (aux2.siguiente==null) 
                                 {
                                     aux.siguiente=null;
-                                    this.size=this.size-1;
                                 }
                                 else
                                 {
                                     aux.siguiente=aux2.siguiente;
-                                    this.size=this.size-1;
                                 }
                             }
                         }
