@@ -49,6 +49,8 @@ public class principal extends javax.swing.JFrame {
                             
         initComponents();
         
+        this.setLocationRelativeTo(null);
+        
         //inicializando listas
         misUsuarios=new opUsuarios();
         historial=new bitacora();
@@ -145,10 +147,15 @@ public class principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EDD DRIVE");
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jpLogin.setBackground(new java.awt.Color(102, 102, 102));
+        jpLogin.setBackground(new java.awt.Color(153, 153, 153));
 
+        txtUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        bttIngresar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttIngresar.setText("INGRESAR");
         bttIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,6 +163,7 @@ public class principal extends javax.swing.JFrame {
             }
         });
 
+        bttRegistrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttRegistrar.setText("REGISTRAR");
         bttRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,20 +171,23 @@ public class principal extends javax.swing.JFrame {
             }
         });
 
+        txtPassword.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout jpLoginLayout = new javax.swing.GroupLayout(jpLogin);
         jpLogin.setLayout(jpLoginLayout);
         jpLoginLayout.setHorizontalGroup(
             jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLoginLayout.createSequentialGroup()
-                .addContainerGap(601, Short.MAX_VALUE)
+            .addGroup(jpLoginLayout.createSequentialGroup()
+                .addGap(581, 581, 581)
                 .addGroup(jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                    .addComponent(txtUsuario)
                     .addGroup(jpLoginLayout.createSequentialGroup()
                         .addComponent(bttIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bttRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtPassword))
-                .addGap(561, 561, 561))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(581, Short.MAX_VALUE))
         );
         jpLoginLayout.setVerticalGroup(
             jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,18 +205,18 @@ public class principal extends javax.swing.JFrame {
 
         areaPestan.addTab("LOGIN", jpLogin);
 
-        jPanel2.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("USUARIOS CARGADOS");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 31, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("USUARIOS CON ERROR");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, 40));
 
         tableUsError.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -217,16 +228,18 @@ public class principal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tableUsError);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 1430, 230));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 1470, 280));
 
-        bttCargaMasivaUs.setText("CARGA MASIVA DE USUARIOS");
+        bttCargaMasivaUs.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttCargaMasivaUs.setText("CARGA MASIVA");
         bttCargaMasivaUs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bttCargaMasivaUsActionPerformed(evt);
             }
         });
-        jPanel2.add(bttCargaMasivaUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 10, -1, 50));
+        jPanel2.add(bttCargaMasivaUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 210, 50));
 
+        bttCerrarSesionAdmin.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttCerrarSesionAdmin.setText("CERRAR SESION");
         bttCerrarSesionAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -264,7 +277,7 @@ public class principal extends javax.swing.JFrame {
         jpanelOcu.add(jScrollPane4);
         jScrollPane4.setBounds(38, 66, 1440, 60);
 
-        jPanel2.add(jpanelOcu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 1490, 140));
+        jPanel2.add(jpanelOcu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 720, 1490, 20));
 
         jtableUsMostrarCarga.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -276,19 +289,20 @@ public class principal extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(jtableUsMostrarCarga);
 
-        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 1440, 220));
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 1470, 290));
 
         areaPestan.addTab("ADMINISTRADOR", jPanel2);
 
-        jPanel4.setBackground(new java.awt.Color(51, 51, 255));
+        jPanel4.setBackground(new java.awt.Color(102, 102, 102));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("ARCHIVOS");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 190, -1));
 
+        bttCrearCarpeta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttCrearCarpeta.setText("CREAR");
         bttCrearCarpeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,6 +311,7 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttCrearCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 190, 44));
 
+        bttEliminarCarpeta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttEliminarCarpeta.setText("ELIMINAR");
         bttEliminarCarpeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,6 +320,7 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttEliminarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 190, 44));
 
+        bttModificarCarpeta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttModificarCarpeta.setText("MODIFICAR");
         bttModificarCarpeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,6 +329,7 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttModificarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 190, 44));
 
+        bttCrearArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttCrearArchivo.setText("CREAR");
         bttCrearArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,6 +338,7 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttCrearArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 190, 44));
 
+        bttCompartirArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttCompartirArchivo.setText("COMPARTIR");
         bttCompartirArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -329,6 +347,7 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttCompartirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 190, 44));
 
+        bttModificarArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttModificarArchivo.setText("MODIFICAR");
         bttModificarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,6 +356,7 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttModificarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 190, 44));
 
+        bttSubirArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttSubirArchivo.setText("SUBIR");
         bttSubirArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,6 +365,7 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttSubirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 190, 44));
 
+        bttEliminarArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttEliminarArchivo.setText("ELIMINAR");
         bttEliminarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,22 +374,25 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttEliminarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 190, 44));
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("CARPETAS");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 190, -1));
         jPanel4.add(txtRutaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 770, 30));
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("RUTA ACTUAL:");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, 30));
+
+        txtNombreUsuarioActual.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtNombreUsuarioActual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel4.add(txtNombreUsuarioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 30, 200, 30));
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("USUARIO:");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 30, -1, 30));
 
@@ -398,13 +422,14 @@ public class principal extends javax.swing.JFrame {
 
         jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 1240, 510));
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("RUTA:");
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 700, 80, 30));
         jPanel4.add(txtContenidoArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 660, 1370, 30));
 
+        bttActualizarRuta.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttActualizarRuta.setText("ACTUALIZAR RUTA");
         bttActualizarRuta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -422,13 +447,14 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 26, 190, 90));
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("CONTENIDO:");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 669, -1, 20));
         jPanel4.add(txtMostrarRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 700, 1370, 30));
 
+        bttDescargarArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bttDescargarArchivo.setText("DESCARGAR");
         bttDescargarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -439,7 +465,7 @@ public class principal extends javax.swing.JFrame {
 
         areaPestan.addTab("PERFIL USUARIO", jPanel4);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
         bttActualizarGraphTablHash.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -496,10 +522,11 @@ public class principal extends javax.swing.JFrame {
 
         areaPestan.addTab("REPORTES", jPanel1);
 
-        getContentPane().add(areaPestan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 1520, 770));
+        getContentPane().add(areaPestan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1520, 770));
 
         jMenu1.setText("GENERAR REPORTES");
 
+        reporteTabHash.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         reporteTabHash.setText("TABLA HASH");
         reporteTabHash.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -508,6 +535,7 @@ public class principal extends javax.swing.JFrame {
         });
         jMenu1.add(reporteTabHash);
 
+        reporteGrafo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         reporteGrafo.setText("GRAFO");
         reporteGrafo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -516,6 +544,7 @@ public class principal extends javax.swing.JFrame {
         });
         jMenu1.add(reporteGrafo);
 
+        reporteMatriz.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         reporteMatriz.setText("MATRIZ");
         reporteMatriz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -524,6 +553,7 @@ public class principal extends javax.swing.JFrame {
         });
         jMenu1.add(reporteMatriz);
 
+        reporteAVL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         reporteAVL.setText("AVL");
         reporteAVL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -532,6 +562,7 @@ public class principal extends javax.swing.JFrame {
         });
         jMenu1.add(reporteAVL);
 
+        reporteBitacora.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         reporteBitacora.setText("BITACORA");
         reporteBitacora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -834,10 +865,20 @@ public class principal extends javax.swing.JFrame {
         try {
             if (!nombre.equals("")) 
             {
-              Date date = new Date();
-              DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy"); 
-              leerCSVUsuarios(nombre);
-              historial.insertar("Carga masiva de usuarios con nombre: "+nombre,horaActual.format(date) , "admin");
+                DefaultTableModel modelo=(DefaultTableModel) jtableUsMostrarCarga.getModel();
+                for (int i = jtableUsMostrarCarga.getRowCount()-1; i >= 0; i--) 
+                {
+                    modelo.removeRow(i);
+                }
+                DefaultTableModel modelo2=(DefaultTableModel) tableUsError.getModel();
+                for (int i = tableUsError.getRowCount()-1; i >= 0; i--) 
+                {
+                    modelo2.removeRow(i);
+                }
+                Date date = new Date();
+                DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy"); 
+                leerCSVUsuarios(nombre);
+                historial.insertar("Carga masiva de usuarios con nombre: "+nombre,horaActual.format(date) , "admin");
             }
         } catch (Exception e) {
         }        
@@ -960,37 +1001,44 @@ public class principal extends javax.swing.JFrame {
             if (!nombreUsAcompartir.equals("")) 
             {
                 int fila=jtableCarpeArchivos.getSelectedRow();
-                if (fila>=0) 
-                {  
-                    String nomArchi=jtableCarpeArchivos.getValueAt(fila, 0).toString();
-                    String contenidoArchivoSeleccionado=jtableCarpeArchivos.getValueAt(fila, 1).toString();
-                    Date date = new Date();
-                    DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-                    
-                    if (misUsuarios.existeUsuario(nombreUsAcompartir)==true) //si el usuario existe
-                    {                    
-                        if (misUsuarios.existeArchivo(nombreUsAcompartir, "/", nomArchi)==false) //si no existe archivo, inserta
-                        {
-                            misUsuarios.insertarArchivoACarpeta("/", nomArchi, contenidoArchivoSeleccionado , horaActual.format(date) , nombreUsAcompartir);
-                            historial.insertar("Se compartio un archivo con nombre: "+nomArchi, horaActual.format(date), txtNombreUsuarioActual.getText());
-                            JOptionPane.showMessageDialog(null, "Archivo compartido!");
-                        }
-                        else //si ya existe sobre escribe
-                        {
-                            int resp = JOptionPane.showConfirmDialog(null, "¿El archivo ya existe en la raiz del usuario, desea reemplazarlo?", "Alerta!", JOptionPane.YES_NO_OPTION);
-                            if (resp==0) 
+                if (jtableCarpeArchivos.getValueAt(fila, 3).toString().equals("archivo")) 
+                {               
+                    if (fila>=0) 
+                    {  
+                        String nomArchi=jtableCarpeArchivos.getValueAt(fila, 0).toString();
+                        String contenidoArchivoSeleccionado=jtableCarpeArchivos.getValueAt(fila, 1).toString();
+                        Date date = new Date();
+                        DateFormat horaActual = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+
+                        if (misUsuarios.existeUsuario(nombreUsAcompartir)==true) //si el usuario existe
+                        {                    
+                            if (misUsuarios.existeArchivo(nombreUsAcompartir, "/", nomArchi)==false) //si no existe archivo, inserta
                             {
-                                misUsuarios.modificarArchivo(nombreUsAcompartir, "/", nomArchi, nomArchi, contenidoArchivoSeleccionado, horaActual.format(date));
+                                misUsuarios.insertarArchivoACarpeta("/", nomArchi, contenidoArchivoSeleccionado , horaActual.format(date) , nombreUsAcompartir);
+                                historial.insertar("Se compartio un archivo con nombre: "+nomArchi, horaActual.format(date), txtNombreUsuarioActual.getText());
                                 JOptionPane.showMessageDialog(null, "Archivo compartido!");
                             }
+                            else //si ya existe sobre escribe
+                            {
+                                int resp = JOptionPane.showConfirmDialog(null, "¿El archivo ya existe en la raiz del usuario, desea reemplazarlo?", "Alerta!", JOptionPane.YES_NO_OPTION);
+                                if (resp==0) 
+                                {
+                                    misUsuarios.modificarArchivo(nombreUsAcompartir, "/", nomArchi, nomArchi, contenidoArchivoSeleccionado, horaActual.format(date));
+                                    JOptionPane.showMessageDialog(null, "Archivo compartido!");
+                                }
+                            }
+                        }else
+                        {
+                            JOptionPane.showMessageDialog(null, "No existe usuario");
                         }
                     }else
                     {
-                        JOptionPane.showMessageDialog(null, "No existe usuario");
+                        JOptionPane.showMessageDialog(null, "Seleccione arcivo");
                     }
-                }else
+                }
+                else
                 {
-                    JOptionPane.showMessageDialog(null, "Seleccione arcivo");
+                    JOptionPane.showMessageDialog(null, "No puede compartir carpetas");
                 }
             }
         } catch (Exception e) {
@@ -1066,6 +1114,14 @@ public class principal extends javax.swing.JFrame {
                         {
                             misUsuarios.modificarCarpeta(txtNombreUsuarioActual.getText(), rutCarpModi, nuevaRuta, nombreNuevoCarpeta);
                             historial.insertar("Se Modifico la carpeta con nombre: "+nomCarpModi, horaActual.format(date), txtNombreUsuarioActual.getText());
+                            //actualizando
+                            DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
+                            for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
+                            {
+                                modelo.removeRow(i);
+                            }
+                            //actualizando visor de archivos y carpetas
+                            misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
                             JOptionPane.showMessageDialog(null, "Carpeta modificada!");
                         }
                         else
@@ -1276,6 +1332,14 @@ public class principal extends javax.swing.JFrame {
                     try {
                         misUsuarios.eliminarCarpeta(txtNombreUsuarioActual.getText(), rutElim);
                         historial.insertar("Se Elimino la carpeta con ruta: "+rutElim, horaActual.format(date), txtNombreUsuarioActual.getText());
+                        //actualizando
+                        DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
+                        for (int i = jtableCarpeArchivos.getRowCount()-1; i >= 0; i--) 
+                        {
+                            modelo.removeRow(i);
+                        }
+                        //actualizando visor de archivos y carpetas
+                        misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtNombreUsuarioActual.getText(), txtRutaActual.getText());
                         JOptionPane.showMessageDialog(null, "Carpeta eliminada!");
                     } catch (Exception e) {}                    
                 } 
@@ -1403,7 +1467,7 @@ public class principal extends javax.swing.JFrame {
                                 jtableUsMostrarCarga.setModel(modeloUsMostrarCarga);                                
                                 
                                 int porc=saberPorcentajeDeTabla(tableUscargados.getRowCount());
-                                System.out.println("porce: "+porc);
+                                //System.out.println("porce: "+porc);
                                 
                                 if (porc<25) 
                                 {
@@ -1496,8 +1560,7 @@ public class principal extends javax.swing.JFrame {
                     if (bandera>0 && bandera2==true) //quiere decir que los archivos estan en la primera fila
                     {
                         if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , campos[0])==false) 
-                        {    
-                            
+                        {                                
                             //se agrega archivo
                             misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), campos[0], campos[1] , horaActual.format(date), txtNombreUsuarioActual.getText());
                             //eliminando contenido de tabla
@@ -1588,7 +1651,7 @@ public class principal extends javax.swing.JFrame {
         int tamTabla=tamanioTabla;
         int op1 = porce*100;
         int op2=op1/tamTabla;
-        System.out.println("Tabla: " + tamTabla + " op1: " + op1 + " op2: " + op2);
+        //System.out.println("Tabla: " + tamTabla + " op1: " + op1 + " op2: " + op2);
                 
         return op2;        
     }
@@ -1623,27 +1686,37 @@ public class principal extends javax.swing.JFrame {
             return dondeIngresar;
         }
         else
-        {
-            
-            return colision(op1, numeroVe);
-            
-            
+        {            
+            return colision(op1, numeroVe,0);            
         }
     }
     
-    public int colision(int indiceOriginal, int numeroVe)
+    public int colision(int indiceOriginal, int numeroVe, int numVueltaEnciclacion)
     {
         int nuevoIndice=indiceOriginal + (int)Math.pow(numeroVe, 2);
-        int dondeIngresar=0;
+        int dondeIngresar=-1;
         for (int i = 0; i < nuevoIndice; i++) 
         {
             dondeIngresar++;
             if (dondeIngresar>(tableUscargados.getRowCount()-1)) 
             {
                 dondeIngresar=0;
-            }
-            
+            }            
         } 
+        
+        //esto es para cuando se encicla, cuando haga 25 vueltas encicladas, recorrera tabla y buscara lugar vacio y retornara ese indice
+        if (numVueltaEnciclacion==25) 
+        {
+            for (int i = 0; i < tableUscargados.getRowCount(); i++) 
+            {
+                String val=tableUscargados.getValueAt(i, 1).toString();
+                if (val.equals("-") || val.equals("")) 
+                {
+                    return i;
+                }
+            }
+        }
+        
         String valor= tableUscargados.getValueAt(dondeIngresar, 1).toString();
         if (valor.equals("-")) 
         {
@@ -1651,22 +1724,7 @@ public class principal extends javax.swing.JFrame {
         }
         else
         {
-            try {
-                return colision(indiceOriginal, numeroVe+1);
-            } catch (Exception e) {
-                System.out.println("se a producido un error, se inciclo!");
-                int a=0;
-                for (int i = 0; i < tableUscargados.getRowCount(); i++) {
-                    String valor2= tableUscargados.getValueAt(i, 1).toString();
-                    if (valor2.equals("")) 
-                    {
-                        break;
-                    }
-                    a++;
-                }
-                return a;
-            }
-            
+            return colision(indiceOriginal, numeroVe+1, numVueltaEnciclacion+1);            
         }
     }
     
@@ -1678,9 +1736,7 @@ public class principal extends javax.swing.JFrame {
         tableUscargados.setValueAt(nom, dondeIngresar, 1);
         tableUscargados.setValueAt(pass, dondeIngresar, 2);
         tableUscargados.setValueAt(fecha, dondeIngresar, 3);
-        tableUscargados.setValueAt(hash, dondeIngresar, 4);      
-               
-        
+        tableUscargados.setValueAt(hash, dondeIngresar, 4);          
     }
     
     public int siguienteNumeroPrimo(int primoActual)
@@ -1695,8 +1751,7 @@ public class principal extends javax.swing.JFrame {
             {
                 bandera=false;
             } 
-        }
-        
+        }        
         return numactual;
     }
     
@@ -1718,8 +1773,7 @@ public class principal extends javax.swing.JFrame {
             resp=true; //es primo
         }
         
-        return resp;       
-        
+        return resp;               
     }
     
     public void recalcularIndices()
@@ -1767,11 +1821,18 @@ public class principal extends javax.swing.JFrame {
         }
     }
     
+    public void insertarIndicesMostrar()
+    {
+        for (int i = 0; i < jtableUsMostrarCarga.getRowCount(); i++) 
+        {
+            tableUscargados.setValueAt(i, i, 0);
+        }
+    }
+    
     //descargar archivo
     public void descargarArchivo(String nomArchi, String contenido)
     {
-        try {
-            
+        try {            
             String ruta = PathActual()+"\\"+nomArchi+".txt";
             File archivo = new File(ruta);
             BufferedWriter bw;
