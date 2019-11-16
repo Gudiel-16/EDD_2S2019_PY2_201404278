@@ -58,6 +58,10 @@ public class principal extends javax.swing.JFrame {
         gvBitacora=new graphvizBitacora();
         gvMatriz=new graphvizMatriz();
         
+        areaPestan.setSelectedIndex(0);
+        areaPestan.setEnabledAt(1, false);
+        areaPestan.setEnabledAt(2, false);
+        
         /* 7 primeras posiciones de tabla hash */
         DefaultTableModel modeloUsCargados=(DefaultTableModel) tableUscargados.getModel();
         for (int i = 0; i < 7; i++) 
@@ -83,9 +87,9 @@ public class principal extends javax.swing.JFrame {
         areaPestan = new javax.swing.JTabbedPane();
         jpLogin = new javax.swing.JPanel();
         txtUsuario = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
         bttIngresar = new javax.swing.JButton();
         bttRegistrar = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -140,9 +144,10 @@ public class principal extends javax.swing.JFrame {
         reporteBitacora = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("EDD DRIVE");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jpLogin.setBackground(new java.awt.Color(153, 153, 255));
+        jpLogin.setBackground(new java.awt.Color(102, 102, 102));
 
         bttIngresar.setText("INGRESAR");
         bttIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -165,12 +170,12 @@ public class principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLoginLayout.createSequentialGroup()
                 .addContainerGap(601, Short.MAX_VALUE)
                 .addGroup(jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                     .addGroup(jpLoginLayout.createSequentialGroup()
                         .addComponent(bttIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bttRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bttRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword))
                 .addGap(561, 561, 561))
         );
         jpLoginLayout.setVerticalGroup(
@@ -178,9 +183,9 @@ public class principal extends javax.swing.JFrame {
             .addGroup(jpLoginLayout.createSequentialGroup()
                 .addGap(149, 149, 149)
                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addGap(14, 14, 14)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addGroup(jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bttIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bttRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -434,9 +439,10 @@ public class principal extends javax.swing.JFrame {
 
         areaPestan.addTab("PERFIL USUARIO", jPanel4);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 0));
         jPanel1.setLayout(null);
 
+        bttActualizarGraphTablHash.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttActualizarGraphTablHash.setText("TABLA HASH");
         bttActualizarGraphTablHash.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -444,8 +450,9 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bttActualizarGraphTablHash);
-        bttActualizarGraphTablHash.setBounds(10, 10, 120, 30);
+        bttActualizarGraphTablHash.setBounds(10, 10, 240, 60);
 
+        bttActualizarGraphArbolAVL.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttActualizarGraphArbolAVL.setText("ARBOL AVL");
         bttActualizarGraphArbolAVL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -453,10 +460,11 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bttActualizarGraphArbolAVL);
-        bttActualizarGraphArbolAVL.setBounds(150, 10, 130, 30);
+        bttActualizarGraphArbolAVL.setBounds(320, 10, 240, 60);
         jPanel1.add(scrollPaneReportes);
         scrollPaneReportes.setBounds(10, 80, 1490, 650);
 
+        bttActualizarGrafo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttActualizarGrafo.setText("GRAFO");
         bttActualizarGrafo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -464,8 +472,9 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bttActualizarGrafo);
-        bttActualizarGrafo.setBounds(300, 10, 130, 30);
+        bttActualizarGrafo.setBounds(640, 10, 240, 60);
 
+        bttActualizarBitacora.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttActualizarBitacora.setText("BITACORA");
         bttActualizarBitacora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -473,8 +482,9 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bttActualizarBitacora);
-        bttActualizarBitacora.setBounds(450, 10, 120, 30);
+        bttActualizarBitacora.setBounds(950, 10, 240, 60);
 
+        bttActualizarMatriz.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bttActualizarMatriz.setText("MATRIZ");
         bttActualizarMatriz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -482,7 +492,7 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bttActualizarMatriz);
-        bttActualizarMatriz.setBounds(590, 10, 130, 30);
+        bttActualizarMatriz.setBounds(1260, 10, 240, 60);
 
         areaPestan.addTab("REPORTES", jPanel1);
 
@@ -539,27 +549,53 @@ public class principal extends javax.swing.JFrame {
 
     private void reporteTabHashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteTabHashActionPerformed
         
-        gvTabHashgvTabHash.generarGrafica(tableUscargados);
-        
-        String a=gvTabHashgvTabHash.listTablaHash.get(0);
-        System.out.println(a);
-        tablaHashGraphviz=a;
-        
+        try {
+            gvTabHashgvTabHash.generarGrafica(tableUscargados);        
+            String a=gvTabHashgvTabHash.listTablaHash.get(0);
+            tablaHashGraphviz=a;
+            bttActualizarGraphTablHash.setBackground(Color.GREEN);
+            bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+            bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+            bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+            bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se ha producido un error","Error",JOptionPane.ERROR_MESSAGE);
+        }                
     }//GEN-LAST:event_reporteTabHashActionPerformed
 
     private void reporteGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteGrafoActionPerformed
        
-        misUsuarios.generarGrafo(txtNombreUsuarioActual.getText());
-        String a=gvGrafo.listGrafo.get(0);        
-        grafoGraphviz=a;
+        try {
+            misUsuarios.generarGrafo(txtNombreUsuarioActual.getText());
+            String a=gvGrafo.listGrafo.get(0);        
+            grafoGraphviz=a;
+            bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+            bttActualizarGrafo.setBackground(Color.GREEN);
+            bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+            bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+            bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se ha producido un error","Error",JOptionPane.ERROR_MESSAGE);
+        }
+        
        
     }//GEN-LAST:event_reporteGrafoActionPerformed
 
     private void reporteMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteMatrizActionPerformed
+
+        try {
+            misUsuarios.generarGraphMatriz(txtNombreUsuarioActual.getText());
+            String a=gvMatriz.listMatriz.get(0);        
+            matrizGraphviz=a;
+            bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+            bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+            bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+            bttActualizarMatriz.setBackground(Color.GREEN);
+            bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se ha producido un error","Error",JOptionPane.ERROR_MESSAGE);
+        }
         
-        misUsuarios.generarGraphMatriz(txtNombreUsuarioActual.getText());
-        String a=gvMatriz.listMatriz.get(0);        
-        matrizGraphviz=a;
         
 //        matriz nuevo=new matriz();
 //        nuevo.insertar("a", "b", "ab");
@@ -600,10 +636,19 @@ public class principal extends javax.swing.JFrame {
 
     private void reporteAVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteAVLActionPerformed
         
-        misUsuarios.generarArbolDeCarpeta(txtNombreUsuarioActual.getText(),txtRutaActual.getText());
-        String a=gvArbolAVL.listArbol.get(0);
+        try {
+            misUsuarios.generarArbolDeCarpeta(txtNombreUsuarioActual.getText(),txtRutaActual.getText());
+            String a=gvArbolAVL.listArbol.get(0);
+            arbolAVLGrapvhiz=a;
+            bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+            bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+            bttActualizarGraphArbolAVL.setBackground(Color.GREEN);
+            bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+            bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se ha producido un error","Error",JOptionPane.ERROR_MESSAGE);
+        }
         
-        arbolAVLGrapvhiz=a;
         
         /*arbol_AVL miTree=new arbol_AVL();
         graphivArbolAVL naa=new graphivArbolAVL();        
@@ -751,6 +796,7 @@ public class principal extends javax.swing.JFrame {
             {
                 areaPestan.setSelectedIndex(1);
                 areaPestan.setEnabledAt(0, false);
+                areaPestan.setEnabledAt(1, true);
                 areaPestan.setEnabledAt(2, false);
             }
             else
@@ -767,6 +813,7 @@ public class principal extends javax.swing.JFrame {
                         areaPestan.setSelectedIndex(2);
                         areaPestan.setEnabledAt(0, false);
                         areaPestan.setEnabledAt(1, false);
+                        areaPestan.setEnabledAt(2, true);
                         
                         //actualizando
                         DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
@@ -1048,6 +1095,12 @@ public class principal extends javax.swing.JFrame {
         aa.setBackground(Color.WHITE);
         aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
         scrollPaneReportes.setViewportView(aa);
+        
+        bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+        bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+        bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
     }//GEN-LAST:event_bttActualizarGraphTablHashActionPerformed
 
     private void bttActualizarGraphArbolAVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarGraphArbolAVLActionPerformed
@@ -1061,6 +1114,13 @@ public class principal extends javax.swing.JFrame {
         aa.setBackground(Color.WHITE);
         aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
         scrollPaneReportes.setViewportView(aa);
+        
+        bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+        bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+        bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
+        
     }//GEN-LAST:event_bttActualizarGraphArbolAVLActionPerformed
 
     private void bttEliminarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEliminarArchivoActionPerformed
@@ -1127,6 +1187,11 @@ public class principal extends javax.swing.JFrame {
         aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
         scrollPaneReportes.setViewportView(aa);
         
+        bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+        bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+        bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
         //misUsuarios.imprimir();
     }//GEN-LAST:event_bttActualizarGrafoActionPerformed
 
@@ -1157,9 +1222,19 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bttDescargarArchivoActionPerformed
 
     private void reporteBitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteBitacoraActionPerformed
-        historial.generarBitacora();
-        String a=gvBitacora.listBitacora.get(0);        
-        bitacoraGraphviz=a;
+        
+        try {
+            historial.generarBitacora();
+            String a=gvBitacora.listBitacora.get(0);        
+            bitacoraGraphviz=a;
+            bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+            bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+            bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+            bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+            bttActualizarBitacora.setBackground(Color.GREEN);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se ha producido un error","Error",JOptionPane.ERROR_MESSAGE);
+        }        
     }//GEN-LAST:event_reporteBitacoraActionPerformed
 
     private void bttActualizarBitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarBitacoraActionPerformed
@@ -1173,6 +1248,12 @@ public class principal extends javax.swing.JFrame {
         aa.setBackground(Color.WHITE);
         aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
         scrollPaneReportes.setViewportView(aa);
+        
+        bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+        bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+        bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
     }//GEN-LAST:event_bttActualizarBitacoraActionPerformed
 
     private void bttEliminarCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEliminarCarpetaActionPerformed
@@ -1214,6 +1295,7 @@ public class principal extends javax.swing.JFrame {
             txtUsuario.setText("");
             txtPassword.setText("");
             areaPestan.setSelectedIndex(0);
+            areaPestan.setEnabledAt(0, true);
             areaPestan.setEnabledAt(1, false);
             areaPestan.setEnabledAt(2, false);
         }
@@ -1242,6 +1324,12 @@ public class principal extends javax.swing.JFrame {
         aa.setBackground(Color.WHITE);
         aa.setPreferredSize(new Dimension(imgi.getIconWidth(), imgi.getIconHeight()));
         scrollPaneReportes.setViewportView(aa);
+        
+        bttActualizarGraphTablHash.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGrafo.setBackground(Color.LIGHT_GRAY);
+        bttActualizarGraphArbolAVL.setBackground(Color.LIGHT_GRAY);
+        bttActualizarMatriz.setBackground(Color.LIGHT_GRAY);
+        bttActualizarBitacora.setBackground(Color.LIGHT_GRAY);
     }//GEN-LAST:event_bttActualizarMatrizActionPerformed
 
     private void bttCerrarSesionAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCerrarSesionAdminActionPerformed
@@ -1253,6 +1341,7 @@ public class principal extends javax.swing.JFrame {
             txtUsuario.setText("");
             txtPassword.setText("");
             areaPestan.setSelectedIndex(0);
+            areaPestan.setEnabledAt(0, true);
             areaPestan.setEnabledAt(1, false);
             areaPestan.setEnabledAt(2, false);
         }
@@ -1802,7 +1891,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JTextField txtContenidoArchivo;
     private javax.swing.JTextField txtMostrarRuta;
     private javax.swing.JTextField txtNombreUsuarioActual;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtRutaActual;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
