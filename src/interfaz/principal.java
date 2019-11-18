@@ -9,7 +9,6 @@ import estructuras.graphvizBitacora;
 import estructuras.graphvizGrafo;
 import estructuras.graphvizMatriz;
 import estructuras.graphvizTablaHash;
-import estructuras.matriz;
 import estructuras.opUsuarios;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -156,6 +155,7 @@ public class principal extends javax.swing.JFrame {
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         bttIngresar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttIngresar.setForeground(new java.awt.Color(0, 0, 0));
         bttIngresar.setText("INGRESAR");
         bttIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +164,7 @@ public class principal extends javax.swing.JFrame {
         });
 
         bttRegistrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttRegistrar.setForeground(new java.awt.Color(0, 0, 0));
         bttRegistrar.setText("REGISTRAR");
         bttRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,16 +206,16 @@ public class principal extends javax.swing.JFrame {
 
         areaPestan.addTab("LOGIN", jpLogin);
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Elephant", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("USUARIOS CARGADOS");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Elephant", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("USUARIOS CON ERROR");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, 40));
 
@@ -296,13 +297,14 @@ public class principal extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("ARCHIVOS");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 190, -1));
 
         bttCrearCarpeta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttCrearCarpeta.setForeground(new java.awt.Color(0, 0, 0));
         bttCrearCarpeta.setText("CREAR");
         bttCrearCarpeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,6 +314,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttCrearCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 190, 44));
 
         bttEliminarCarpeta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttEliminarCarpeta.setForeground(new java.awt.Color(0, 0, 0));
         bttEliminarCarpeta.setText("ELIMINAR");
         bttEliminarCarpeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,6 +324,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttEliminarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 190, 44));
 
         bttModificarCarpeta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttModificarCarpeta.setForeground(new java.awt.Color(0, 0, 0));
         bttModificarCarpeta.setText("MODIFICAR");
         bttModificarCarpeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,6 +334,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttModificarCarpeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 190, 44));
 
         bttCrearArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttCrearArchivo.setForeground(new java.awt.Color(0, 0, 0));
         bttCrearArchivo.setText("CREAR");
         bttCrearArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,6 +344,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttCrearArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 190, 44));
 
         bttCompartirArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttCompartirArchivo.setForeground(new java.awt.Color(0, 0, 0));
         bttCompartirArchivo.setText("COMPARTIR");
         bttCompartirArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,6 +354,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttCompartirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 190, 44));
 
         bttModificarArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttModificarArchivo.setForeground(new java.awt.Color(0, 0, 0));
         bttModificarArchivo.setText("MODIFICAR");
         bttModificarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -357,6 +364,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttModificarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 190, 44));
 
         bttSubirArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttSubirArchivo.setForeground(new java.awt.Color(0, 0, 0));
         bttSubirArchivo.setText("SUBIR");
         bttSubirArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,6 +374,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(bttSubirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 190, 44));
 
         bttEliminarArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttEliminarArchivo.setForeground(new java.awt.Color(0, 0, 0));
         bttEliminarArchivo.setText("ELIMINAR");
         bttEliminarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -374,14 +383,14 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttEliminarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 190, 44));
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("CARPETAS");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 190, -1));
-        jPanel4.add(txtRutaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 770, 30));
+        jPanel4.add(txtRutaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 750, 30));
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Elephant", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("RUTA ACTUAL:");
@@ -391,10 +400,10 @@ public class principal extends javax.swing.JFrame {
         txtNombreUsuarioActual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel4.add(txtNombreUsuarioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 30, 200, 30));
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("USUARIO:");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 30, -1, 30));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 30, -1, 30));
 
         jtableCarpeArchivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -430,6 +439,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(txtContenidoArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 660, 1370, 30));
 
         bttActualizarRuta.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttActualizarRuta.setForeground(new java.awt.Color(0, 0, 0));
         bttActualizarRuta.setText("ACTUALIZAR RUTA");
         bttActualizarRuta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,7 +448,8 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel4.add(bttActualizarRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 1240, 40));
 
-        bttCerrarSesion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        bttCerrarSesion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttCerrarSesion.setForeground(new java.awt.Color(0, 0, 0));
         bttCerrarSesion.setText("CERRAR SESION");
         bttCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -455,6 +466,7 @@ public class principal extends javax.swing.JFrame {
         jPanel4.add(txtMostrarRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 700, 1370, 30));
 
         bttDescargarArchivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bttDescargarArchivo.setForeground(new java.awt.Color(0, 0, 0));
         bttDescargarArchivo.setText("DESCARGAR");
         bttDescargarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -465,10 +477,11 @@ public class principal extends javax.swing.JFrame {
 
         areaPestan.addTab("PERFIL USUARIO", jPanel4);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(null);
 
         bttActualizarGraphTablHash.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttActualizarGraphTablHash.setForeground(new java.awt.Color(0, 0, 0));
         bttActualizarGraphTablHash.setText("TABLA HASH");
         bttActualizarGraphTablHash.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -479,6 +492,7 @@ public class principal extends javax.swing.JFrame {
         bttActualizarGraphTablHash.setBounds(10, 10, 240, 60);
 
         bttActualizarGraphArbolAVL.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttActualizarGraphArbolAVL.setForeground(new java.awt.Color(0, 0, 0));
         bttActualizarGraphArbolAVL.setText("ARBOL AVL");
         bttActualizarGraphArbolAVL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -491,6 +505,7 @@ public class principal extends javax.swing.JFrame {
         scrollPaneReportes.setBounds(10, 80, 1490, 650);
 
         bttActualizarGrafo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttActualizarGrafo.setForeground(new java.awt.Color(0, 0, 0));
         bttActualizarGrafo.setText("GRAFO");
         bttActualizarGrafo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -501,6 +516,7 @@ public class principal extends javax.swing.JFrame {
         bttActualizarGrafo.setBounds(640, 10, 240, 60);
 
         bttActualizarBitacora.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttActualizarBitacora.setForeground(new java.awt.Color(0, 0, 0));
         bttActualizarBitacora.setText("BITACORA");
         bttActualizarBitacora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,6 +527,7 @@ public class principal extends javax.swing.JFrame {
         bttActualizarBitacora.setBounds(950, 10, 240, 60);
 
         bttActualizarMatriz.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bttActualizarMatriz.setForeground(new java.awt.Color(0, 0, 0));
         bttActualizarMatriz.setText("MATRIZ");
         bttActualizarMatriz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -755,7 +772,7 @@ public class principal extends javax.swing.JFrame {
                             tableUsuariosOrden.setModel(modeloUsOrden);
                             
                             //agregando a la lista y creando carpeta raiz
-                            misUsuarios.insertar(nombre);
+                            misUsuarios.insertar(nombre,password,obtenerHash(password));
                             misUsuarios.insertarCarpetaParaUsuario(nombre, "/");
                             
                             historial.insertar("Se registro nuevo usuario con nombre: "+nombre, horaActual.format(date), "sistema");
@@ -832,29 +849,27 @@ public class principal extends javax.swing.JFrame {
             }
             else
             {
-                for (int i = 0; i < tableUscargados.getRowCount(); i++) 
-                {
-                    String nombre=tableUscargados.getValueAt(i, 1).toString();
-                    String passw=tableUscargados.getValueAt(i, 2).toString();
-                    if (txtUsuario.getText().equals(nombre) && txtPassword.getText().equals(passw)) 
+                if(misUsuarios.iniciarSesion(txtUsuario.getText(), obtenerHash(txtPassword.getText()))) 
+                {                    
+                    txtRutaActual.setText("/");
+                    txtNombreUsuarioActual.setText(txtUsuario.getText());
+
+                    areaPestan.setSelectedIndex(2);
+                    areaPestan.setEnabledAt(0, false);
+                    areaPestan.setEnabledAt(1, false);
+                    areaPestan.setEnabledAt(2, true);
+
+                    //actualizando
+                    DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
+                    for (int j = jtableCarpeArchivos.getRowCount()-1; j >= 0; j--) 
                     {
-                        txtRutaActual.setText("/");
-                        txtNombreUsuarioActual.setText(nombre);
-                        
-                        areaPestan.setSelectedIndex(2);
-                        areaPestan.setEnabledAt(0, false);
-                        areaPestan.setEnabledAt(1, false);
-                        areaPestan.setEnabledAt(2, true);
-                        
-                        //actualizando
-                        DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();
-                        for (int j = jtableCarpeArchivos.getRowCount()-1; j >= 0; j--) 
-                        {
-                            modelo.removeRow(j);
-                        }
-                        misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, nombre, "/");                        
-                    }                    
-                           
+                        modelo.removeRow(j);
+                    }
+                    misUsuarios.mostrarCarpetasYArchivos(jtableCarpeArchivos, txtUsuario.getText(), "/");                         
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Usuario o password incorrectas!","ERROR",JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -1365,14 +1380,14 @@ public class principal extends javax.swing.JFrame {
         }
         
         //usuario1
-       misUsuarios.insertar("gudiel");
-       misUsuarios.insertarCarpetaParaUsuario("gudiel", "/"); //usuario, ruta
-       //usuario2
-       misUsuarios.insertar("cris");
-       misUsuarios.insertarCarpetaParaUsuario("cris", "/"); //usuario, ruta
-       
-       txtNombreUsuarioActual.setText("gudiel");
-       txtRutaActual.setText("/");  
+//       misUsuarios.insertar("gudiel");
+//       misUsuarios.insertarCarpetaParaUsuario("gudiel", "/"); //usuario, ruta
+//       //usuario2
+//       misUsuarios.insertar("cris");
+//       misUsuarios.insertarCarpetaParaUsuario("cris", "/"); //usuario, ruta
+//       
+//       txtNombreUsuarioActual.setText("gudiel");
+//       txtRutaActual.setText("/");  
 //       
        
     }//GEN-LAST:event_bttCerrarSesionActionPerformed
@@ -1450,7 +1465,7 @@ public class principal extends javax.swing.JFrame {
                                 ingresarEnTablaHash(campos[0], campos[1], obtenerHash(campos[1]),horaActual.format(date)); 
                                 
                                 //se ingresa a la lista usuario y se crea su raiz
-                                misUsuarios.insertar(campos[0]);
+                                misUsuarios.insertar(campos[0], campos[1], obtenerHash(campos[1]));
                                 misUsuarios.insertarCarpetaParaUsuario(campos[0], "/");
                                 
                                 DefaultTableModel modeloUsOrden=(DefaultTableModel) tableUsuariosOrden.getModel();
@@ -1562,6 +1577,7 @@ public class principal extends javax.swing.JFrame {
                         if (misUsuarios.existeArchivo(txtNombreUsuarioActual.getText(), txtRutaActual.getText() , campos[0])==false) 
                         {                                
                             //se agrega archivo
+                            campos[1]=campos[1].replace("\"", " ");//quitamos comillas del contenido de archivos
                             misUsuarios.insertarArchivoACarpeta(txtRutaActual.getText(), campos[0], campos[1] , horaActual.format(date), txtNombreUsuarioActual.getText());
                             //eliminando contenido de tabla
                             DefaultTableModel modelo=(DefaultTableModel) jtableCarpeArchivos.getModel();

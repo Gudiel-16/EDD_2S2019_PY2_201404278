@@ -43,9 +43,9 @@ public class opUsuarios
     }
     
     //inserta el usuario
-    public void insertar(String nomUs)
+    public void insertar(String nomUs, String pass, String hash)
     {
-        nodoUsuario nuevo=new nodoUsuario(nomUs);
+        nodoUsuario nuevo=new nodoUsuario(nomUs, pass, hash);
         
         if (estaVacia()) 
         {
@@ -59,6 +59,24 @@ public class opUsuarios
            this.ultimo=nuevo;
            this.size=this.size+1;
         }
+    }
+    
+    //inicio de sesion
+    public boolean iniciarSesion(String nomUs, String hash)
+    {
+        nodoUsuario temp=this.primero;
+        for (int i = 0; i < this.size; i++) 
+        {
+            if (temp.nombre.equals(nomUs)) //cuando encuentra nombre
+            {
+                if (temp.hash.equals(hash)) //si el hash es el mismo 
+                {
+                    return true;
+                }                
+            }
+            temp=temp.siguiente;
+        }
+        return false;
     }
     
     //ingresa carpetas a usuario especifico
